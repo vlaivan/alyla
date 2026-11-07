@@ -1,0 +1,147 @@
+# Metamodel for the Älylä reference world (alyla), version 1.0
+#
+# Defines everything that may exist in the world. Nothing outside this file is generated,
+# and the validator checks all content against it. To add a type, change this file first.
+# Field names, type names and enumeration codes are English; all content is Finnish.
+
+version: "1.0"
+archimate: "3.2"
+world_today: "2026-11-01"
+id_format: "PREFIX-NNNN (type prefix, hyphen, four digits); stable across regenerations"
+
+# ---------------------------------------------------------------------------
+# Sources: where each kind of knowledge lives
+# ---------------------------------------------------------------------------
+sources:
+  model:       {format: "ArchiMate Model Exchange Format (XML), viewed in Archi", holds: [elements, relationships]}
+  principles:  {format: "Markdown with YAML header, one file per record", holds: [PRI]}
+  decisions:   {format: "Markdown with YAML header, one file per record", holds: [DEC]}
+  initiatives: {format: "CSV, like an export from a portfolio tool", holds: [INI]}
+  documents:   {format: "Markdown with YAML header, one file per document", holds: [DOC]}
+
+# ---------------------------------------------------------------------------
+# Metadata carried by every element (in the model as ArchiMate properties)
+# ---------------------------------------------------------------------------
+metadata:
+  required:
+    id: "PREFIX-NNNN"
+    name: "Finnish name"
+    owner: "ID of a BusinessRole (ROL); empty only on external items (which carry provider instead) or where noise/planting says so"
+    source: "where the fact comes from: a DOC ID or a short Finnish description"
+    last_confirmed: "YYYY-MM-DD, when a person last confirmed the item"
+    lifecycle: [planned, active, phasing_out, retired]
+    valid_from: "YYYY-MM-DD"
+    classification: [public, internal, confidential]
+  optional:
+    description: "one or two Finnish sentences"
+    valid_to: "YYYY-MM-DD; set when lifecycle is phasing_out (planned end) or retired (actual end)"
+    external: "true for items outside the city organisation (group companies, wellbeing services county, national services)"
+    provider: "key of the external organisation that provides or owns an external item; used instead of owner"
+
+# ---------------------------------------------------------------------------
+# Element types
+# ---------------------------------------------------------------------------
+elements:
+  Goal:                 {prefix: GOL, layer: motivation,  holds: "strategy goals"}
+  Constraint:           {prefix: CON, layer: motivation,  holds: "laws and national requirements, by generic name"}
+  Capability:           {prefix: CAP, layer: strategy,    holds: "capability map, up to three levels",
+                         attributes: {level: [1, 2, 3]}}
+  BusinessActor:        {prefix: ACT, layer: business,    holds: "organisation units (up to two levels below a division), political bodies, resident groups, external organisations",
+                         attributes: {actor_kind: [city, division, unit, subunit, political_body, steering_group, customer_group, group_company, external_org, national_authority]}}
+  BusinessRole:         {prefix: ROL, layer: business,    holds: "owner roles",
+                         attributes: {holder: "fictional person's name; may be empty (vacant)",
+                                      role_kind: [service_owner, process_owner, application_owner, information_owner, platform_owner, architect, other]}}
+  BusinessService:      {prefix: SRV, layer: business,    holds: "services for residents, businesses and internal customers",
+                         attributes: {audience: [residents, businesses, internal, partners]}}
+  BusinessProcess:      {prefix: PRC, layer: business,    holds: "processes; backbone of governance, core and support processes",
+                         attributes: {process_kind: [governance, core, support]}}
+  ApplicationComponent: {prefix: APP, layer: application, holds: "applications, including the integration platform and black-box provided systems",
+                         attributes: {vendor: "fictional vendor name",
+                                      deployment: [saas, on_prem, cloud, national_service],
+                                      contract_end: "YYYY-MM-DD or empty",
+                                      criticality: [low, medium, high, critical],
+                                      personal_data: [true, false]}}
+  DataObject:           {prefix: DAT, layer: application, holds: "information sets"}
+  Node:                 {prefix: NOD, layer: technology,  holds: "hosting environments and platforms",
+                         attributes: {data_region: [fi, eu_eea, outside_eu_eea]}}
+  SystemSoftware:       {prefix: SSW, layer: technology,  holds: "databases, operating systems, frameworks and middleware",
+                         attributes: {version: "text", vendor_support_end: "YYYY-MM-DD or empty"}}
+  Location:             {prefix: LOC, layer: other,       holds: "data residency regions and main sites"}
+
+# ---------------------------------------------------------------------------
+# Relationships (prefix REL). Only these source → target pairs are allowed;
+# all are valid in ArchiMate 3.2.
+# ---------------------------------------------------------------------------
+relationships:
+  composition:
+    - [BusinessActor, BusinessActor]          # unit hierarchy
+    - [Capability, Capability]                # capability levels
+    - [BusinessProcess, BusinessProcess]      # sub-processes
+    - [ApplicationComponent, ApplicationComponent]  # modules (used sparingly)
+    - [Node, SystemSoftware]                  # what a platform consists of
+  aggregation:
+    - [Location, Node]                        # where a platform is hosted
+    - [Location, BusinessActor]               # main sites
+  assignment:
+    - [BusinessActor, BusinessRole]           # which unit an owner role belongs to
+    - [BusinessActor, BusinessProcess]        # unit responsible for a process
+    - [BusinessRole, BusinessProcess]
+  serving:
+    - [BusinessService, BusinessActor]        # service to a customer group or unit
+    - [ApplicationComponent, BusinessProcess] # application supports a process
+    - [ApplicationComponent, BusinessActor]   # application used by a unit
+    - [ApplicationComponent, ApplicationComponent]  # integration platform serves the applications it connects
+    - [Node, ApplicationComponent]            # application runs on a platform; national data exchange layer serves the applications it connects
+    - [SystemSoftware, ApplicationComponent]  # application depends on software
+  realization:
+    - [BusinessProcess, BusinessService]
+    - [BusinessProcess, Capability]
+    - [Capability, Goal]
+    - [BusinessService, Constraint]           # law regulates a service
+    - [BusinessProcess, Constraint]           # law regulates a process
+    - [ApplicationComponent, Constraint]      # law regulates information systems
+    - [Node, Constraint]                      # law requires technology, e.g. a national integration service
+    - [SystemSoftware, Constraint]
+  access:
+    - [ApplicationComponent, DataObject]      # attribute access_type: [read, write, readwrite]
+    - [BusinessProcess, DataObject]
+  flow:
+    - [ApplicationComponent, ApplicationComponent]  # attribute payload: Finnish description of what flows
+  association:
+    - [BusinessActor, BusinessActor]          # e.g. ownership of a group company (name: "omistaa")
+    - [Constraint, DataObject]                # law regulates information
+# Rule for laws (Constraint): link only what the law itself regulates, at the level it names
+# (a service, a process, information, an information system, technology). Link the most specific thing
+# it names and do not add links that follow from others; impact analysis traverses the rest.
+# Relationship metadata: id, source, last_confirmed, valid_from, optional valid_to.
+
+# ---------------------------------------------------------------------------
+# Enumerations
+# ---------------------------------------------------------------------------
+# Enumerated values are closed but extensible: a new value is added in this file first,
+# and the validator accepts it on the next run. Removing or renaming a value requires
+# migrating the items that use it.
+
+# ---------------------------------------------------------------------------
+# Records outside the model
+# ---------------------------------------------------------------------------
+records:
+  PRI:
+    fields: {id: "PRI-NNNN", key: "slug of title", title: "", category: [general, business, information, application, technology, security],
+             statement: "", rationale: "", implications: "list of Finnish sentences",
+             owner: "ROL id", status: [draft, approved, retired], approved_on: "YYYY-MM-DD", approved_by: "ACT id of the approving body"}
+  DEC:
+    fields: {id: "DEC-NNNN", title: "", kind: [decision, exception], status: [proposed, accepted, rejected, superseded, expired],
+             decided_on: "YYYY-MM-DD", decided_by: "ACT id of the deciding body", valid_until: "YYYY-MM-DD or empty (exceptions always have one)",
+             concerns: "list of element IDs", principles: "list of PRI ids", supersedes: "DEC id or empty",
+             context: "", decision: "", consequences: "", conditions: "list of Finnish conditions"}
+  INI:
+    fields: {id: "INI-NNNN", name: "", type: [project, programme, procurement, development, service_change],
+             status: [idea, planned, active, completed, stopped], owner: "ROL id", lead: "fictional person's name",
+             start: "YYYY-MM-DD", end: "YYYY-MM-DD", affects: "semicolon-separated element IDs", goals: "semicolon-separated GOL ids",
+             budget_eur: "integer or empty", outcome: "Finnish text, completed or stopped only", lessons: "Finnish text, completed or stopped only"}
+  DOC:
+    fields: {id: "DOC-NNNN", title: "", kind: [strategy, programme, plan, report, audit, vendor_document, register_extract, public_description, memo],
+             author: "ACT or ROL id", published_on: "YYYY-MM-DD", classification: [public, internal, confidential],
+             mentions: "list of element and record IDs the document refers to",
+             facts: "list of {subject: ID, field: attribute or metadata name, value} the document states; the validator checks them against the world"}

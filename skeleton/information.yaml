@@ -1,0 +1,93 @@
+# Älylän kaupunki: tietoaineistot
+
+# Information sets the city's processes and systems use.
+
+# Attributes:
+#   key, name: as in organisation.yaml.
+#   owner: organisation key of the information owner unit.
+#   personal_data: whether the set holds personal data.
+
+
+information:
+  - {key: asiarekisteri_ja_asiakirjat, name: "Asiarekisteri ja asiakirjat", owner: kirjaamo_ja_arkisto, personal_data: true}
+  - {key: paatokset_ja_poytakirjat, name: "Päätökset ja pöytäkirjat", owner: paatoksenteon_tuki, personal_data: false}
+  - {key: luottamushenkilotiedot, name: "Luottamushenkilötiedot", owner: paatoksenteon_tuki, personal_data: true}
+  - {key: talousarvio_ja_suunnittelutiedot, name: "Talousarvio- ja suunnittelutiedot", owner: talousohjaus_ja_budjetointi, personal_data: false}
+  - {key: kirjanpitotiedot, name: "Kirjanpitotiedot", owner: laskenta_ja_maksuliikennepalvelut, personal_data: false}
+  - {key: ostolaskut, name: "Ostolaskut", owner: laskenta_ja_maksuliikennepalvelut, personal_data: false}
+  - {key: myyntilaskut_ja_saatavat, name: "Myyntilaskut ja saatavat", owner: laskenta_ja_maksuliikennepalvelut, personal_data: true}
+  - {key: henkiloston_perustiedot, name: "Henkilöstön perustiedot", owner: palvelussuhdeasiat, personal_data: true}
+  - {key: palvelussuhde_ja_palkkatiedot, name: "Palvelussuhde- ja palkkatiedot", owner: palvelussuhdeasiat, personal_data: true}
+  - {key: tyoaika_ja_tyovuorotiedot, name: "Työaika- ja työvuorotiedot", owner: palvelussuhdeasiat, personal_data: true}
+  - {key: rekrytointitiedot, name: "Rekrytointitiedot", owner: rekrytointi_ja_osaamisen_kehittaminen, personal_data: true}
+  - {key: osaamis_ja_koulutustiedot, name: "Osaamis- ja koulutustiedot", owner: rekrytointi_ja_osaamisen_kehittaminen, personal_data: true}
+  - {key: tyohyvinvointi_ja_tyoturvallisuustiedot, name: "Työhyvinvointi- ja työturvallisuustiedot", owner: tyohyvinvointi_ja_tyosuojelu, personal_data: true}
+  - {key: hankinta_ja_sopimustiedot, name: "Hankinta- ja sopimustiedot", owner: hankintapalvelut, personal_data: false}
+  - {key: toimittajatiedot, name: "Toimittajatiedot", owner: hankintapalvelut, personal_data: false}
+  - {key: asiakaspalautteet_ja_aloitteet, name: "Asiakaspalautteet ja aloitteet", owner: asiakaspalvelu, personal_data: true}
+  - {key: asiakaspalvelun_yhteydenotot, name: "Asiakaspalvelun yhteydenotot", owner: asiakaspalvelu, personal_data: true}
+  - {key: verkkopalvelun_sisallot, name: "Verkkopalvelun sisällöt", owner: viestinta, personal_data: false}
+  - {key: sahkoisen_asioinnin_lomaketiedot, name: "Sähköisen asioinnin lomaketiedot", owner: digitaalinen_asiointi, personal_data: true}
+  - {key: kayttajatunnukset_ja_kayttooikeudet, name: "Käyttäjätunnukset ja käyttöoikeudet", owner: tietoturva_ja_tietosuoja, personal_data: true}
+  - {key: ict_palvelupyynnot_ja_hairiot, name: "ICT-palvelupyynnöt ja häiriöt", owner: ict_palvelutuotanto, personal_data: true}
+  - {key: arkkitehtuurikuvaukset, name: "Arkkitehtuurikuvaukset", owner: arkkitehtuuri_ja_tiedonhallinta, personal_data: false}
+  - {key: tiedonhallintamalli, name: "Tiedonhallintamalli", owner: arkkitehtuuri_ja_tiedonhallinta, personal_data: false}
+  - {key: tietoturvapoikkeamat, name: "Tietoturvapoikkeamat", owner: tietoturva_ja_tietosuoja, personal_data: true}
+  - {key: raportointi_ja_tietovarastotiedot, name: "Raportointi- ja tietovarastotiedot", owner: strategia_ja_tietojohtaminen, personal_data: false}
+  - {key: hyvinvointi_indikaattorit, name: "Hyvinvointi-indikaattorit", owner: hyvinvoinnin_edistaminen, personal_data: false}
+  - {key: henkiloiden_perustiedot, name: "Henkilöiden perustiedot", owner: kirjaamo_ja_arkisto, personal_data: true}
+  - {key: yritysten_perustiedot, name: "Yritysten perustiedot", owner: yrityspalvelut, personal_data: false}
+  - {key: konserniyhteisojen_raportointitiedot, name: "Konserniyhteisöjen raportointitiedot", owner: omistajaohjaus, personal_data: false}
+  - {key: yritysasiakkuustiedot, name: "Yritysasiakkuustiedot", owner: yrityspalvelut, personal_data: true}
+  - {key: elinkeinoavustukset, name: "Elinkeinoavustukset", owner: elinkeinokehitys_ja_investoinnit, personal_data: false}
+  - {key: tyonhakija_asiakastiedot, name: "Työnhakija-asiakastiedot", owner: tyonhakijapalvelut, personal_data: true}
+  - {key: tyollistymissuunnitelmat, name: "Työllistymissuunnitelmat", owner: tyonhakijapalvelut, personal_data: true}
+  - {key: palkkatukipaatokset, name: "Palkkatukipäätökset", owner: tyollistamisen_tuet, personal_data: true}
+  - {key: tyonantaja_asiakkuustiedot, name: "Työnantaja-asiakkuustiedot", owner: tyonantajapalvelut, personal_data: false}
+  - {key: kotoutumissuunnitelmat, name: "Kotoutumissuunnitelmat", owner: kotoutumispalvelut, personal_data: true}
+  - {key: tulkkaustilaukset, name: "Tulkkaustilaukset", owner: kotoutumispalvelut, personal_data: true}
+  - {key: tapahtumatiedot, name: "Tapahtumatiedot", owner: matkailu_tapahtumat_ja_markkinointi, personal_data: false}
+  - {key: matkailukohdetiedot, name: "Matkailukohdetiedot", owner: matkailu_tapahtumat_ja_markkinointi, personal_data: false}
+  - {key: kaava_aineistot, name: "Kaava-aineistot", owner: asemakaavoitus, personal_data: false}
+  - {key: tontti_ja_maanvuokrasopimukset, name: "Tontti- ja maanvuokrasopimukset", owner: maapolitiikka_ja_tonttipalvelut, personal_data: true}
+  - {key: kiinteistotiedot, name: "Kiinteistötiedot", owner: kiinteistonmuodostus, personal_data: true}
+  - {key: rakennuslupahakemukset_ja_paatokset, name: "Rakennuslupahakemukset ja -päätökset", owner: rakennusvalvonta, personal_data: true}
+  - {key: rakennus_ja_huoneistotiedot, name: "Rakennus- ja huoneistotiedot", owner: rakennusvalvonta, personal_data: false}
+  - {key: katselmus_ja_valvontatiedot, name: "Katselmus- ja valvontatiedot", owner: rakennusvalvonta, personal_data: true}
+  - {key: ymparistolupa_ja_valvontatiedot, name: "Ympäristölupa- ja valvontatiedot", owner: ymparistonsuojelu, personal_data: false}
+  - {key: elintarvikevalvonnan_kohdetiedot, name: "Elintarvikevalvonnan kohdetiedot", owner: ymparistoterveydenhuolto, personal_data: false}
+  - {key: katu_ja_viheromaisuustiedot, name: "Katu- ja viheromaisuustiedot", owner: kuntatekniikka, personal_data: false}
+  - {key: katutyo_ja_sijoitusluvat, name: "Katutyö- ja sijoitusluvat", owner: kadut_ja_liikennevaylat, personal_data: false}
+  - {key: vika_ja_kunnossapitoilmoitukset, name: "Vika- ja kunnossapitoilmoitukset", owner: kuntatekniikka, personal_data: true}
+  - {key: pysakointivirhemaksut, name: "Pysäköintivirhemaksut", owner: liikenne_ja_joukkoliikenne, personal_data: true}
+  - {key: joukkoliikenteen_linja_ja_lipputiedot, name: "Joukkoliikenteen linja- ja lipputiedot", owner: liikenne_ja_joukkoliikenne, personal_data: true}
+  - {key: tilatiedot_ja_tilavaraukset, name: "Tilatiedot ja tilavaraukset", owner: tilahallinta_ja_vuokraus, personal_data: true}
+  - {key: kiinteistojen_huolto_ja_kunnossapitotiedot, name: "Kiinteistöjen huolto- ja kunnossapitotiedot", owner: kiinteistonpito_ja_energianhallinta, personal_data: false}
+  - {key: energiankulutustiedot, name: "Energiankulutustiedot", owner: kiinteistonpito_ja_energianhallinta, personal_data: false}
+  - {key: kunto_ja_sisailmatutkimukset, name: "Kunto- ja sisäilmatutkimukset", owner: kiinteistonpito_ja_energianhallinta, personal_data: false}
+  - {key: investointihankkeiden_tiedot, name: "Investointihankkeiden tiedot", owner: rakennuttaminen, personal_data: false}
+  - {key: kantakartta_ja_paikkatietoaineistot, name: "Kantakartta ja paikkatietoaineistot", owner: paikkatietopalvelut, personal_data: false}
+  - {key: osoitetiedot, name: "Osoitetiedot", owner: paikkatietopalvelut, personal_data: false}
+  - {key: varhaiskasvatuksen_asiakastiedot, name: "Varhaiskasvatuksen asiakastiedot", owner: varhaiskasvatuksen_asiakaspalvelu, personal_data: true}
+  - {key: varhaiskasvatussuunnitelmat, name: "Varhaiskasvatussuunnitelmat", owner: paivakotiverkosto, personal_data: true}
+  - {key: lapsen_tuen_asiakirjat_varhaiskasvatuksessa, name: "Lapsen tuen asiakirjat varhaiskasvatuksessa", owner: paivakotiverkosto, personal_data: true}
+  - {key: varhaiskasvatuksen_asiakasmaksutiedot, name: "Varhaiskasvatuksen asiakasmaksutiedot", owner: varhaiskasvatuksen_asiakaspalvelu, personal_data: true}
+  - {key: palvelusetelitiedot, name: "Palvelusetelitiedot", owner: yksityisen_varhaiskasvatuksen_ohjaus, personal_data: true}
+  - {key: oppilastiedot, name: "Oppilastiedot", owner: sivistyksen_hallinto_ja_tukipalvelut, personal_data: true}
+  - {key: opetussuunnitelmat, name: "Opetussuunnitelmat", owner: kouluverkosto, personal_data: false}
+  - {key: arviointi_ja_todistustiedot, name: "Arviointi- ja todistustiedot", owner: kouluverkosto, personal_data: true}
+  - {key: oppimisen_tuen_asiakirjat, name: "Oppimisen tuen asiakirjat", owner: oppimisen_tuki_ja_oppilashuolto, personal_data: true}
+  - {key: oppilashuoltokertomukset, name: "Oppilashuoltokertomukset", owner: oppimisen_tuki_ja_oppilashuolto, personal_data: true}
+  - {key: lukujarjestys_ja_kurssitiedot, name: "Lukujärjestys- ja kurssitiedot", owner: kouluverkosto, personal_data: false}
+  - {key: koulukuljetustiedot, name: "Koulukuljetustiedot", owner: sivistyksen_hallinto_ja_tukipalvelut, personal_data: true}
+  - {key: lukion_opiskelijatiedot, name: "Lukion opiskelijatiedot", owner: alylan_lukio, personal_data: true}
+  - {key: ylioppilastutkintotiedot, name: "Ylioppilastutkintotiedot", owner: alylan_lukio, personal_data: true}
+  - {key: kirjaston_asiakas_ja_lainatiedot, name: "Kirjaston asiakas- ja lainatiedot", owner: kirjasto, personal_data: true}
+  - {key: kirjastoaineistotiedot, name: "Kirjastoaineistotiedot", owner: kirjasto, personal_data: false}
+  - {key: museon_kokoelmatiedot, name: "Museon kokoelmatiedot", owner: museo, personal_data: false}
+  - {key: kansalaisopiston_kurssi_ja_ilmoittautumistiedot, name: "Kansalaisopiston kurssi- ja ilmoittautumistiedot", owner: kansalaisopisto, personal_data: true}
+  - {key: liikuntapaikkojen_vuorovaraukset, name: "Liikuntapaikkojen vuorovaraukset", owner: liikuntapaikat, personal_data: true}
+  - {key: kulttuuri_liikunta_ja_nuorisoavustukset, name: "Kulttuuri-, liikunta- ja nuorisoavustukset", owner: kulttuuritoiminta, personal_data: false}
+  - {key: etsivan_nuorisotyon_asiakastiedot, name: "Etsivän nuorisotyön asiakastiedot", owner: nuorisopalvelut, personal_data: true}
+  - {key: kesatyosetelitiedot, name: "Kesätyösetelitiedot", owner: nuorisopalvelut, personal_data: true}
+  - {key: vesihuollon_kulutus_ja_laskutustiedot, name: "Vesihuollon kulutus- ja laskutustiedot", owner: alylan_vesi_ja_energia, personal_data: true}

@@ -1,0 +1,168 @@
+# Älylän kaupunki: istutetut puutteet
+
+# Planted gaps P01, P02, … for the test version, applied as patches on the base version.
+# Each gap carries its truth card entry.
+
+# Attributes:
+#   id, title: identifier and Finnish title.
+#   use_cases: the test set's use cases U01–U05.  principles: principle keys the gap relates to.
+#   where: what the model contains.  good_answer: what a good answer could say.
+#   expected_deviations: validator rules the gap breaks on purpose, so the validator accepts them.
+#   ops: set (meta / attrs; null removes a field) | add_element | add_rel | remove_rel. Elements as [Type, key].
+
+
+plants:
+  - id: P01
+    title: "Tietojärjestelmältä puuttuu omistaja"
+    use_cases: [U01, U03, U05]
+    principles: [jokaisella_tietojarjestelmalla_on_omistaja_ja_elinkaarisuunnitelma]
+    where: "`Kerro kartalla` -osallistumisalustalle ei ole kirjattu omistajaa."
+    good_answer:
+      - "Toteaa, ettei omistajaa ole kirjattu, eikä arvaa sitä."
+      - "Voi mainita, että järjestelmää käyttää `Maankäyttö ja kaavoitus`, ja ehdottaa omistajan nimeämistä."
+    expected_deviations: [no_owner]
+    ops:
+      - set: {target: [ApplicationComponent, kerro_kartalla], meta: {owner: null}}
+
+  - id: P02
+    title: "Tietoaineistolta puuttuu omistaja"
+    use_cases: [U03]
+    principles: [tiedolla_on_omistaja_ja_laatuvastuu]
+    where: "Henkilötietoja sisältävälle aineistolle `Kesätyösetelitiedot` ei ole kirjattu omistajaa."
+    good_answer:
+      - "Toteaa, ettei aineistolle ole kirjattu omistajaa."
+      - "Huomauttaa, että aineisto sisältää henkilötietoja, joten omistajuus on erityisen tärkeä."
+    expected_deviations: [no_owner]
+    ops:
+      - set: {target: [DataObject, kesatyosetelitiedot], meta: {owner: null}}
+
+  - id: P03
+    title: "Mahdollinen päällekkäisyys asianhallinnassa"
+    use_cases: [U02]
+    principles: [yhteiset_ratkaisut_ennen_yksikkokohtaisia]
+    where: "`Ympäristönsuojelu` käyttää omaa `Ympäristöasiat`-järjestelmää, joka kirjaa samaa asiarekisteriä kuin kaupunkiyhteinen `Diaari`."
+    good_answer:
+      - "Huomaa, että kaksi järjestelmää kirjaa samaa asiarekisteriä."
+      - "Esittää asian mahdollisena päällekkäisyytenä: yksikön oma järjestelmä voi olla perusteltu, mutta periaatteen 01 mukaan perustelu pitäisi kirjata."
+    ops:
+      - add_element: {type: ApplicationComponent, key: ymparistoasiat, name: "Ympäristöasiat", description: "Ympäristönsuojelun asian- ja dokumenttienhallinta",
+                      meta: {owner: [BusinessRole, tietojarjestelmaomistaja_kaupunkiymparisto], source: "Sovellussalkku", valid_from: "2022-04-01", classification: confidential},
+                      attrs: {vendor: "Kehä Systems", deployment: saas, contract_end: "2028-03-31", criticality: medium, personal_data: true}}
+      - add_rel: {type: Serving, source: [ApplicationComponent, ymparistoasiat], target: [BusinessProcess, ymparistolupien_ja_ilmoitusten_kasittely]}
+      - add_rel: {type: Serving, source: [ApplicationComponent, ymparistoasiat], target: [BusinessActor, ymparistonsuojelu]}
+      - add_rel: {type: Access, source: [ApplicationComponent, ymparistoasiat], target: [DataObject, asiarekisteri_ja_asiakirjat], attrs: {access_type: readwrite}}
+      - add_rel: {type: Serving, source: [Node, keha_systemsin_pilvipalvelu], target: [ApplicationComponent, ymparistoasiat]}
+
+  - id: P04
+    title: "Poistuvalla järjestelmällä ei näy korvaajaa"
+    use_cases: [U02, U04]
+    principles: [jokaisella_tietojarjestelmalla_on_omistaja_ja_elinkaarisuunnitelma]
+    where: "`Tonttipalvelu` on merkitty poistuvaksi 30.6.2027. Se tukee prosesseja `Tonttien luovutus` ja `Maanhankinta ja maankäyttösopimukset`, eikä mikään suunniteltu järjestelmä ole tulossa tilalle."
+    good_answer:
+      - "Toteaa, ettei korvaajaa näy mallissa. Korvaaja olisi toinen aktiivinen tai suunniteltu järjestelmä, joka tukee samoja prosesseja."
+      - "Huomaa, että `Maanhankinta ja maankäyttösopimukset` jää kokonaan ilman järjestelmää."
+      - "Mainitsee, että `Tonttipalvelu` toimii lisäksi ohjelmistoilla, joiden tuki on päättynyt."
+    ops:
+      - set: {target: [ApplicationComponent, tonttipalvelu], meta: {lifecycle: phasing_out, valid_to: "2027-06-30"}}
+
+  - id: P05
+    title: "Uusi riippuvuus poistuvaan järjestelmään"
+    use_cases: [U05, U04]
+    principles: [ei_uusia_riippuvuuksia_poistuviin_jarjestelmiin_ja_teknologioihin]
+    where: "`Tonttihaku`-palvelusta on vuonna 2026 rakennettu uusi tietovirta poistuvaan `Tonttipalvelu`-järjestelmään."
+    good_answer:
+      - "Tunnistaa uuden riippuvuuden poistuvaan järjestelmään, mikä on periaatteen 13 vastaista."
+      - "Huomaa, että `Tonttipalvelu`-järjestelmän poistuminen katkaisee myös tonttihaun."
+    ops:
+      - add_rel: {type: Flow, source: [ApplicationComponent, tonttihaku], target: [ApplicationComponent, tonttipalvelu], name: "Tonttihakemukset", attrs: {via: direct}, meta: {valid_from: "2026-05-04"}}
+
+  - id: P06
+    title: "Tietovirta poistettuun järjestelmään"
+    use_cases: [U03]
+    principles: []
+    where: "`Tilakone`-järjestelmästä kulkee mallin mukaan tietovirta `Tilavaraus Classic` -järjestelmään, joka poistettiin käytöstä 31.8.2025."
+    good_answer:
+      - "Huomaa, ettei poistettuun järjestelmään voi kulkea tietoa."
+      - "Pitää molemmat tiedot esillä ja ehdottaa kuvauksen tarkistamista."
+    ops:
+      - add_element: {type: ApplicationComponent, key: tilavaraus_classic, name: "Tilavaraus Classic", description: "Vanha tilavarausjärjestelmä",
+                      meta: {owner: [BusinessRole, tietojarjestelmaomistaja_kaupunkiymparisto], source: "Sovellussalkku", valid_from: "2012-01-01", valid_to: "2025-08-31", lifecycle: retired, classification: confidential},
+                      attrs: {vendor: "Kiinteistösoft Oy", deployment: on_prem, criticality: low, personal_data: true}}
+      - add_rel: {type: Flow, source: [ApplicationComponent, tilakone], target: [ApplicationComponent, tilavaraus_classic], name: "Varattavat tilat", attrs: {via: direct}}
+
+  - id: P07
+    title: "Henkilötietomerkintä on ristiriidassa"
+    use_cases: [U03, U05]
+    principles: [tietoturva_ja_tietosuoja_sisaanrakennettuina]
+    where: "`Lukudiplomi` lukee aineistoa `Oppilastiedot`, mutta järjestelmän henkilötietomerkintä (`personal_data`) on `false`."
+    good_answer:
+      - "Huomaa ristiriidan merkinnän ja tiedon käytön välillä, kun se selvittää henkilötietojen käsittelyä."
+    ops:
+      - add_rel: {type: Access, source: [ApplicationComponent, lukudiplomi], target: [DataObject, oppilastiedot], attrs: {access_type: read}}
+
+  - id: P08
+    title: "Henkilötietoja EU/ETA-alueen ulkopuolella"
+    use_cases: [U05]
+    principles: [henkilotiedot_kasitellaan_eu_eta_alueella]
+    where: "Oppimissovellus `Englantikeidas` toimii alustalla `Oppimissovelluksen pilvipalvelu (Yhdysvallat)` ja lukee aineistoa `Oppilastiedot`."
+    good_answer:
+      - "Löytää sovelluksen."
+      - "Toteaa, että lasten henkilötietoja käsitellään EU/ETA-alueen ulkopuolella, mikä on periaatteen 19 vastaista."
+    ops:
+      - add_element: {type: Node, key: oppimissovelluksen_pilvipalvelu_yhdysvallat, name: "Oppimissovelluksen pilvipalvelu (Yhdysvallat)", description: "Toimittajan SaaS-ympäristö",
+                      meta: {provider: toimittaja, source: "Konfiguraatiotietokanta", valid_from: "2023-08-01", classification: internal}, attrs: {data_region: outside_eu_eea}}
+      - add_rel: {type: Aggregation, source: [Location, eu_eta_alueen_ulkopuolinen_pilvialue], target: [Node, oppimissovelluksen_pilvipalvelu_yhdysvallat]}
+      - remove_rel: {type: Serving, source: [Node, muut_toimittajien_saas_palvelut_eu_eta], target: [ApplicationComponent, englantikeidas]}
+      - add_rel: {type: Serving, source: [Node, oppimissovelluksen_pilvipalvelu_yhdysvallat], target: [ApplicationComponent, englantikeidas]}
+      - add_rel: {type: Access, source: [ApplicationComponent, englantikeidas], target: [DataObject, oppilastiedot], attrs: {access_type: read}}
+
+  - id: P09
+    title: "Kriittinen järjestelmä poistuvalla alustalla"
+    use_cases: [U04]
+    principles: [teknologioiden_elinkaari_hallitaan]
+    where: "Alusta `Tietokantaklusteri Quarry` on merkitty poistuvaksi 31.3.2027, ja kriittinen `Lupakone` toimii sen varassa."
+    good_answer:
+      - "Kytkee alustan poistumisen rakennuslupien käsittelyyn."
+      - "Huomaa, että `Lupakone`-järjestelmän muutkin ohjelmistot ovat vanhentuneita."
+    ops:
+      - set: {target: [Node, tietokantaklusteri_quarry], meta: {lifecycle: phasing_out, valid_to: "2027-03-31"}}
+
+  - id: P10
+    title: "Tiedon lähdettä ei ole kuvattu"
+    use_cases: [U03, U05]
+    principles: [integraatiot_integraatioalustan_kautta]
+    where: "`Pysäköintivahti` käyttää aineistoa `Henkilöiden perustiedot`, mutta mallissa ei ole kuvattu, mistä se tiedon saa."
+    good_answer:
+      - "Huomaa, että tiedon lähde puuttuu kuvauksesta."
+      - "Ei pidä tätä välttämättä virheenä: tieto voidaan hakea esimerkiksi kansallisen palvelun käyttöliittymän kautta. Ehdottaa tarkistusta."
+      - "Huomaa, että väestötietojen muutoksen vaikutusarvio voisi ohittaa järjestelmän."
+    ops:
+      - add_rel: {type: Access, source: [ApplicationComponent, pysakointivahti], target: [DataObject, henkiloiden_perustiedot], attrs: {access_type: read}}
+
+  - id: P11
+    title: "Sama järjestelmä todennäköisesti kuvattu kahdesti"
+    use_cases: [U02, U03]
+    principles: []
+    where: "Kuntatekniikan katuomaisuuden hallinta on kuvattu kahtena järjestelmänä: `Infrakone` ja `Infra-kone 2`."
+    good_answer:
+      - "Epäilee kaksoiskuvausta: sama toimittaja, käyttötarkoitus ja prosessi."
+      - "Ei laske niitä kahdeksi järjestelmäksi ilman tarkistusta."
+    ops:
+      - add_element: {type: ApplicationComponent, key: infra_kone_2, name: "Infra-kone 2", description: "Katu- ja viheromaisuusrekisteri",
+                      meta: {owner: [BusinessRole, tietojarjestelmaomistaja_kaupunkiymparisto], source: "Sovellussalkku", valid_from: "2019-02-01", classification: internal},
+                      attrs: {vendor: "Geomatica Oy", deployment: on_prem, contract_end: "2029-12-31", criticality: high, personal_data: false}}
+      - add_rel: {type: Serving, source: [ApplicationComponent, infra_kone_2], target: [BusinessProcess, katujen_ja_vaylien_yllapito]}
+      - add_rel: {type: Serving, source: [ApplicationComponent, infra_kone_2], target: [BusinessActor, kuntatekniikka]}
+      - add_rel: {type: Access, source: [ApplicationComponent, infra_kone_2], target: [DataObject, katu_ja_viheromaisuustiedot], attrs: {access_type: readwrite}}
+      - add_rel: {type: Serving, source: [Node, paikkatietopalvelinymparisto], target: [ApplicationComponent, infra_kone_2]}
+
+  - id: P12
+    title: "Sama palvelu kahden yksikön vastuulla"
+    use_cases: [U01, U02]
+    principles: [palvelut_suunnitellaan_asiakkaan_tarpeista_lahtien]
+    where: "Sekä Tilahallinnon prosessi `Tilojen vuokraus ja varaukset` että Liikuntapaikkojen prosessi `Liikuntapaikkojen vuorojen jako ja varaukset` toteuttavat palvelun `Tilojen vuokraus ja tilavaraukset`."
+    good_answer:
+      - "Nimeää molemmat yksiköt ja prosessit."
+      - "Kytkee asian siihen, että varauksiin on useita erillisiä järjestelmiä."
+    ops:
+      - add_rel: {type: Realization, source: [BusinessProcess, liikuntapaikkojen_vuorojen_jako_ja_varaukset], target: [BusinessService, tilojen_vuokraus_ja_tilavaraukset]}

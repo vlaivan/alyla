@@ -1,0 +1,137 @@
+# Älylän kaupunki: palvelut
+
+# Services for residents, businesses, partners and the city's own staff, grouped by division.
+# Black-box services are provided from outside the city organisation.
+
+# Attributes:
+#   key, name: as in organisation.yaml.
+#   unit: organisation key of the responsible unit or sub-unit.
+#   provider: for black-box services, the external organisation key instead of unit.
+#   audience: residents | businesses | internal | partners.
+#   serves: customer group keys (optional).
+
+
+services:
+  # --- Konsernihallinto
+  - {key: neuvonta_ja_asiointi_palvelupisteessa, name: "Neuvonta ja asiointi palvelupisteessä", unit: palvelupiste_alyla_info, audience: residents, serves: [asukkaat]}
+  - {key: sahkoinen_asiointi_kaupungin_verkkopalvelussa, name: "Sähköinen asiointi kaupungin verkkopalvelussa", unit: digitaalinen_asiointi, audience: residents, serves: [asukkaat, yritykset_ja_yhteisot]}
+  - {key: kaupungin_viestinta_ja_tiedottaminen, name: "Kaupungin viestintä ja tiedottaminen", unit: viestinta, audience: residents, serves: [asukkaat]}
+  - {key: asiakirja_ja_tietopyyntojen_kasittely, name: "Asiakirja- ja tietopyyntöjen käsittely", unit: kirjaamo_ja_arkisto, audience: residents, serves: [asukkaat, yritykset_ja_yhteisot]}
+  - {key: palautteen_ja_kuntalaisaloitteiden_kasittely, name: "Palautteen ja kuntalaisaloitteiden käsittely", unit: asiakaspalvelu, audience: residents, serves: [asukkaat]}
+  - {key: paatoksenteon_valmistelu_ja_kokouspalvelut, name: "Päätöksenteon valmistelu ja kokouspalvelut", unit: paatoksenteon_tuki, audience: internal}
+  - {key: vaalien_jarjestaminen, name: "Vaalien järjestäminen", unit: hallinto_ja_lakipalvelut, audience: residents, serves: [asukkaat]}
+  - {key: talousarvio_ja_talousohjauspalvelu, name: "Talousarvio- ja talousohjauspalvelu", unit: talousohjaus_ja_budjetointi, audience: internal}
+  - {key: myyntilaskutus_ja_perinta, name: "Myyntilaskutus ja perintä", unit: laskenta_ja_maksuliikennepalvelut, audience: residents, serves: [asukkaat, yritykset_ja_yhteisot]}
+  - {key: rekrytointipalvelu, name: "Rekrytointipalvelu", unit: rekrytointi_ja_osaamisen_kehittaminen, audience: internal}
+  - {key: henkiloston_osaamisen_kehittaminen, name: "Henkilöstön osaamisen kehittäminen", unit: rekrytointi_ja_osaamisen_kehittaminen, audience: internal}
+  - {key: tyohyvinvointi_ja_tyosuojelupalvelut, name: "Työhyvinvointi- ja työsuojelupalvelut", unit: tyohyvinvointi_ja_tyosuojelu, audience: internal}
+  - {key: palvelussuhde_ja_palkka_asioiden_neuvonta, name: "Palvelussuhde- ja palkka-asioiden neuvonta", unit: palvelussuhdeasiat, audience: internal}
+  - {key: hankintojen_tuki_ja_kilpailutus, name: "Hankintojen tuki ja kilpailutus", unit: hankintapalvelut, audience: internal}
+  - {key: oikeudellinen_neuvonta, name: "Oikeudellinen neuvonta", unit: lakipalvelut, audience: internal}
+  - {key: tyoasema_ja_kayttajatukipalvelut, name: "Työasema- ja käyttäjätukipalvelut", unit: ict_palvelutuotanto, audience: internal}
+  - {key: sovellus_ja_integraatiopalvelut, name: "Sovellus- ja integraatiopalvelut", unit: ict_palvelutuotanto, audience: internal}
+  - {key: arkkitehtuuri_ja_tiedonhallintapalvelut, name: "Arkkitehtuuri- ja tiedonhallintapalvelut", unit: arkkitehtuuri_ja_tiedonhallinta, audience: internal}
+  - {key: tietoturva_ja_tietosuojapalvelut, name: "Tietoturva- ja tietosuojapalvelut", unit: tietoturva_ja_tietosuoja, audience: internal}
+  - {key: tietojohtamisen_ja_raportoinnin_palvelut, name: "Tietojohtamisen ja raportoinnin palvelut", unit: strategia_ja_tietojohtaminen, audience: internal}
+  - {key: hyvinvoinnin_ja_terveyden_edistaminen, name: "Hyvinvoinnin ja terveyden edistäminen", unit: hyvinvoinnin_edistaminen, audience: residents, serves: [asukkaat]}
+  - {key: konserniyhteisojen_omistajaohjaus, name: "Konserniyhteisöjen omistajaohjaus", unit: omistajaohjaus, audience: partners}
+
+  # --- Elinvoima
+  - {key: yritysneuvonta_ja_aloittavan_yrittajan_palvelut, name: "Yritysneuvonta ja aloittavan yrittäjän palvelut", unit: yrityspalvelut, audience: businesses, serves: [yritykset_ja_yhteisot]}
+  - {key: yritysten_sijoittumis_ja_investointipalvelut, name: "Yritysten sijoittumis- ja investointipalvelut", unit: elinkeinokehitys_ja_investoinnit, audience: businesses, serves: [yritykset_ja_yhteisot]}
+  - {key: elinkeinoavustukset, name: "Elinkeinoavustukset", unit: elinkeinokehitys_ja_investoinnit, audience: businesses, serves: [yritykset_ja_yhteisot]}
+  - {key: tyonhakijan_palvelut_ja_ohjaus, name: "Työnhakijan palvelut ja ohjaus", unit: tyonhakijapalvelut, audience: residents, serves: [tyonhakijat]}
+  - {key: tyollistymista_edistavat_valmennukset, name: "Työllistymistä edistävät valmennukset", unit: tyonhakijapalvelut, audience: residents, serves: [tyonhakijat]}
+  - {key: nuorten_tyollisyyspalvelut, name: "Nuorten työllisyyspalvelut", unit: tyonhakijapalvelut, audience: residents, serves: [tyonhakijat, lapset_nuoret_ja_perheet]}
+  - {key: tyovoimakoulutuksen_hankinta, name: "Työvoimakoulutuksen hankinta", unit: tyonhakijapalvelut, audience: residents, serves: [tyonhakijat]}
+  - {key: tyonantaja_ja_rekrytointipalvelut, name: "Työnantaja- ja rekrytointipalvelut", unit: tyonantajapalvelut, audience: businesses, serves: [yritykset_ja_yhteisot]}
+  - {key: palkkatuki_ja_muut_tyollistamisen_tuet, name: "Palkkatuki ja muut työllistämisen tuet", unit: tyollistamisen_tuet, audience: businesses, serves: [yritykset_ja_yhteisot, tyonhakijat]}
+  - {key: kotoutumisen_alkukartoitus_ja_kotoutumissuunnitelma, name: "Kotoutumisen alkukartoitus ja kotoutumissuunnitelma", unit: kotoutumispalvelut, audience: residents, serves: [maahanmuuttajat]}
+  - {key: maahanmuuttajien_neuvonta_ja_ohjaus, name: "Maahanmuuttajien neuvonta ja ohjaus", unit: kotoutumispalvelut, audience: residents, serves: [maahanmuuttajat]}
+  - {key: tulkkauspalvelujen_valitys, name: "Tulkkauspalvelujen välitys", unit: kotoutumispalvelut, audience: internal}
+  - {key: matkailuneuvonta, name: "Matkailuneuvonta", unit: matkailu_tapahtumat_ja_markkinointi, audience: residents, serves: [matkailijat_ja_vierailijat]}
+  - {key: tapahtumien_jarjestaminen_ja_tapahtumaneuvonta, name: "Tapahtumien järjestäminen ja tapahtumaneuvonta", unit: matkailu_tapahtumat_ja_markkinointi, audience: businesses, serves: [yritykset_ja_yhteisot, asukkaat]}
+  - {key: kaupunkimarkkinointi, name: "Kaupunkimarkkinointi", unit: matkailu_tapahtumat_ja_markkinointi, audience: partners}
+  - {key: tapahtuma_avustukset, name: "Tapahtuma-avustukset", unit: matkailu_tapahtumat_ja_markkinointi, audience: businesses, serves: [yritykset_ja_yhteisot]}
+
+  # --- Kaupunkiympäristö
+  - {key: yleiskaavoitus, name: "Yleiskaavoitus", unit: yleiskaavoitus, audience: residents, serves: [asukkaat, yritykset_ja_yhteisot]}
+  - {key: asemakaavoitus_ja_kaavamuutokset, name: "Asemakaavoitus ja kaavamuutokset", unit: asemakaavoitus, audience: residents, serves: [asukkaat, yritykset_ja_yhteisot]}
+  - {key: kaupunkisuunnittelun_vuorovaikutus_ja_osallistuminen, name: "Kaupunkisuunnittelun vuorovaikutus ja osallistuminen", unit: maankaytto_ja_kaavoitus, audience: residents, serves: [asukkaat]}
+  - {key: poikkeamis_ja_suunnittelutarveratkaisut, name: "Poikkeamis- ja suunnittelutarveratkaisut", unit: asemakaavoitus, audience: residents, serves: [asukkaat, yritykset_ja_yhteisot]}
+  - {key: tonttien_myynti_ja_vuokraus, name: "Tonttien myynti ja vuokraus", unit: maapolitiikka_ja_tonttipalvelut, audience: residents, serves: [asukkaat, yritykset_ja_yhteisot]}
+  - {key: maanhankinta, name: "Maanhankinta", unit: maapolitiikka_ja_tonttipalvelut, audience: internal}
+  - {key: rakennus_ja_toimenpideluvat, name: "Rakennus- ja toimenpideluvat", unit: rakennusvalvonta, audience: residents, serves: [asukkaat, yritykset_ja_yhteisot]}
+  - {key: rakentamisen_neuvonta, name: "Rakentamisen neuvonta", unit: rakennusvalvonta, audience: residents, serves: [asukkaat, yritykset_ja_yhteisot]}
+  - {key: rakennustyon_valvonta_ja_katselmukset, name: "Rakennustyön valvonta ja katselmukset", unit: rakennusvalvonta, audience: residents, serves: [asukkaat, yritykset_ja_yhteisot]}
+  - {key: ymparistoluvat_ja_ilmoitukset, name: "Ympäristöluvat ja -ilmoitukset", unit: ymparistonsuojelu, audience: businesses, serves: [yritykset_ja_yhteisot]}
+  - {key: ymparistonsuojelun_valvonta, name: "Ympäristönsuojelun valvonta", unit: ymparistonsuojelu, audience: businesses, serves: [yritykset_ja_yhteisot, asukkaat]}
+  - {key: elintarvike_ja_terveydensuojeluvalvonta, name: "Elintarvike- ja terveydensuojeluvalvonta", unit: ymparistoterveydenhuolto, audience: businesses, serves: [yritykset_ja_yhteisot]}
+  - {key: elainlaakaripalvelut, name: "Eläinlääkäripalvelut", unit: ymparistoterveydenhuolto, audience: residents, serves: [asukkaat]}
+  - {key: katujen_ja_vaylien_kunnossapito, name: "Katujen ja väylien kunnossapito", unit: kadut_ja_liikennevaylat, audience: residents, serves: [asukkaat]}
+  - {key: katutyo_ja_sijoitusluvat, name: "Katutyö- ja sijoitusluvat", unit: kadut_ja_liikennevaylat, audience: businesses, serves: [yritykset_ja_yhteisot]}
+  - {key: vika_ja_kunnossapitoilmoitukset, name: "Vika- ja kunnossapitoilmoitukset", unit: kuntatekniikka, audience: residents, serves: [asukkaat]}
+  - {key: puistojen_ja_viheralueiden_hoito, name: "Puistojen ja viheralueiden hoito", unit: puistot_ja_viheralueet, audience: residents, serves: [asukkaat]}
+  - {key: pysakoinninvalvonta, name: "Pysäköinninvalvonta", unit: liikenne_ja_joukkoliikenne, audience: residents, serves: [asukkaat]}
+  - {key: liikennesuunnittelu, name: "Liikennesuunnittelu", unit: liikenne_ja_joukkoliikenne, audience: residents, serves: [asukkaat]}
+  - {key: joukkoliikenne_ja_lipputuotteet, name: "Joukkoliikenne ja lipputuotteet", unit: liikenne_ja_joukkoliikenne, audience: residents, serves: [asukkaat]}
+  - {key: tilojen_vuokraus_ja_tilavaraukset, name: "Tilojen vuokraus ja tilavaraukset", unit: tilahallinta_ja_vuokraus, audience: residents, serves: [asukkaat, yritykset_ja_yhteisot, kaupungin_henkilosto]}
+  - {key: kiinteistojen_yllapito_ja_huolto, name: "Kiinteistöjen ylläpito ja huolto", unit: kiinteistonpito_ja_energianhallinta, audience: internal}
+  - {key: energianhallinta, name: "Energianhallinta", unit: kiinteistonpito_ja_energianhallinta, audience: internal}
+  - {key: sisailma_ja_kuntotutkimukset, name: "Sisäilma- ja kuntotutkimukset", unit: kiinteistonpito_ja_energianhallinta, audience: internal}
+  - {key: rakennuttaminen_ja_investointihankkeet, name: "Rakennuttaminen ja investointihankkeet", unit: rakennuttaminen, audience: internal}
+  - {key: kiinteistonmuodostus_ja_tonttijaot, name: "Kiinteistönmuodostus ja tonttijaot", unit: kiinteistonmuodostus, audience: residents, serves: [asukkaat, yritykset_ja_yhteisot]}
+  - {key: rakennuksen_paikan_merkinta_ja_sijaintikatselmus, name: "Rakennuksen paikan merkintä ja sijaintikatselmus", unit: kiinteistonmuodostus, audience: residents, serves: [asukkaat, yritykset_ja_yhteisot]}
+  - {key: kartta_ja_paikkatietopalvelut, name: "Kartta- ja paikkatietopalvelut", unit: paikkatietopalvelut, audience: residents, serves: [asukkaat, yritykset_ja_yhteisot, kaupungin_henkilosto]}
+  - {key: osoitteiden_ja_nimiston_hallinta, name: "Osoitteiden ja nimistön hallinta", unit: paikkatietopalvelut, audience: residents, serves: [asukkaat]}
+
+  # --- Sivistys
+  - {key: varhaiskasvatukseen_hakeminen_ja_paikan_myontaminen, name: "Varhaiskasvatukseen hakeminen ja paikan myöntäminen", unit: varhaiskasvatuksen_asiakaspalvelu, audience: residents, serves: [lapset_nuoret_ja_perheet]}
+  - {key: kunnallinen_varhaiskasvatus_paivakodeissa, name: "Kunnallinen varhaiskasvatus päiväkodeissa", unit: paivakotiverkosto, audience: residents, serves: [lapset_nuoret_ja_perheet]}
+  - {key: perhepaivahoito, name: "Perhepäivähoito", unit: paivakotiverkosto, audience: residents, serves: [lapset_nuoret_ja_perheet]}
+  - {key: yksityisen_varhaiskasvatuksen_palveluseteli, name: "Yksityisen varhaiskasvatuksen palveluseteli", unit: yksityisen_varhaiskasvatuksen_ohjaus, audience: residents, serves: [lapset_nuoret_ja_perheet]}
+  - {key: esiopetus, name: "Esiopetus", unit: paivakotiverkosto, audience: residents, serves: [lapset_nuoret_ja_perheet]}
+  - {key: varhaiskasvatuksen_asiakasmaksut, name: "Varhaiskasvatuksen asiakasmaksut", unit: varhaiskasvatuksen_asiakaspalvelu, audience: residents, serves: [lapset_nuoret_ja_perheet]}
+  - {key: lapsen_kasvun_ja_oppimisen_tuki_varhaiskasvatuksessa, name: "Lapsen kasvun ja oppimisen tuki varhaiskasvatuksessa", unit: paivakotiverkosto, audience: residents, serves: [lapset_nuoret_ja_perheet]}
+  - {key: avoin_varhaiskasvatus_ja_kerhot, name: "Avoin varhaiskasvatus ja kerhot", unit: paivakotiverkosto, audience: residents, serves: [lapset_nuoret_ja_perheet]}
+  - {key: kouluun_ilmoittautuminen_ja_oppilaaksiotto, name: "Kouluun ilmoittautuminen ja oppilaaksiotto", unit: sivistyksen_hallinto_ja_tukipalvelut, audience: residents, serves: [lapset_nuoret_ja_perheet]}
+  - {key: perusopetus, name: "Perusopetus", unit: kouluverkosto, audience: residents, serves: [lapset_nuoret_ja_perheet]}
+  - {key: perusopetukseen_valmistava_opetus, name: "Perusopetukseen valmistava opetus", unit: kouluverkosto, audience: residents, serves: [lapset_nuoret_ja_perheet, maahanmuuttajat]}
+  - {key: oppimisen_ja_koulunkaynnin_tuki, name: "Oppimisen ja koulunkäynnin tuki", unit: oppimisen_tuki_ja_oppilashuolto, audience: residents, serves: [lapset_nuoret_ja_perheet]}
+  - {key: yhteisollinen_oppilashuolto, name: "Yhteisöllinen oppilashuolto", unit: oppimisen_tuki_ja_oppilashuolto, audience: residents, serves: [lapset_nuoret_ja_perheet]}
+  - {key: aamu_ja_iltapaivatoiminta, name: "Aamu- ja iltapäivätoiminta", unit: aamu_ja_iltapaivatoiminta, audience: residents, serves: [lapset_nuoret_ja_perheet]}
+  - {key: koulukuljetukset, name: "Koulukuljetukset", unit: sivistyksen_hallinto_ja_tukipalvelut, audience: residents, serves: [lapset_nuoret_ja_perheet]}
+  - {key: kodin_ja_koulun_yhteistyo_ja_viestinta, name: "Kodin ja koulun yhteistyö ja viestintä", unit: kouluverkosto, audience: residents, serves: [lapset_nuoret_ja_perheet]}
+  - {key: todistukset_ja_opintosuoritusten_hallinta, name: "Todistukset ja opintosuoritusten hallinta", unit: kouluverkosto, audience: residents, serves: [lapset_nuoret_ja_perheet]}
+  - {key: oppivelvollisuuden_valvonta_ja_ohjaus, name: "Oppivelvollisuuden valvonta ja ohjaus", unit: sivistyksen_hallinto_ja_tukipalvelut, audience: residents, serves: [lapset_nuoret_ja_perheet]}
+  - {key: lukioon_haku_ja_opiskelijaksi_ottaminen, name: "Lukioon haku ja opiskelijaksi ottaminen", unit: alylan_lukio, audience: residents, serves: [lapset_nuoret_ja_perheet]}
+  - {key: lukio_opetus, name: "Lukio-opetus", unit: alylan_lukio, audience: residents, serves: [lapset_nuoret_ja_perheet]}
+  - {key: ylioppilastutkinnon_jarjestaminen, name: "Ylioppilastutkinnon järjestäminen", unit: alylan_lukio, audience: residents, serves: [lapset_nuoret_ja_perheet]}
+  - {key: opinto_ohjaus, name: "Opinto-ohjaus", unit: alylan_lukio, audience: residents, serves: [lapset_nuoret_ja_perheet]}
+  - {key: kirjaston_lainaus_ja_aineistopalvelut, name: "Kirjaston lainaus- ja aineistopalvelut", unit: kirjasto, audience: residents, serves: [asukkaat]}
+  - {key: e_aineistot_ja_verkkokirjasto, name: "E-aineistot ja verkkokirjasto", unit: kirjasto, audience: residents, serves: [asukkaat]}
+  - {key: kirjaston_tilat_ja_tapahtumat, name: "Kirjaston tilat ja tapahtumat", unit: kirjasto, audience: residents, serves: [asukkaat]}
+  - {key: museon_nayttelyt_ja_opastukset, name: "Museon näyttelyt ja opastukset", unit: museo, audience: residents, serves: [asukkaat, matkailijat_ja_vierailijat]}
+  - {key: kokoelmien_hallinta_ja_kulttuuriperinto, name: "Kokoelmien hallinta ja kulttuuriperintö", unit: museo, audience: partners}
+  - {key: kansalaisopiston_kurssit, name: "Kansalaisopiston kurssit", unit: kansalaisopisto, audience: residents, serves: [asukkaat]}
+  - {key: taiteen_perusopetus, name: "Taiteen perusopetus", unit: kansalaisopisto, audience: residents, serves: [lapset_nuoret_ja_perheet]}
+  - {key: kulttuuriavustukset, name: "Kulttuuriavustukset", unit: kulttuuritoiminta, audience: partners, serves: [yritykset_ja_yhteisot]}
+  - {key: kulttuuritapahtumat_ja_taidekasvatus, name: "Kulttuuritapahtumat ja taidekasvatus", unit: kulttuuritoiminta, audience: residents, serves: [asukkaat, matkailijat_ja_vierailijat]}
+  - {key: liikuntapaikkojen_vuorojen_varaus, name: "Liikuntapaikkojen vuorojen varaus", unit: liikuntapaikat, audience: residents, serves: [asukkaat, yritykset_ja_yhteisot]}
+  - {key: uimahalli_ja_kuntosalipalvelut, name: "Uimahalli- ja kuntosalipalvelut", unit: liikuntapaikat, audience: residents, serves: [asukkaat]}
+  - {key: ulkoilureitit_ja_latujen_kunnossapito, name: "Ulkoilureitit ja latujen kunnossapito", unit: liikuntapaikat, audience: residents, serves: [asukkaat, matkailijat_ja_vierailijat]}
+  - {key: liikuntaneuvonta_ja_ohjattu_liikunta, name: "Liikuntaneuvonta ja ohjattu liikunta", unit: ohjattu_liikunta, audience: residents, serves: [asukkaat]}
+  - {key: liikunta_avustukset, name: "Liikunta-avustukset", unit: liikuntapalvelut, audience: partners, serves: [yritykset_ja_yhteisot]}
+  - {key: nuorisotilat_ja_avoin_nuorisotoiminta, name: "Nuorisotilat ja avoin nuorisotoiminta", unit: nuorisopalvelut, audience: residents, serves: [lapset_nuoret_ja_perheet]}
+  - {key: etsiva_nuorisotyo, name: "Etsivä nuorisotyö", unit: nuorisopalvelut, audience: residents, serves: [lapset_nuoret_ja_perheet]}
+  - {key: nuorten_osallisuus_ja_vaikuttaminen, name: "Nuorten osallisuus ja vaikuttaminen", unit: nuorisopalvelut, audience: residents, serves: [lapset_nuoret_ja_perheet]}
+  - {key: nuorten_kesatyoseteli, name: "Nuorten kesätyöseteli", unit: nuorisopalvelut, audience: residents, serves: [lapset_nuoret_ja_perheet, yritykset_ja_yhteisot]}
+  - {key: nuorisoavustukset, name: "Nuorisoavustukset", unit: nuorisopalvelut, audience: partners, serves: [yritykset_ja_yhteisot]}
+
+  # --- Black boxes: services the city uses or its residents receive from outside the city organisation
+  - {key: vesihuolto_ja_energiapalvelut, name: "Vesihuolto ja energiapalvelut", provider: alylan_vesi_ja_energia, audience: residents, serves: [asukkaat, yritykset_ja_yhteisot]}
+  - {key: kaupungin_vuokra_asunnot, name: "Kaupungin vuokra-asunnot", provider: alylan_vuokrakodit_oy, audience: residents, serves: [asukkaat]}
+  - {key: kirjanpito_palkanlaskenta_ja_henkilostohallinnon_palvelut, name: "Kirjanpito-, palkanlaskenta- ja henkilöstöhallinnon palvelut", provider: alylan_laskenta_oy, audience: internal, serves: [kaupungin_henkilosto]}
+  - {key: sosiaali_ja_terveyspalvelut, name: "Sosiaali- ja terveyspalvelut", provider: alymaan_hyvinvointialue, audience: residents, serves: [asukkaat]}
+  - {key: opiskeluhuollon_psykologi_ja_kuraattoripalvelut, name: "Opiskeluhuollon psykologi- ja kuraattoripalvelut", provider: alymaan_hyvinvointialue, audience: residents, serves: [lapset_nuoret_ja_perheet]}
+  - {key: pelastustoimi, name: "Pelastustoimi", provider: alymaan_hyvinvointialue, audience: residents, serves: [asukkaat, yritykset_ja_yhteisot]}

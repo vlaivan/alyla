@@ -1,0 +1,22 @@
+# Älylän kaupunki: strategiatavoitteet
+
+# City strategy goals: inspirational themes without metrics.
+
+# Attributes:
+#   key, name: as in organisation.yaml.
+#   description: one Finnish sentence.
+
+
+goals:
+  - {key: elinvoimainen_ja_yritysmyonteinen_kaupunki, name: "Elinvoimainen ja yritysmyönteinen kaupunki", description: "Älylässä on helppo perustaa yritys, investoida ja kasvaa."}
+  - {key: tyota_kaikille, name: "Työtä kaikille", description: "Jokaiselle löytyy polku työhön tai koulutukseen."}
+  - {key: hyva_paikka_kasvaa_ja_oppia, name: "Hyvä paikka kasvaa ja oppia", description: "Jokainen lapsi ja nuori saa tarvitsemansa tuen ajoissa ja voi oppia omien vahvuuksiensa mukaan."}
+  - {key: hiilineutraali_alyla, name: "Hiilineutraali Älylä", description: "Kaupunki kantaa vastuunsa ilmastosta omassa toiminnassaan ja kaupunkirakenteessa."}
+  - {key: palvelut_helposti_verkossa, name: "Palvelut helposti verkossa", description: "Asukkaat ja yritykset hoitavat asiansa sujuvasti verkossa, ja palvelut ovat kaikille saavutettavia."}
+  - {key: tiedolla_johdettu_kaupunki, name: "Tiedolla johdettu kaupunki", description: "Päätökset perustuvat ajantasaiseen ja luotettavaan tietoon."}
+  - {key: kestava_talous, name: "Kestävä talous", description: "Kaupunki huolehtii taloudestaan niin, että palvelut voidaan turvata myös tulevaisuudessa."}
+  - {key: vetovoimainen_tyonantaja, name: "Vetovoimainen työnantaja", description: "Älylän kaupunki on työpaikka, johon osaajat haluavat tulla ja jäädä."}
+  - {key: kestavasti_kasvava_kaupunki, name: "Kestävästi kasvava kaupunki", description: "Kaupunki kasvaa tiiviisti, kestävästi ja sujuvan arjen ehdoilla."}
+  - {key: yhdessa_tekeva_kaupunki, name: "Yhdessä tekevä kaupunki", description: "Asukkaat, yhteisöt ja yritykset kehittävät kaupunkia yhdessä kaupungin kanssa."}
+  - {key: elamyksia_ja_liiketta_arkeen, name: "Elämyksiä ja liikettä arkeen", description: "Kulttuuri, liikunta ja vapaa-aika tuovat iloa arkeen ja vetovoimaa kaupunkiin."}
+  - {key: turvallinen_ja_toimintavarma_kaupunki, name: "Turvallinen ja toimintavarma kaupunki", description: "Kaupungin palvelut ja tietojärjestelmät toimivat myös häiriötilanteissa."}

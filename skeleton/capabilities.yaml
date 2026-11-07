@@ -1,0 +1,113 @@
+# Älylän kaupunki: kyvykkyyskartta
+
+# Three levels of capabilities. Processes realize capabilities, and level-2 capabilities support strategy goals.
+
+# Attributes:
+#   key, name: as in organisation.yaml.
+#   realized_by: process keys (process groups or processes).
+#   supports: goal keys.
+#   children: the next level.
+
+
+capabilities:
+  - key: johtaminen_ja_ohjaus
+    name: "Johtaminen ja ohjaus"
+    children:
+      - {key: strateginen_johtaminen, name: "Strateginen johtaminen", supports: [tiedolla_johdettu_kaupunki], realized_by: [strategiaprosessi], children: [
+          {key: strategian_valmistelu_ja_toimeenpano, name: "Strategian valmistelu ja toimeenpano", realized_by: [kaupunkistrategian_valmistelu_ja_hyvaksyminen, strategian_toimeenpano_ja_seuranta]},
+          {key: hyvinvoinnin_edistamisen_johtaminen, name: "Hyvinvoinnin edistämisen johtaminen", realized_by: [hyvinvointikertomuksen_ja_suunnitelman_laadinta]}]}
+      - {key: talouden_ohjaus, name: "Talouden ohjaus", supports: [kestava_talous], realized_by: [talous_ja_tulosohjaus]}
+      - {key: paatoksenteko_ja_hallinto, name: "Päätöksenteko ja hallinto", realized_by: [paatoksenteko]}
+      - {key: kehittamisen_ja_arkkitehtuurin_ohjaus, name: "Kehittämisen ja arkkitehtuurin ohjaus", supports: [tiedolla_johdettu_kaupunki, palvelut_helposti_verkossa], realized_by: [kehittamisen_ohjaus], children: [
+          {key: kehittamissalkun_hallinta, name: "Kehittämissalkun hallinta", realized_by: [kehittamissalkun_hallinta]},
+          {key: kokonaisarkkitehtuurin_hallinta, name: "Kokonaisarkkitehtuurin hallinta", realized_by: [kokonaisarkkitehtuurin_hallinta]}]}
+      - {key: konserni_ja_riskienhallinta, name: "Konserni- ja riskienhallinta", supports: [turvallinen_ja_toimintavarma_kaupunki], realized_by: [konserniohjaus_ja_riskienhallinta]}
+      - {key: tietojohtaminen_ja_analytiikka, name: "Tietojohtaminen ja analytiikka", supports: [tiedolla_johdettu_kaupunki], realized_by: [toiminnan_ja_talouden_seuranta_ja_raportointi]}
+  - key: asiakkuus_ja_asiointi
+    name: "Asiakkuus ja asiointi"
+    children:
+      - {key: monikanavainen_asiakaspalvelu, name: "Monikanavainen asiakaspalvelu", supports: [palvelut_helposti_verkossa], realized_by: [asiakaspalvelu_ja_asiointi], children: [
+          {key: palvelupisteasiointi, name: "Palvelupisteasiointi", realized_by: [neuvonta_ja_asiakasohjaus]},
+          {key: sahkoinen_asiointi, name: "Sähköinen asiointi", realized_by: [sahkoisen_asioinnin_vastaanotto_ja_ohjaus, digitaalisten_palvelujen_kehittaminen]},
+          {key: palautteenhallinta, name: "Palautteenhallinta", realized_by: [palautteen_ja_aloitteiden_kasittely]}]}
+      - {key: viestinta_ja_vuorovaikutus, name: "Viestintä ja vuorovaikutus", supports: [yhdessa_tekeva_kaupunki], realized_by: [viestinta]}
+      - {key: osallisuus_ja_demokratia, name: "Osallisuus ja demokratia", supports: [yhdessa_tekeva_kaupunki], realized_by: [vaalien_jarjestaminen]}
+  - key: elinvoima_ja_tyollisyys
+    name: "Elinvoima ja työllisyys"
+    children:
+      - {key: elinkeinojen_kehittaminen, name: "Elinkeinojen kehittäminen", supports: [elinvoimainen_ja_yritysmyonteinen_kaupunki], realized_by: [elinkeinojen_kehittaminen], children: [
+          {key: yritysasiakkuuksien_hallinta, name: "Yritysasiakkuuksien hallinta", realized_by: [yritysasiakkuuksien_hallinta_ja_neuvonta]},
+          {key: investointien_edistaminen, name: "Investointien edistäminen", realized_by: [investointien_ja_sijoittumisen_edistaminen]}]}
+      - {key: tyollisyyden_edistaminen, name: "Työllisyyden edistäminen", supports: [tyota_kaikille], realized_by: [tyollisyyspalvelut], children: [
+          {key: tyonhakija_asiakkuuden_hallinta, name: "Työnhakija-asiakkuuden hallinta", realized_by: [tyonhakuasiakkuuden_aloitus_ja_palvelutarpeen_arviointi, tyonhakuvelvollisuuden_seuranta_ja_tyovoimapoliittiset_lausunnot]},
+          {key: tyollistamisen_tukien_hallinta, name: "Työllistämisen tukien hallinta", realized_by: [palkkatukien_ja_muiden_tukien_kasittely]},
+          {key: tyonantajayhteistyo, name: "Työnantajayhteistyö", realized_by: [tyonantajayhteistyo_ja_rekrytointien_tuki]}]}
+      - {key: kotoutumisen_edistaminen, name: "Kotoutumisen edistäminen", supports: [tyota_kaikille], realized_by: [kotoutumisen_edistaminen]}
+      - {key: matkailu_tapahtumat_ja_markkinointi, name: "Matkailu, tapahtumat ja markkinointi", supports: [elinvoimainen_ja_yritysmyonteinen_kaupunki, elamyksia_ja_liiketta_arkeen], realized_by: [matkailu_tapahtumat_ja_markkinointi]}
+  - key: kaupunkiymparisto_ja_rakentaminen
+    name: "Kaupunkiympäristö ja rakentaminen"
+    children:
+      - {key: maankayton_suunnittelu, name: "Maankäytön suunnittelu", supports: [kestavasti_kasvava_kaupunki], realized_by: [kaupunkisuunnittelu], children: [
+          {key: kaavoitus, name: "Kaavoitus", realized_by: [yleiskaavan_laadinta, asemakaavan_laadinta_ja_muutos, poikkeamis_ja_suunnittelutarveasioiden_kasittely]},
+          {key: maapolitiikka, name: "Maapolitiikka", realized_by: [tonttien_luovutus, maanhankinta_ja_maankayttosopimukset]}]}
+      - {key: rakentamisen_ohjaus_ja_valvonta, name: "Rakentamisen ohjaus ja valvonta", supports: [kestavasti_kasvava_kaupunki], realized_by: [rakennusvalvonta], children: [
+          {key: lupakasittely, name: "Lupakäsittely", realized_by: [rakentamisen_neuvonta_ja_ennakko_ohjaus, rakennus_ja_toimenpidelupien_kasittely]},
+          {key: rakennustietojen_hallinta, name: "Rakennustietojen hallinta", realized_by: [rakennus_ja_huoneistotietojen_yllapito]}]}
+      - {key: ympariston_ja_terveyden_suojelu, name: "Ympäristön ja terveyden suojelu", supports: [hiilineutraali_alyla], realized_by: [ymparistonsuojelu_ja_ymparistoterveys]}
+      - {key: infrastruktuurin_yllapito, name: "Infrastruktuurin ylläpito", realized_by: [katujen_ja_viheralueiden_yllapito]}
+      - {key: liikennejarjestelma, name: "Liikennejärjestelmä", supports: [kestavasti_kasvava_kaupunki, hiilineutraali_alyla], realized_by: [liikenne]}
+      - {key: paikkatieto_ja_kiinteistonmuodostus, name: "Paikkatieto ja kiinteistönmuodostus", supports: [tiedolla_johdettu_kaupunki], realized_by: [mittaus_ja_paikkatieto], children: [
+          {key: kiinteistonmuodostus, name: "Kiinteistönmuodostus", realized_by: [kiinteistotoimitukset_ja_tonttijaot, maastomittaus_ja_paikan_merkinta]},
+          {key: paikkatiedon_hallinta, name: "Paikkatiedon hallinta", realized_by: [kantakartan_ja_paikkatietoaineistojen_yllapito, osoitteiden_ja_nimiston_yllapito]}]}
+  - key: kasvatus_ja_koulutus
+    name: "Kasvatus ja koulutus"
+    children:
+      - {key: varhaiskasvatus, name: "Varhaiskasvatus", supports: [hyva_paikka_kasvaa_ja_oppia], realized_by: [varhaiskasvatus], children: [
+          {key: varhaiskasvatuksen_asiakkuuksien_hallinta, name: "Varhaiskasvatuksen asiakkuuksien hallinta", realized_by: [varhaiskasvatushakemusten_kasittely_ja_sijoittaminen, asiakasmaksujen_maarittaminen_ja_laskutus]},
+          {key: varhaiskasvatuksen_toteutus, name: "Varhaiskasvatuksen toteutus", realized_by: [varhaiskasvatuksen_toteuttaminen_ja_suunnitelmat, esiopetuksen_toteuttaminen, tuen_jarjestaminen_varhaiskasvatuksessa]},
+          {key: yksityisen_varhaiskasvatuksen_ohjaus, name: "Yksityisen varhaiskasvatuksen ohjaus", realized_by: [palvelusetelien_myontaminen_ja_palveluntuottajien_valvonta]}]}
+      - {key: perusopetus, name: "Perusopetus", supports: [hyva_paikka_kasvaa_ja_oppia], realized_by: [perusopetus], children: [
+          {key: oppilashallinto, name: "Oppilashallinto", realized_by: [oppilaaksiotto, arviointi_ja_todistukset, oppivelvollisuuden_valvonta]},
+          {key: opetuksen_toteutus, name: "Opetuksen toteutus", realized_by: [opetuksen_suunnittelu_ja_toteutus]},
+          {key: oppimisen_tuki_ja_oppilashuolto, name: "Oppimisen tuki ja oppilashuolto", realized_by: [oppimisen_tuen_jarjestaminen, yhteisollinen_oppilashuolto]},
+          {key: kodin_ja_koulun_yhteistyo, name: "Kodin ja koulun yhteistyö", realized_by: [huoltajaviestinta]}]}
+      - {key: lukiokoulutus, name: "Lukiokoulutus", supports: [hyva_paikka_kasvaa_ja_oppia], realized_by: [lukiokoulutus]}
+      - {key: koulutuksen_tukipalvelut, name: "Koulutuksen tukipalvelut", children: [
+          {key: koulukuljetukset, name: "Koulukuljetukset", realized_by: [koulukuljetusten_jarjestaminen]},
+          {key: aamu_ja_iltapaivatoiminta, name: "Aamu- ja iltapäivätoiminta", realized_by: [aamu_ja_iltapaivatoiminnan_jarjestaminen]}]}
+      - {key: kansallinen_opintotietojen_raportointi, name: "Kansallinen opintotietojen raportointi", supports: [tiedolla_johdettu_kaupunki], realized_by: [varhaiskasvatustietojen_ilmoittaminen_kansalliseen_tietovarantoon, opintotietojen_ilmoittaminen_kansalliseen_tietovarantoon]}
+  - key: kulttuuri_liikunta_ja_vapaa_aika
+    name: "Kulttuuri, liikunta ja vapaa-aika"
+    children:
+      - {key: kirjastopalvelut, name: "Kirjastopalvelut", supports: [elamyksia_ja_liiketta_arkeen], realized_by: [kirjastoaineiston_hankinta_ja_hallinta, lainaus_ja_asiakaspalvelu]}
+      - {key: museo_ja_kulttuuriperintotyo, name: "Museo- ja kulttuuriperintötyö", supports: [elamyksia_ja_liiketta_arkeen], realized_by: [nayttely_ja_opastustoiminta, kokoelmatyo_ja_luettelointi]}
+      - {key: vapaa_sivistystyo, name: "Vapaa sivistystyö", realized_by: [kurssien_suunnittelu_ja_ilmoittautumiset]}
+      - {key: kulttuuritoiminta_ja_avustukset, name: "Kulttuuritoiminta ja avustukset", supports: [elamyksia_ja_liiketta_arkeen], realized_by: [kulttuuritapahtumien_tuotanto, kulttuuri_liikunta_ja_nuorisoavustusten_kasittely]}
+      - {key: liikuntapalvelut, name: "Liikuntapalvelut", supports: [elamyksia_ja_liiketta_arkeen], realized_by: [liikuntapaikkojen_vuorojen_jako_ja_varaukset, liikuntapaikkojen_yllapito, ohjatun_liikunnan_jarjestaminen]}
+      - {key: nuorisotyo, name: "Nuorisotyö", supports: [hyva_paikka_kasvaa_ja_oppia], realized_by: [nuorisotyo, kesatyoseteleiden_myontaminen]}
+  - key: tuki_ja_resurssit
+    name: "Tuki ja resurssit"
+    children:
+      - {key: henkilostovoimavarojen_hallinta, name: "Henkilöstövoimavarojen hallinta", supports: [vetovoimainen_tyonantaja], realized_by: [henkilostohallinta], children: [
+          {key: rekrytointi_ja_osaaminen, name: "Rekrytointi ja osaaminen", realized_by: [rekrytointi, osaamisen_kehittaminen]},
+          {key: palvelussuhteiden_ja_tyoajan_hallinta, name: "Palvelussuhteiden ja työajan hallinta", realized_by: [palvelussuhteen_hallinta, tyoaikojen_ja_tyovuorojen_suunnittelu]},
+          {key: tyohyvinvointi, name: "Työhyvinvointi", realized_by: [tyohyvinvoinnin_ja_tyosuojelun_hallinta]}]}
+      - {key: taloushallinto, name: "Taloushallinto", supports: [kestava_talous], realized_by: [taloushallinto]}
+      - {key: hankinta_ja_sopimushallinta, name: "Hankinta- ja sopimushallinta", supports: [kestava_talous], realized_by: [hankintojen_hallinta]}
+      - {key: tila_ja_kiinteistohallinta, name: "Tila- ja kiinteistöhallinta", supports: [hiilineutraali_alyla], realized_by: [tilahallinta], children: [
+          {key: tilojen_kayton_hallinta, name: "Tilojen käytön hallinta", realized_by: [tilojen_vuokraus_ja_varaukset]},
+          {key: kiinteistojen_yllapito, name: "Kiinteistöjen ylläpito", realized_by: [kiinteistonhoito_ja_huoltopyynnot, kunto_ja_sisailmatutkimukset]},
+          {key: energianhallinta, name: "Energianhallinta", realized_by: [energiankulutuksen_seuranta]},
+          {key: investointien_toteutus, name: "Investointien toteutus", realized_by: [investointihankkeiden_rakennuttaminen]}]}
+  - key: tieto_ja_teknologia
+    name: "Tieto ja teknologia"
+    children:
+      - {key: tiedonhallinta, name: "Tiedonhallinta", supports: [tiedolla_johdettu_kaupunki], realized_by: [tiedonhallinta], children: [
+          {key: asiakirjahallinta, name: "Asiakirjahallinta", realized_by: [asiakirjahallinta_ja_arkistointi, asiakirja_ja_tietopyyntojen_kasittely]},
+          {key: tiedonhallintamallin_hallinta, name: "Tiedonhallintamallin hallinta", realized_by: [tiedonhallintamallin_yllapito]},
+          {key: tietosuoja, name: "Tietosuoja", realized_by: [tietosuojan_hallinta_ja_rekisteroidyn_oikeudet]}]}
+      - {key: ict_palvelujen_hallinta, name: "ICT-palvelujen hallinta", supports: [turvallinen_ja_toimintavarma_kaupunki], realized_by: [ict_hallinta], children: [
+          {key: sovellussalkun_hallinta, name: "Sovellussalkun hallinta", realized_by: [sovellussalkun_hallinta]},
+          {key: integraatioiden_hallinta, name: "Integraatioiden hallinta", realized_by: [integraatioiden_hallinta]},
+          {key: kayttaja_ja_palvelutuki, name: "Käyttäjä- ja palvelutuki", realized_by: [ict_palvelupyyntojen_ja_hairioiden_hallinta]}]}
+      - {key: tietoturvallisuus, name: "Tietoturvallisuus", supports: [turvallinen_ja_toimintavarma_kaupunki], realized_by: [kayttovaltuuksien_hallinta, tietoturvapoikkeamien_hallinta]}

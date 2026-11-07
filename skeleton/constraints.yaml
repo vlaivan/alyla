@@ -1,0 +1,45 @@
+# Älylän kaupunki: säädökset ja kansalliset vaatimukset
+
+# Based on real Finnish legislation in force in 2026. Names are the law's common short name or a generic one;
+# no statute numbers or clause text. Descriptions say only in general terms what the law regulates. The content
+# is not legal advice and is not kept up to date with legislation. A law is linked only to what it regulates,
+# at the level it names; links to information systems and technology are made in the catalogues.
+
+# Attributes:
+#   key, name: as in organisation.yaml.
+#   based_on: the real law, or 'ryhmitelty' when several are grouped.
+#   description: what the law regulates, in Finnish.
+#   services / processes / data: keys of what the law regulates.
+
+
+constraints:
+  - {key: kuntalaki, name: "Kuntalaki", based_on: "kuntalaki", description: "Sääntelee kunnan päätöksentekoa, taloutta, omistajaohjausta ja päätösten julkaisemista.", processes: [kokousmenettely_ja_poytakirjat, viranhaltijapaatosten_tekeminen_ja_julkaisu, talousarvion_ja_suunnitelman_laadinta, tilinpaatos_ja_toimintakertomus, omistajaohjaus]}
+  - {key: hallintolaki, name: "Hallintolaki", based_on: "hallintolaki", description: "Sääntelee hallintoasian käsittelyä ja oikaisuvaatimuksia.", processes: [asian_valmistelu_ja_esittely, oikaisuvaatimusten_ja_valitusten_kasittely]}
+  - {key: julkisuuslaki, name: "Julkisuuslaki", based_on: "laki viranomaisten toiminnan julkisuudesta", description: "Sääntelee viranomaisten asiakirjojen julkisuutta ja tietopyyntöjen käsittelyä.", processes: [asiakirja_ja_tietopyyntojen_kasittely]}
+  - {key: tiedonhallintalaki, name: "Tiedonhallintalaki", based_on: "laki julkisen hallinnon tiedonhallinnasta", description: "Sääntelee tiedonhallintamallia, asiakirjahallintaa sekä tietojärjestelmien ja tietovarantojen hallintaa.", processes: [tiedonhallintamallin_yllapito, asiakirjahallinta_ja_arkistointi], data: [tiedonhallintamalli]}
+  - {key: tietosuojasaantely, name: "Tietosuojasääntely", based_on: "EU:n yleinen tietosuoja-asetus ja tietosuojalaki (ryhmitelty)", description: "EU:n tietosuoja-asetus ja kansallinen tietosuojalaki: henkilötietojen käsittely ja rekisteröidyn oikeudet.", processes: [tietosuojan_hallinta_ja_rekisteroidyn_oikeudet]}
+  - {key: arkistolaki, name: "Arkistolaki", based_on: "arkistolaki", description: "Sääntelee pysyvästi säilytettävien asiakirjojen säilyttämistä.", processes: [asiakirjahallinta_ja_arkistointi]}
+  - {key: digipalvelulaki, name: "Digipalvelulaki", based_on: "laki digitaalisten palvelujen tarjoamisesta", description: "Sääntelee digitaalisten palvelujen saavutettavuutta ja sähköisen asioinnin tarjoamista.", services: [sahkoinen_asiointi_kaupungin_verkkopalvelussa]}
+  - {key: tukipalvelulaki, name: "Tukipalvelulaki", based_on: "laki hallinnon yhteisistä sähköisen asioinnin tukipalveluista", description: "Velvoittaa käyttämään kansallisia sähköisen asioinnin tukipalveluja, kuten tunnistusta, viestinvälitystä ja tiedonvälitystä."}
+  - {key: hankintalaki, name: "Hankintalaki", based_on: "laki julkisista hankinnoista ja käyttöoikeussopimuksista", description: "Sääntelee julkisia hankintoja ja niiden kilpailuttamista.", processes: [hankintojen_suunnittelu, kilpailutus]}
+  - {key: vaalilaki, name: "Vaalilaki", based_on: "vaalilaki", description: "Sääntelee vaalien toimittamista.", processes: [vaalien_valmistelu_ja_toimeenpano]}
+  - {key: varhaiskasvatuslaki, name: "Varhaiskasvatuslaki", based_on: "varhaiskasvatuslaki", description: "Sääntelee varhaiskasvatuksen järjestämistä, hakemista, tukea ja varhaiskasvatustietojen ilmoittamista kansalliseen tietovarantoon.", processes: [varhaiskasvatushakemusten_kasittely_ja_sijoittaminen, varhaiskasvatuksen_toteuttaminen_ja_suunnitelmat, tuen_jarjestaminen_varhaiskasvatuksessa, varhaiskasvatustietojen_ilmoittaminen_kansalliseen_tietovarantoon], data: [varhaiskasvatuksen_asiakastiedot, varhaiskasvatussuunnitelmat]}
+  - {key: varhaiskasvatuksen_asiakasmaksulaki, name: "Varhaiskasvatuksen asiakasmaksulaki", based_on: "laki varhaiskasvatuksen asiakasmaksuista", description: "Sääntelee varhaiskasvatuksen asiakasmaksujen määräytymistä.", processes: [asiakasmaksujen_maarittaminen_ja_laskutus]}
+  - {key: palvelusetelilaki, name: "Palvelusetelilaki", based_on: "laki sosiaali- ja terveydenhuollon palvelusetelistä, jota sovelletaan myös varhaiskasvatukseen", description: "Sääntelee palvelusetelin myöntämistä ja palveluntuottajien hyväksymistä.", processes: [palvelusetelien_myontaminen_ja_palveluntuottajien_valvonta]}
+  - {key: perusopetuslaki, name: "Perusopetuslaki", based_on: "perusopetuslaki", description: "Sääntelee perusopetuksen järjestämistä, oppilaaksiottoa, tukea, arviointia, kuljetuksia sekä aamu- ja iltapäivätoimintaa.", processes: [oppilaaksiotto, opetuksen_suunnittelu_ja_toteutus, oppimisen_tuen_jarjestaminen, arviointi_ja_todistukset, koulukuljetusten_jarjestaminen, aamu_ja_iltapaivatoiminnan_jarjestaminen]}
+  - {key: oppivelvollisuuslaki, name: "Oppivelvollisuuslaki", based_on: "oppivelvollisuuslaki", description: "Sääntelee oppivelvollisuuden valvontaa ja ohjausta.", processes: [oppivelvollisuuden_valvonta]}
+  - {key: lukiolaki, name: "Lukiolaki", based_on: "lukiolaki", description: "Sääntelee lukiokoulutuksen järjestämistä, opiskelijavalintaa ja ohjausta.", processes: [opiskelijavalinta, lukio_opetuksen_toteutus, opinto_ohjaus_ja_jatko_opintoihin_ohjaus]}
+  - {key: ylioppilastutkintolaki, name: "Ylioppilastutkintolaki", based_on: "laki ylioppilastutkinnon järjestämisestä", description: "Sääntelee ylioppilastutkinnon järjestämistä.", processes: [ylioppilastutkinnon_jarjestaminen]}
+  - {key: oppilashuoltolaki, name: "Oppilashuoltolaki", based_on: "oppilas- ja opiskelijahuoltolaki", description: "Sääntelee oppilas- ja opiskelijahuoltoa ja oppilashuoltokertomuksia.", processes: [yhteisollinen_oppilashuolto], data: [oppilashuoltokertomukset]}
+  - {key: opintotietorekisterilaki, name: "Opintotietorekisterilaki", based_on: "laki valtakunnallisista opinto- ja tutkintorekistereistä", description: "Sääntelee opinto- ja tutkintotietojen ilmoittamista kansalliseen tietovarantoon.", processes: [opintotietojen_ilmoittaminen_kansalliseen_tietovarantoon], data: [arviointi_ja_todistustiedot]}
+  - {key: kirjastolaki, name: "Kirjastolaki", based_on: "laki yleisistä kirjastoista", description: "Sääntelee yleisten kirjastojen palveluja.", services: [kirjaston_lainaus_ja_aineistopalvelut]}
+  - {key: museolaki, name: "Museolaki", based_on: "museolaki", description: "Sääntelee museoiden kokoelmatyötä.", processes: [kokoelmatyo_ja_luettelointi]}
+  - {key: vapaan_sivistystyon_laki, name: "Vapaan sivistystyön laki", based_on: "laki vapaasta sivistystyöstä", description: "Sääntelee kansalaisopiston toimintaa.", services: [kansalaisopiston_kurssit]}
+  - {key: nuorisolaki, name: "Nuorisolaki", based_on: "nuorisolaki", description: "Sääntelee nuorisotyötä ja etsivää nuorisotyötä.", services: [etsiva_nuorisotyo]}
+  - {key: alueidenkayttolaki, name: "Alueidenkäyttölaki", based_on: "alueidenkäyttölaki (ent. maankäyttö- ja rakennuslaki)", description: "Sääntelee kaavoitusta ja poikkeamisia.", processes: [yleiskaavan_laadinta, asemakaavan_laadinta_ja_muutos, poikkeamis_ja_suunnittelutarveasioiden_kasittely]}
+  - {key: rakentamislaki, name: "Rakentamislaki", based_on: "rakentamislaki", description: "Sääntelee rakentamisen lupia, valvontaa ja rakennustietojen ilmoittamista.", processes: [rakennus_ja_toimenpidelupien_kasittely, rakennustyon_aikainen_valvonta_ja_katselmukset], data: [rakennus_ja_huoneistotiedot]}
+  - {key: ymparistonsuojelulaki, name: "Ympäristönsuojelulaki", based_on: "ympäristönsuojelulaki", description: "Sääntelee ympäristölupia ja valvontaa.", processes: [ymparistolupien_ja_ilmoitusten_kasittely, ymparistonsuojelun_valvonta]}
+  - {key: elintarvike_ja_terveydensuojelusaantely, name: "Elintarvike- ja terveydensuojelusääntely", based_on: "elintarvikelaki ja terveydensuojelulaki (ryhmitelty)", description: "Sääntelee elintarvikevalvontaa ja terveydensuojelua.", processes: [elintarvike_ja_terveydensuojeluvalvonta]}
+  - {key: kiinteistonmuodostamislaki, name: "Kiinteistönmuodostamislaki", based_on: "kiinteistönmuodostamislaki", description: "Sääntelee kiinteistötoimituksia ja tonttijakoja.", processes: [kiinteistotoimitukset_ja_tonttijaot]}
+  - {key: tyovoimapalvelujen_jarjestamislaki, name: "Työvoimapalvelujen järjestämislaki", based_on: "laki työvoimapalvelujen järjestämisestä", description: "Sääntelee työvoimapalvelujen järjestämistä, työnhakuvelvollisuuden seurantaa ja työllistämisen tukia.", processes: [tyonhakuasiakkuuden_aloitus_ja_palvelutarpeen_arviointi, tyonhakuvelvollisuuden_seuranta_ja_tyovoimapoliittiset_lausunnot, palkkatukien_ja_muiden_tukien_kasittely], data: [tyonhakija_asiakastiedot]}
+  - {key: kotoutumislaki, name: "Kotoutumislaki", based_on: "laki kotoutumisen edistämisestä", description: "Sääntelee alkukartoitusta, kotoutumissuunnitelmaa ja kotoutumisen ohjausta.", processes: [alkukartoitus_ja_kotoutumissuunnitelma, kotoutumisen_ohjaus_ja_neuvonta]}

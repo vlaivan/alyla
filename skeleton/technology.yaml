@@ -1,0 +1,102 @@
+# Älylän kaupunki: teknologialuettelo
+
+# Locations, platforms (nodes) and system software. All product and vendor names are fictional;
+# vendor_support_end dates are invented and relative to the world date 1.11.2026.
+
+# Attributes:
+#   key, name: as in organisation.yaml.
+#   location_kind: datacenter | cloud_region | site.  data_region: fi | eu_eea | outside_eu_eea.
+#   hosts: organisation keys located at a site.
+#   owner: organisation key; external: true for environments owned outside the city.
+#   consists_of: system software keys of a platform.  laws: constraint keys regulating the platform.
+#   vendor_support_end: date the vendor's support ends.
+
+
+locations:
+  - {key: alylan_konesali, name: "Älylän konesali", location_kind: datacenter, data_region: fi}
+  - {key: alymaan_varakonesali, name: "Älymaan varakonesali", location_kind: datacenter, data_region: fi}
+  - {key: suomen_pilvialue, name: "Suomen pilvialue", location_kind: cloud_region, data_region: fi}
+  - {key: eu_eta_alueen_pilvialue, name: "EU/ETA-alueen pilvialue", location_kind: cloud_region, data_region: eu_eea}
+  - {key: eu_eta_alueen_ulkopuolinen_pilvialue, name: "EU/ETA-alueen ulkopuolinen pilvialue", location_kind: cloud_region, data_region: outside_eu_eea}
+  - {key: kaupungintalo, name: "Kaupungintalo", location_kind: site, data_region: fi, hosts: [konsernihallinto, elinvoima]}
+  - {key: kaupunkiympariston_virastotalo, name: "Kaupunkiympäristön virastotalo", location_kind: site, data_region: fi, hosts: [kaupunkiymparisto]}
+  - {key: sivistyksen_palvelukeskus, name: "Sivistyksen palvelukeskus", location_kind: site, data_region: fi, hosts: [sivistys]}
+  - {key: kaupunginhallinnon_asiointipiste, name: "Kaupunginhallinnon asiointipiste", location_kind: site, data_region: fi, hosts: [palvelupiste_alyla_info]}
+
+nodes:
+  - {key: virtualisointiymparisto, name: "Virtualisointiympäristö", location: alylan_konesali, data_region: fi, owner: ict_palvelutuotanto, description: "Kaupungin palvelinvirtualisointi", consists_of: [virtuos_8]}
+  - {key: windows_palvelinymparisto, name: "Windows-palvelinympäristö", location: alylan_konesali, data_region: fi, owner: ict_palvelutuotanto, description: "Windows-sovelluspalvelimet", consists_of: [fenestra_server_2012_r2, fenestra_server_2016, fenestra_server_2019, fenestra_server_2022, dotframe_4_8, dotframe_8, portti_http_server_2_4, raporttipalvelin_2016]}
+  - {key: linux_palvelinymparisto, name: "Linux-palvelinympäristö", location: alylan_konesali, data_region: fi, owner: ict_palvelutuotanto, description: "Linux-sovelluspalvelimet", consists_of: [pohjola_linux_7, pohjola_linux_8, pohjola_linux_9, javelin_runtime_8, javelin_runtime_17, javelin_runtime_21, portti_http_server_2_4]}
+  - {key: tietokantaklusteri_sql, name: "Tietokantaklusteri SQL", location: alylan_konesali, data_region: fi, owner: ict_palvelutuotanto, description: "Jaettu relaatiotietokantaympäristö", consists_of: [polaris_sql_2014, polaris_sql_2016, polaris_sql_2019, polaris_sql_2022]}
+  - {key: tietokantaklusteri_quarry, name: "Tietokantaklusteri Quarry", location: alylan_konesali, data_region: fi, owner: ict_palvelutuotanto, description: "Erillinen tietokantaympäristö vanhoille järjestelmille", consists_of: [quarry_database_12c, quarry_database_19c]}
+  - {key: paikkatietopalvelinymparisto, name: "Paikkatietopalvelinympäristö", location: alylan_konesali, data_region: fi, owner: paikkatietopalvelut, description: "Paikkatietopalvelimet ja -tietokannat", consists_of: [geomatica_server_10, geomatica_server_11, openrel_12, openrel_15]}
+  - {key: tiedostopalvelinymparisto, name: "Tiedostopalvelinympäristö", location: alylan_konesali, data_region: fi, owner: ict_palvelutuotanto, description: "Yksiköiden verkkolevyt"}
+  - {key: varmuuskopiointiymparisto, name: "Varmuuskopiointiympäristö", location: alymaan_varakonesali, data_region: fi, owner: ict_palvelutuotanto, description: "Varmuuskopiot ja palautus", consists_of: [turva_backup_12]}
+  - {key: varakonesalin_replikointiymparisto, name: "Varakonesalin replikointiympäristö", location: alymaan_varakonesali, data_region: fi, owner: ict_palvelutuotanto, description: "Kriittisten järjestelmien varaympäristö"}
+  - {key: kaupungin_verkko_ja_palomuuriymparisto, name: "Kaupungin verkko- ja palomuuriympäristö", location: alylan_konesali, data_region: fi, owner: ict_palvelutuotanto, description: "Lähiverkko, VPN ja palomuurit", consists_of: [kilpi_firewall_os_9]}
+  - {key: kiinteistoautomaation_verkko, name: "Kiinteistöautomaation verkko", location: kaupunkiympariston_virastotalo, data_region: fi, owner: kiinteistonpito_ja_energianhallinta, description: "Erillinen verkko rakennusautomaatiolle ja kulunvalvonnalle", consists_of: [automaatio_bms_5]}
+  - {key: liikenteenohjauksen_verkko, name: "Liikenteenohjauksen verkko", location: kaupunkiympariston_virastotalo, data_region: fi, owner: kadut_ja_liikennevaylat, description: "Liikennevalojen ohjausverkko"}
+  - {key: kaupungin_pilvialusta, name: "Kaupungin pilvialusta", location: eu_eta_alueen_pilvialue, data_region: eu_eea, owner: ict_palvelutuotanto, description: "Kaupungin oma pilviympäristö", consists_of: [openrel_15, javelin_runtime_21]}
+  - {key: kaupungin_pilvialusta_suomi, name: "Kaupungin pilvialusta Suomi", location: suomen_pilvialue, data_region: fi, owner: ict_palvelutuotanto, description: "Kaupungin pilviympäristö luottamuksellisille tiedoille"}
+  - {key: kontti_ja_sovellusalusta, name: "Kontti- ja sovellusalusta", location: suomen_pilvialue, data_region: fi, owner: ict_palvelutuotanto, description: "Kaupungin omien verkkopalvelujen ajoympäristö", consists_of: [kontit_1_33, kontit_1_35, openrel_17, dotframe_10]}
+  - {key: stratus_cloud_palvelu, name: "Stratus Cloud -palvelu", location: eu_eta_alueen_pilvialue, data_region: eu_eea, owner: ict_palvelutuotanto, description: "Toimisto-, hakemisto- ja laitehallintapalvelut"}
+  - {key: kuntasoftin_palvelukeskus, name: "Kuntasoftin palvelukeskus", location: suomen_pilvialue, data_region: fi, external: true, description: "Toimittajan SaaS-ympäristö"}
+  - {key: lumo_softwaren_pilvipalvelu, name: "Lumo Softwaren pilvipalvelu", location: eu_eta_alueen_pilvialue, data_region: eu_eea, external: true, description: "Toimittajan SaaS-ympäristö"}
+  - {key: avanti_systemsin_pilvipalvelu, name: "Avanti Systemsin pilvipalvelu", location: suomen_pilvialue, data_region: fi, external: true, description: "Toimittajan SaaS-ympäristö"}
+  - {key: keha_systemsin_pilvipalvelu, name: "Kehä Systemsin pilvipalvelu", location: eu_eta_alueen_pilvialue, data_region: eu_eea, external: true, description: "Toimittajan SaaS-ympäristö"}
+  - {key: nordlogicin_pilvipalvelu, name: "Nordlogicin pilvipalvelu", location: eu_eta_alueen_pilvialue, data_region: eu_eea, external: true, description: "Toimittajan SaaS-ympäristö"}
+  - {key: hilla_solutionsin_pilvipalvelu, name: "Hilla Solutionsin pilvipalvelu", location: eu_eta_alueen_pilvialue, data_region: eu_eea, external: true, description: "Toimittajan SaaS-ympäristö"}
+  - {key: opixin_pilvipalvelu, name: "Opixin pilvipalvelu", location: suomen_pilvialue, data_region: fi, external: true, description: "Toimittajan SaaS-ympäristö"}
+  - {key: geomatican_pilvipalvelu, name: "Geomatican pilvipalvelu", location: eu_eta_alueen_pilvialue, data_region: eu_eea, external: true, description: "Toimittajan SaaS-ympäristö"}
+  - {key: verkkoverstaan_hosting, name: "Verkkoverstaan hosting", location: suomen_pilvialue, data_region: fi, external: true, description: "Toimittajan verkkosivujen ajoympäristö", consists_of: [sisaltohallinta_kaari_9, sisaltohallinta_kaari_10]}
+  - {key: varaamon_pilvipalvelu, name: "Varaamon pilvipalvelu", location: eu_eta_alueen_pilvialue, data_region: eu_eea, external: true, description: "Toimittajan SaaS-ympäristö"}
+  - {key: sportin_pilvipalvelu, name: "Sportin pilvipalvelu", location: eu_eta_alueen_pilvialue, data_region: eu_eea, external: true, description: "Toimittajan SaaS-ympäristö"}
+  - {key: educloudin_oppimisymparisto, name: "EduCloudin oppimisympäristö", location: eu_eta_alueen_pilvialue, data_region: eu_eea, external: true, description: "Toimittajan SaaS-ympäristö"}
+  - {key: integran_integraatiopilvi, name: "Integran integraatiopilvi", location: suomen_pilvialue, data_region: fi, external: true, description: "Integraatioalustan ajoympäristö", consists_of: [vayla_integrator_6]}
+  - {key: kiinteistosoftin_pilvipalvelu, name: "Kiinteistösoftin pilvipalvelu", location: suomen_pilvialue, data_region: fi, external: true, description: "Toimittajan SaaS-ympäristö"}
+  - {key: liikennetiedon_pilvipalvelu, name: "Liikennetiedon pilvipalvelu", location: eu_eta_alueen_pilvialue, data_region: eu_eea, external: true, description: "Toimittajan SaaS-ympäristö"}
+  - {key: muut_toimittajien_saas_palvelut_eu_eta, name: "Muut toimittajien SaaS-palvelut EU/ETA", location: eu_eta_alueen_pilvialue, data_region: eu_eea, external: true, description: "Pienempien toimittajien SaaS-ympäristöt yhteisesti kuvattuna"}
+  - {key: alylan_laskenta_oy_n_palveluymparisto, name: "Älylän laskenta Oy:n palveluympäristö", location: suomen_pilvialue, data_region: fi, owner: alylan_laskenta_oy, external: true, description: "Tytäryhtiön ylläpitämä talous- ja henkilöstöhallinnon ympäristö"}
+  - {key: alylan_vesi_ja_energian_palveluymparisto, name: "Älylän vesi ja energian palveluympäristö", location: suomen_pilvialue, data_region: fi, owner: alylan_vesi_ja_energia, external: true, description: "Liikelaitoksen järjestelmät"}
+  - {key: hyvinvointialueen_palveluymparisto, name: "Hyvinvointialueen palveluympäristö", location: suomen_pilvialue, data_region: fi, owner: alymaan_hyvinvointialue, external: true, description: "Hyvinvointialueen järjestelmät"}
+  - {key: kansallinen_tiedonvalityskerros, name: "Kansallinen tiedonvälityskerros", location: suomen_pilvialue, data_region: fi, owner: kansallinen_digi_ja_vaestotietovirasto, external: true, description: "Kansallinen turvallinen tiedonvälitys viranomaisten välillä", laws: [tukipalvelulaki]}
+  - {key: kansallisten_palvelujen_ymparisto, name: "Kansallisten palvelujen ympäristö", location: suomen_pilvialue, data_region: fi, external: true, description: "Kansallisten viranomaisten palvelujen ajoympäristöt yhteisesti kuvattuna"}
+
+system_software:
+  - {key: fenestra_server_2012_r2, name: "Fenestra Server 2012 R2", product: "Fenestra Server", version: "2012 R2", vendor: "Fenestra Corp", software_kind: os, vendor_support_end: 2023-10-10}
+  - {key: fenestra_server_2016, name: "Fenestra Server 2016", product: "Fenestra Server", version: "2016", vendor: "Fenestra Corp", software_kind: os, vendor_support_end: 2027-01-12}
+  - {key: fenestra_server_2019, name: "Fenestra Server 2019", product: "Fenestra Server", version: "2019", vendor: "Fenestra Corp", software_kind: os, vendor_support_end: 2029-01-09}
+  - {key: fenestra_server_2022, name: "Fenestra Server 2022", product: "Fenestra Server", version: "2022", vendor: "Fenestra Corp", software_kind: os, vendor_support_end: 2031-10-14}
+  - {key: pohjola_linux_7, name: "Pohjola Linux 7", product: "Pohjola Linux", version: "7", vendor: "Pohjola Software", software_kind: os, vendor_support_end: 2024-06-30}
+  - {key: pohjola_linux_8, name: "Pohjola Linux 8", product: "Pohjola Linux", version: "8", vendor: "Pohjola Software", software_kind: os, vendor_support_end: 2029-05-31}
+  - {key: pohjola_linux_9, name: "Pohjola Linux 9", product: "Pohjola Linux", version: "9", vendor: "Pohjola Software", software_kind: os, vendor_support_end: 2032-05-31}
+  - {key: polaris_sql_2014, name: "Polaris SQL 2014", product: "Polaris SQL", version: "2014", vendor: "Fenestra Corp", software_kind: database, vendor_support_end: 2024-07-09}
+  - {key: polaris_sql_2016, name: "Polaris SQL 2016", product: "Polaris SQL", version: "2016", vendor: "Fenestra Corp", software_kind: database, vendor_support_end: 2026-07-14}
+  - {key: polaris_sql_2019, name: "Polaris SQL 2019", product: "Polaris SQL", version: "2019", vendor: "Fenestra Corp", software_kind: database, vendor_support_end: 2030-01-08}
+  - {key: polaris_sql_2022, name: "Polaris SQL 2022", product: "Polaris SQL", version: "2022", vendor: "Fenestra Corp", software_kind: database, vendor_support_end: 2033-01-11}
+  - {key: quarry_database_12c, name: "Quarry Database 12c", product: "Quarry Database", version: "12c", vendor: "Quarry Systems", software_kind: database, vendor_support_end: 2027-03-31}
+  - {key: quarry_database_19c, name: "Quarry Database 19c", product: "Quarry Database", version: "19c", vendor: "Quarry Systems", software_kind: database, vendor_support_end: 2029-12-31}
+  - {key: openrel_12, name: "OpenRel 12", product: "OpenRel", version: "12", vendor: "OpenRel-yhteisö", software_kind: database, vendor_support_end: 2024-11-14}
+  - {key: openrel_15, name: "OpenRel 15", product: "OpenRel", version: "15", vendor: "OpenRel-yhteisö", software_kind: database, vendor_support_end: 2027-11-11}
+  - {key: openrel_17, name: "OpenRel 17", product: "OpenRel", version: "17", vendor: "OpenRel-yhteisö", software_kind: database, vendor_support_end: 2029-11-08}
+  - {key: javelin_runtime_8, name: "Javelin Runtime 8", product: "Javelin Runtime", version: "8", vendor: "Javelin Foundation", software_kind: runtime, vendor_support_end: 2026-12-31}
+  - {key: javelin_runtime_17, name: "Javelin Runtime 17", product: "Javelin Runtime", version: "17", vendor: "Javelin Foundation", software_kind: runtime, vendor_support_end: 2029-09-30}
+  - {key: javelin_runtime_21, name: "Javelin Runtime 21", product: "Javelin Runtime", version: "21", vendor: "Javelin Foundation", software_kind: runtime, vendor_support_end: 2031-09-30}
+  - {key: dotframe_4_8, name: "Dotframe 4.8", product: "Dotframe", version: "4.8", vendor: "Fenestra Corp", software_kind: runtime, vendor_support_end: 2028-01-11}
+  - {key: dotframe_8, name: "Dotframe 8", product: "Dotframe", version: "8", vendor: "Fenestra Corp", software_kind: runtime, vendor_support_end: 2026-11-10}
+  - {key: dotframe_10, name: "Dotframe 10", product: "Dotframe", version: "10", vendor: "Fenestra Corp", software_kind: runtime, vendor_support_end: 2028-11-14}
+  - {key: portti_http_server_2_4, name: "Portti HTTP Server 2.4", product: "Portti HTTP Server", version: "2.4", vendor: "Portti-yhteisö", software_kind: web_server, vendor_support_end: 2028-12-31}
+  - {key: virtuos_7, name: "VirtuOS 7", product: "VirtuOS", version: "7", vendor: "VirtuOS Inc", software_kind: virtualisation, vendor_support_end: 2025-10-02}
+  - {key: virtuos_8, name: "VirtuOS 8", product: "VirtuOS", version: "8", vendor: "VirtuOS Inc", software_kind: virtualisation, vendor_support_end: 2027-10-11}
+  - {key: geomatica_server_10, name: "Geomatica Server 10", product: "Geomatica Server", version: "10", vendor: "Geomatica Oy", software_kind: gis_server, vendor_support_end: 2026-12-31}
+  - {key: geomatica_server_11, name: "Geomatica Server 11", product: "Geomatica Server", version: "11", vendor: "Geomatica Oy", software_kind: gis_server, vendor_support_end: 2029-06-30}
+  - {key: vayla_integrator_6, name: "Väylä Integrator 6", product: "Väylä Integrator", version: "6", vendor: "Integra Oy", software_kind: integration, vendor_support_end: 2027-06-30}
+  - {key: turva_backup_12, name: "Turva Backup 12", product: "Turva Backup", version: "12", vendor: "Kilpi Security", software_kind: backup, vendor_support_end: 2028-03-31}
+  - {key: kilpi_firewall_os_9, name: "Kilpi Firewall OS 9", product: "Kilpi Firewall OS", version: "9", vendor: "Kilpi Security", software_kind: network, vendor_support_end: 2027-12-31}
+  - {key: raporttipalvelin_2016, name: "Raporttipalvelin 2016", product: "Raporttipalvelin", version: "2016", vendor: "Fenestra Corp", software_kind: reporting, vendor_support_end: 2026-07-14}
+  - {key: kontit_1_30, name: "Kontit 1.30", product: "Kontit", version: "1.30", vendor: "Kontit-yhteisö", software_kind: container_platform, vendor_support_end: 2025-06-28}
+  - {key: kontit_1_33, name: "Kontit 1.33", product: "Kontit", version: "1.33", vendor: "Kontit-yhteisö", software_kind: container_platform, vendor_support_end: 2026-06-28}
+  - {key: kontit_1_35, name: "Kontit 1.35", product: "Kontit", version: "1.35", vendor: "Kontit-yhteisö", software_kind: container_platform, vendor_support_end: 2027-02-28}
+  - {key: automaatio_bms_5, name: "Automaatio BMS 5", product: "Automaatio BMS", version: "5", vendor: "Automaatio Oy", software_kind: building_automation, vendor_support_end: 2025-12-31}
+  - {key: sisaltohallinta_kaari_9, name: "Sisältöhallinta Kaari 9", product: "Sisältöhallinta Kaari", version: "9", vendor: "Verkkoverstas Oy", software_kind: cms, vendor_support_end: 2026-04-30}
+  - {key: sisaltohallinta_kaari_10, name: "Sisältöhallinta Kaari 10", product: "Sisältöhallinta Kaari", version: "10", vendor: "Verkkoverstas Oy", software_kind: cms, vendor_support_end: 2029-04-30}

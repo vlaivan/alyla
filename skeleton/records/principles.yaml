@@ -1,0 +1,185 @@
+# Älylän kaupunki: arkkitehtuuriperiaatteet
+
+# Twenty architecture principles in six areas. Owner: the enterprise architect role;
+# approved by Kokonaisarkkitehtuuriryhmä.
+
+# Attributes:
+#   title: Finnish title; the key is the title in lowercase ASCII with underscores.
+#   category: general | business | information | application | technology | security.
+#   approved_on: date.  statement, rationale: Finnish text.  implications: list of Finnish sentences.
+
+
+principles:
+
+  # --- Yleiset
+  - title: "Yhteiset ratkaisut ennen yksikkökohtaisia"
+    category: general
+    approved_on: 2023-02-08
+    statement: "Kaupunki käyttää ensisijaisesti kaupunkiyhteisiä ratkaisuja. Yksikkökohtainen ratkaisu hankitaan vain, jos yhteinen ratkaisu ei sovellu tarpeeseen."
+    rationale: "Päällekkäiset ratkaisut lisäävät kustannuksia, hajauttavat tietoa ja vaikeuttavat ylläpitoa."
+    implications:
+      - "Uuden tietojärjestelmän tarve verrataan ensin olemassa oleviin ratkaisuihin."
+      - "Yksikkökohtaiselle ratkaisulle kirjataan perustelu kokonaisarkkitehtuuriryhmälle."
+  - title: "Kansalliset palvelut ennen omia ratkaisuja"
+    category: general
+    approved_on: 2023-02-08
+    statement: "Kun tarpeeseen on olemassa kansallinen palvelu, kaupunki käyttää sitä oman ratkaisun sijaan."
+    rationale: "Kansalliset palvelut ovat lakisääteisiä tai yhteentoimivia, ja niiden käyttö vähentää päällekkäistä kehittämistä."
+    implications:
+      - "Tunnistuksessa, viestinvälityksessä, valtuuksissa ja tiedonvälityksessä käytetään kansallisia palveluja."
+      - "Oman ratkaisun rinnalla ylläpidettävästä kansallisesta palvelusta tehdään poikkeamispäätös."
+  - title: "Parhaat käytännöt ja valmisratkaisut ennen räätälöityä kehittämistä"
+    category: general
+    approved_on: 2024-05-14
+    statement: "Kaupunki hyödyntää ensisijaisesti vakiintuneita käytäntöjä ja markkinoilla olevia valmisratkaisuja ja mukauttaa toimintaansa niihin. Räätälöityä kehittämistä tehdään vain, kun valmisratkaisu ei sovellu."
+    rationale: "Räätälöinti lisää kustannuksia, vaikeuttaa päivityksiä ja lisää riippuvuutta toimittajasta."
+    implications:
+      - "Hankinnoissa arvioidaan ensin valmisratkaisut ja muiden kuntien kokemukset."
+      - "Räätälöinnin tarve perustellaan ja sen elinkaarikustannukset arvioidaan."
+
+  # --- Toiminta
+  - title: "Palvelut suunnitellaan asiakkaan tarpeista lähtien"
+    category: business
+    approved_on: 2024-05-14
+    statement: "Palvelut ja niitä tukevat ratkaisut suunnitellaan asiakkaan tarpeista ja elämäntilanteista lähtien, ei organisaatiorajojen mukaan."
+    rationale: "Asiakkaan asia ylittää usein yksiköiden rajat, ja hajanainen palvelu kuormittaa sekä asiakasta että henkilöstöä."
+    implications:
+      - "Kehittämishankkeissa kuvataan asiakkaan palvelupolku yli yksikkörajojen."
+      - "Asiakkaita osallistetaan palvelujen kehittämiseen."
+  - title: "Digitaalinen asiointi ensisijaisena kanavana"
+    category: business
+    approved_on: 2023-02-08
+    statement: "Kaupungin palvelut ovat ensisijaisesti asioitavissa verkossa, ja muut kanavat tukevat niitä, jotka eivät voi asioida digitaalisesti."
+    rationale: "Digitaalinen asiointi on asukkaille ja yrityksille joustavinta ja kaupungille tehokkainta."
+    implications:
+      - "Uudet asiakaspalvelut suunnitellaan sähköisen asioinnin alustalle."
+      - "Palvelupisteasiointi säilyy tukikanavana."
+      - "Asiakkaille tarjottavat digitaaliset palvelut täyttävät saavutettavuusvaatimukset."
+  - title: "Ratkaisut suunnitellaan toimintalähtöisesti ja toimintaa uudistaen"
+    category: business
+    approved_on: 2023-02-08
+    statement: "Tietojärjestelmät ja muut ratkaisut suunnitellaan toiminnan tarpeista lähtien, ja niiden käyttöönotto on tilaisuus uudistaa toimintatapoja eikä vain siirtää nykyisiä tapoja uuteen välineeseen."
+    rationale: "Teknologialähtöinen kehittäminen tuottaa ratkaisuja, jotka eivät vastaa toiminnan tarpeisiin ja jäävät vajaalle käytölle."
+    implications:
+      - "Hankkeissa kuvataan tavoiteltava toimintamalli ennen ratkaisun valintaa."
+      - "Toiminnan omistaja vastaa siitä, että hankkeen hyödyt toteutuvat."
+
+  # --- Tieto
+  - title: "Tieto kerätään kerran ja hyödynnetään monesti"
+    category: information
+    approved_on: 2023-02-08
+    statement: "Sama tieto kerätään asiakkaalta vain kerran, ja sillä on yksi määritelty päälähde, josta muut järjestelmät sen saavat."
+    rationale: "Saman tiedon ylläpito useassa paikassa heikentää laatua ja kuormittaa asiakasta."
+    implications:
+      - "Jokaiselle tietoaineistolle määritetään päälähde tiedonhallintamallissa."
+      - "Muut järjestelmät hakevat tiedon päälähteestä integraation kautta."
+  - title: "Tiedolla on omistaja ja laatuvastuu"
+    category: information
+    approved_on: 2023-02-08
+    statement: "Jokaisella tietoaineistolla on nimetty omistaja, joka vastaa sen laadusta, käyttöoikeuksista ja elinkaaresta."
+    rationale: "Ilman omistajaa tiedon laatu ja käyttö jäävät hallitsematta."
+    implications:
+      - "Tietoaineiston omistaja kirjataan tiedonhallintamalliin."
+      - "Omistaja hyväksyy tiedon uudet käyttötarkoitukset."
+  - title: "Tieto tukee johtamista"
+    category: information
+    approved_on: 2024-05-14
+    statement: "Tieto tuotetaan ja kootaan niin, että se tukee päätöksentekoa ja johtamista kaikilla tasoilla."
+    rationale: "Ajantasainen ja vertailukelpoinen tieto parantaa päätösten laatua ja mahdollistaa vaikutusten seurannan."
+    implications:
+      - "Keskeiset tietoaineistot viedään kaupungin raportointialustalle."
+      - "Mittarit ja niiden tietolähteet määritellään yhdessä tiedon omistajien kanssa."
+
+  # --- Tietojärjestelmät
+  - title: "Jokaisella tietojärjestelmällä on omistaja ja elinkaarisuunnitelma"
+    category: application
+    approved_on: 2023-02-08
+    statement: "Jokaisella tietojärjestelmällä on nimetty omistaja ja suunnitelma sen käyttöönotosta, ylläpidosta ja poistamisesta."
+    rationale: "Omistajuus ja elinkaarisuunnittelu estävät hallitsemattomien järjestelmien syntymisen."
+    implications:
+      - "Tietojärjestelmä kirjataan sovellussalkkuun ennen käyttöönottoa."
+      - "Poistuvalle järjestelmälle laaditaan korvaus- ja tiedonsiirtosuunnitelma."
+  - title: "Integraatiot integraatioalustan kautta"
+    category: application
+    approved_on: 2023-02-08
+    statement: "Tietojärjestelmien väliset integraatiot toteutetaan kaupungin integraatioalustan kautta."
+    rationale: "Keskitetyt integraatiot ovat hallittavampia, valvottavampia ja helpompia muuttaa kuin suorat kytkökset."
+    implications:
+      - "Suora integraatio edellyttää kokonaisarkkitehtuuriryhmän poikkeamispäätöstä."
+      - "Kansallisiin palveluihin liitytään kansallisen tiedonvälityskerroksen tai integraatioalustan kautta."
+  - title: "Avoimet rajapinnat ja standardit"
+    category: application
+    approved_on: 2023-02-08
+    statement: "Hankittavat ja kehitettävät tietojärjestelmät tarjoavat dokumentoidut avoimet rajapinnat ja noudattavat yleisiä standardeja."
+    rationale: "Avoimet rajapinnat mahdollistavat integraatiot ja vähentävät toimittajariippuvuutta."
+    implications:
+      - "Rajapintojen saatavuus ja dokumentaatio ovat hankinnan vähimmäisvaatimuksia."
+      - "Suljettuja tiedonsiirtomuotoja ei oteta uusissa ratkaisuissa käyttöön."
+  - title: "Ei uusia riippuvuuksia poistuviin järjestelmiin ja teknologioihin"
+    category: application
+    approved_on: 2023-02-08
+    statement: "Uusia integraatioita tai muita riippuvuuksia ei rakenneta tietojärjestelmiin tai teknologioihin, joiden poistaminen on päätetty."
+    rationale: "Riippuvuudet poistuviin ratkaisuihin vaikeuttavat ja viivästyttävät niiden korvaamista."
+    implications:
+      - "Poistuvaksi merkittyyn järjestelmään kytkeytyminen edellyttää poikkeamispäätöstä."
+      - "Hankkeiden suunnitelmissa tarkistetaan riippuvuudet poistuviin ratkaisuihin."
+
+  # --- Teknologia
+  - title: "Pilvi- ja SaaS-palvelut ensisijaisina"
+    category: technology
+    approved_on: 2023-02-08
+    statement: "Uudet ratkaisut hankitaan ensisijaisesti pilvi- tai SaaS-palveluina. Omaan konesaliin sijoitetaan vain ratkaisut, joille siihen on erityinen peruste."
+    rationale: "Pilvipalvelut vähentävät oman infrastruktuurin ylläpitoa ja parantavat skaalautuvuutta."
+    implications:
+      - "Omaan konesaliin sijoittamisesta kirjataan peruste."
+      - "Pilvipalvelun sijainti ja tietojen käsittely selvitetään ennen hankintaa."
+  - title: "Teknologioiden elinkaari hallitaan"
+    category: technology
+    approved_on: 2023-02-08
+    statement: "Käytössä olevien teknologioiden elinkaarta seurataan, ja ne päivitetään tai korvataan ennen kuin toimittajan tuki päättyy."
+    rationale: "Tuettomat teknologiat eivät saa tietoturvapäivityksiä, ja niiden korvaaminen viime hetkellä on kallista ja riskialtista."
+    implications:
+      - "Ohjelmistojen ja alustojen tuen päättymispäivät seurataan konfiguraatiotietokannassa."
+      - "Päivitys tai korvaaminen suunnitellaan vähintään vuotta ennen tuen päättymistä."
+  - title: "Toimittajariippuvuus hallitaan ja exit suunnitellaan"
+    category: technology
+    approved_on: 2023-02-08
+    statement: "Jokaiseen merkittävään hankintaan sisältyy suunnitelma siitä, miten palvelusta ja sen tiedoista voidaan siirtyä toiseen ratkaisuun."
+    rationale: "Sitoutuminen yhteen toimittajaan heikentää neuvotteluasemaa ja voi estää muutokset."
+    implications:
+      - "Sopimuksissa sovitaan tietojen palauttamisesta koneluettavassa muodossa."
+      - "Sopimusten päättymispäivät seurataan ja jatkosta päätetään hyvissä ajoin."
+  - title: "Ympäristövastuullinen ICT"
+    category: technology
+    approved_on: 2024-09-10
+    statement: "ICT-ratkaisuissa otetaan huomioon energiankulutus ja laitteiden elinkaari."
+    rationale: "ICT:n ympäristövaikutusten vähentäminen tukee kaupungin hiilineutraaliustavoitetta."
+    implications:
+      - "Hankinnoissa arvioidaan palvelun energiatehokkuus ja laitteiden kierrätys."
+      - "Käyttämättömät palvelimet ja palvelut poistetaan käytöstä."
+
+  # --- Turvallisuus
+  - title: "Tietoturva ja tietosuoja sisäänrakennettuina"
+    category: security
+    approved_on: 2023-02-08
+    statement: "Tietoturva ja tietosuoja otetaan huomioon ratkaisujen suunnittelusta alkaen, ei jälkikäteen."
+    rationale: "Jälkikäteen lisätty suojaus on kalliimpaa ja heikompaa kuin suunnitteluun sisäänrakennettu."
+    implications:
+      - "Hankkeissa tehdään tietoturva- ja tietosuojan vaikutustenarviointi."
+      - "Henkilötietoja käsittelevät ratkaisut hyväksytetään tietosuojavastaavalla."
+  - title: "Henkilötiedot käsitellään EU/ETA-alueella"
+    category: security
+    approved_on: 2023-02-08
+    statement: "Henkilötietoja käsitellään ja säilytetään vain EU/ETA-alueella, mukaan lukien toimittajan tuki- ja ylläpitopääsy."
+    rationale: "EU/ETA-alueen ulkopuolinen käsittely lisää oikeudellisia ja tietosuojariskejä."
+    implications:
+      - "Palvelun sijainti ja alihankkijat selvitetään ennen hankintaa."
+      - "Poikkeus edellyttää kokonaisarkkitehtuuriryhmän päätöstä ja tietosuojan vaikutustenarviointia."
+  - title: "Kriittisten palvelujen toimintavarmuus varmistetaan"
+    category: security
+    approved_on: 2025-03-11
+    statement: "Kriittisiksi luokitelluille tietojärjestelmille on varautumis- ja jatkuvuussuunnitelma, joka testataan säännöllisesti."
+    rationale: "Kriittisten palvelujen katkos vaikuttaa suoraan asukkaiden turvallisuuteen ja kaupungin toimintakykyyn."
+    implications:
+      - "Kriittisten järjestelmien varmistukset ja palautus testataan vähintään kerran vuodessa."
+      - "Häiriötilanteiden viestintä on osa jatkuvuussuunnitelmaa."

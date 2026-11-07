@@ -1,0 +1,288 @@
+# Älylän kaupunki: prosessit
+
+# Two levels: process groups and their processes. The governance, core and support split follows the
+# municipal management reference architecture; the substance comes from the divisions' own work.
+
+# Attributes:
+#   key, name: as in organisation.yaml.
+#   kind: governance | core | support (process groups).
+#   unit: organisation key of the responsible unit or sub-unit.
+#   realizes: service keys (optional).
+
+
+process_groups:
+  # --- Governance
+  - key: strategiaprosessi
+    name: "Strategiaprosessi"
+    kind: governance
+    unit: strategia_ja_kehittaminen
+    processes:
+      - {key: kaupunkistrategian_valmistelu_ja_hyvaksyminen, name: "Kaupunkistrategian valmistelu ja hyväksyminen", unit: strategia_ja_tietojohtaminen}
+      - {key: strategian_toimeenpano_ja_seuranta, name: "Strategian toimeenpano ja seuranta", unit: strategia_ja_tietojohtaminen, realizes: [tietojohtamisen_ja_raportoinnin_palvelut]}
+      - {key: hyvinvointikertomuksen_ja_suunnitelman_laadinta, name: "Hyvinvointikertomuksen ja -suunnitelman laadinta", unit: hyvinvoinnin_edistaminen, realizes: [hyvinvoinnin_ja_terveyden_edistaminen]}
+  - key: talous_ja_tulosohjaus
+    name: "Talous- ja tulosohjaus"
+    kind: governance
+    unit: talouspalvelut
+    processes:
+      - {key: talousarvion_ja_suunnitelman_laadinta, name: "Talousarvion ja -suunnitelman laadinta", unit: talousohjaus_ja_budjetointi, realizes: [talousarvio_ja_talousohjauspalvelu]}
+      - {key: toiminnan_ja_talouden_seuranta_ja_raportointi, name: "Toiminnan ja talouden seuranta ja raportointi", unit: talousohjaus_ja_budjetointi, realizes: [talousarvio_ja_talousohjauspalvelu, tietojohtamisen_ja_raportoinnin_palvelut]}
+      - {key: tilinpaatos_ja_toimintakertomus, name: "Tilinpäätös ja toimintakertomus", unit: talousohjaus_ja_budjetointi}
+  - key: paatoksenteko
+    name: "Päätöksenteko"
+    kind: governance
+    unit: hallinto_ja_lakipalvelut
+    processes:
+      - {key: asian_valmistelu_ja_esittely, name: "Asian valmistelu ja esittely", unit: paatoksenteon_tuki, realizes: [paatoksenteon_valmistelu_ja_kokouspalvelut]}
+      - {key: kokousmenettely_ja_poytakirjat, name: "Kokousmenettely ja pöytäkirjat", unit: paatoksenteon_tuki, realizes: [paatoksenteon_valmistelu_ja_kokouspalvelut]}
+      - {key: viranhaltijapaatosten_tekeminen_ja_julkaisu, name: "Viranhaltijapäätösten tekeminen ja julkaisu", unit: paatoksenteon_tuki}
+      - {key: oikaisuvaatimusten_ja_valitusten_kasittely, name: "Oikaisuvaatimusten ja valitusten käsittely", unit: lakipalvelut, realizes: [oikeudellinen_neuvonta]}
+  - key: kehittamisen_ohjaus
+    name: "Kehittämisen ohjaus"
+    kind: governance
+    unit: strategia_ja_kehittaminen
+    processes:
+      - {key: kehittamissalkun_hallinta, name: "Kehittämissalkun hallinta", unit: strategia_ja_tietojohtaminen}
+      - {key: kokonaisarkkitehtuurin_hallinta, name: "Kokonaisarkkitehtuurin hallinta", unit: arkkitehtuuri_ja_tiedonhallinta, realizes: [arkkitehtuuri_ja_tiedonhallintapalvelut]}
+      - {key: digitaalisten_palvelujen_kehittaminen, name: "Digitaalisten palvelujen kehittäminen", unit: digitaalinen_asiointi, realizes: [sahkoinen_asiointi_kaupungin_verkkopalvelussa]}
+  - key: konserniohjaus_ja_riskienhallinta
+    name: "Konserniohjaus ja riskienhallinta"
+    kind: governance
+    unit: omistajaohjaus
+    processes:
+      - {key: omistajaohjaus, name: "Omistajaohjaus", unit: omistajaohjaus, realizes: [konserniyhteisojen_omistajaohjaus]}
+      - {key: riskienhallinta_ja_sisainen_valvonta, name: "Riskienhallinta ja sisäinen valvonta", unit: talousohjaus_ja_budjetointi}
+
+  # --- Core: Konsernihallinto
+  - key: asiakaspalvelu_ja_asiointi
+    name: "Asiakaspalvelu ja asiointi"
+    kind: core
+    unit: asiakaspalvelu
+    processes:
+      - {key: neuvonta_ja_asiakasohjaus, name: "Neuvonta ja asiakasohjaus", unit: palvelupiste_alyla_info, realizes: [neuvonta_ja_asiointi_palvelupisteessa]}
+      - {key: sahkoisen_asioinnin_vastaanotto_ja_ohjaus, name: "Sähköisen asioinnin vastaanotto ja ohjaus", unit: digitaalinen_asiointi, realizes: [sahkoinen_asiointi_kaupungin_verkkopalvelussa]}
+      - {key: palautteen_ja_aloitteiden_kasittely, name: "Palautteen ja aloitteiden käsittely", unit: asiakaspalvelu, realizes: [palautteen_ja_kuntalaisaloitteiden_kasittely]}
+  - key: vaalien_jarjestaminen
+    name: "Vaalien järjestäminen"
+    kind: core
+    unit: hallinto_ja_lakipalvelut
+    processes:
+      - {key: vaalien_valmistelu_ja_toimeenpano, name: "Vaalien valmistelu ja toimeenpano", unit: hallinto_ja_lakipalvelut, realizes: [vaalien_jarjestaminen]}
+
+  # --- Core: Elinvoima
+  - key: elinkeinojen_kehittaminen
+    name: "Elinkeinojen kehittäminen"
+    kind: core
+    unit: elinkeinopalvelut
+    processes:
+      - {key: yritysasiakkuuksien_hallinta_ja_neuvonta, name: "Yritysasiakkuuksien hallinta ja neuvonta", unit: yrityspalvelut, realizes: [yritysneuvonta_ja_aloittavan_yrittajan_palvelut]}
+      - {key: investointien_ja_sijoittumisen_edistaminen, name: "Investointien ja sijoittumisen edistäminen", unit: elinkeinokehitys_ja_investoinnit, realizes: [yritysten_sijoittumis_ja_investointipalvelut]}
+      - {key: elinkeinoavustusten_kasittely, name: "Elinkeinoavustusten käsittely", unit: elinkeinokehitys_ja_investoinnit, realizes: [elinkeinoavustukset]}
+  - key: tyollisyyspalvelut
+    name: "Työllisyyspalvelut"
+    kind: core
+    unit: tyollisyyspalvelut
+    processes:
+      - {key: tyonhakuasiakkuuden_aloitus_ja_palvelutarpeen_arviointi, name: "Työnhakuasiakkuuden aloitus ja palvelutarpeen arviointi", unit: tyonhakijapalvelut, realizes: [tyonhakijan_palvelut_ja_ohjaus]}
+      - {key: tyonhakuvelvollisuuden_seuranta_ja_tyovoimapoliittiset_lausunnot, name: "Työnhakuvelvollisuuden seuranta ja työvoimapoliittiset lausunnot", unit: tyonhakijapalvelut, realizes: [tyonhakijan_palvelut_ja_ohjaus]}
+      - {key: valmennusten_ja_koulutusten_hankinta, name: "Valmennusten ja koulutusten hankinta", unit: tyonhakijapalvelut, realizes: [tyollistymista_edistavat_valmennukset, tyovoimakoulutuksen_hankinta]}
+      - {key: nuorten_tyollisyyden_ohjaus, name: "Nuorten työllisyyden ohjaus", unit: tyonhakijapalvelut, realizes: [nuorten_tyollisyyspalvelut]}
+      - {key: tyonantajayhteistyo_ja_rekrytointien_tuki, name: "Työnantajayhteistyö ja rekrytointien tuki", unit: tyonantajapalvelut, realizes: [tyonantaja_ja_rekrytointipalvelut]}
+      - {key: palkkatukien_ja_muiden_tukien_kasittely, name: "Palkkatukien ja muiden tukien käsittely", unit: tyollistamisen_tuet, realizes: [palkkatuki_ja_muut_tyollistamisen_tuet]}
+  - key: kotoutumisen_edistaminen
+    name: "Kotoutumisen edistäminen"
+    kind: core
+    unit: kotoutumispalvelut
+    processes:
+      - {key: alkukartoitus_ja_kotoutumissuunnitelma, name: "Alkukartoitus ja kotoutumissuunnitelma", unit: kotoutumispalvelut, realizes: [kotoutumisen_alkukartoitus_ja_kotoutumissuunnitelma]}
+      - {key: kotoutumisen_ohjaus_ja_neuvonta, name: "Kotoutumisen ohjaus ja neuvonta", unit: kotoutumispalvelut, realizes: [maahanmuuttajien_neuvonta_ja_ohjaus]}
+      - {key: tulkkauksen_tilaaminen, name: "Tulkkauksen tilaaminen", unit: kotoutumispalvelut, realizes: [tulkkauspalvelujen_valitys]}
+  - key: matkailu_tapahtumat_ja_markkinointi
+    name: "Matkailu, tapahtumat ja markkinointi"
+    kind: core
+    unit: matkailu_tapahtumat_ja_markkinointi
+    processes:
+      - {key: matkailun_edistaminen_ja_neuvonta, name: "Matkailun edistäminen ja neuvonta", unit: matkailu_tapahtumat_ja_markkinointi, realizes: [matkailuneuvonta]}
+      - {key: tapahtumien_tuotanto_ja_tuki, name: "Tapahtumien tuotanto ja tuki", unit: matkailu_tapahtumat_ja_markkinointi, realizes: [tapahtumien_jarjestaminen_ja_tapahtumaneuvonta, tapahtuma_avustukset]}
+      - {key: kaupunkimarkkinointi_ja_brandinhallinta, name: "Kaupunkimarkkinointi ja brändinhallinta", unit: matkailu_tapahtumat_ja_markkinointi, realizes: [kaupunkimarkkinointi]}
+
+  # --- Core: Kaupunkiympäristö
+  - key: kaupunkisuunnittelu
+    name: "Kaupunkisuunnittelu"
+    kind: core
+    unit: maankaytto_ja_kaavoitus
+    processes:
+      - {key: yleiskaavan_laadinta, name: "Yleiskaavan laadinta", unit: yleiskaavoitus, realizes: [yleiskaavoitus]}
+      - {key: asemakaavan_laadinta_ja_muutos, name: "Asemakaavan laadinta ja muutos", unit: asemakaavoitus, realizes: [asemakaavoitus_ja_kaavamuutokset, kaupunkisuunnittelun_vuorovaikutus_ja_osallistuminen]}
+      - {key: poikkeamis_ja_suunnittelutarveasioiden_kasittely, name: "Poikkeamis- ja suunnittelutarveasioiden käsittely", unit: asemakaavoitus, realizes: [poikkeamis_ja_suunnittelutarveratkaisut]}
+      - {key: tonttien_luovutus, name: "Tonttien luovutus", unit: maapolitiikka_ja_tonttipalvelut, realizes: [tonttien_myynti_ja_vuokraus]}
+      - {key: maanhankinta_ja_maankayttosopimukset, name: "Maanhankinta ja maankäyttösopimukset", unit: maapolitiikka_ja_tonttipalvelut, realizes: [maanhankinta]}
+  - key: rakennusvalvonta
+    name: "Rakennusvalvonta"
+    kind: core
+    unit: rakennusvalvonta
+    processes:
+      - {key: rakentamisen_neuvonta_ja_ennakko_ohjaus, name: "Rakentamisen neuvonta ja ennakko-ohjaus", unit: rakennusvalvonta, realizes: [rakentamisen_neuvonta]}
+      - {key: rakennus_ja_toimenpidelupien_kasittely, name: "Rakennus- ja toimenpidelupien käsittely", unit: rakennusvalvonta, realizes: [rakennus_ja_toimenpideluvat]}
+      - {key: rakennustyon_aikainen_valvonta_ja_katselmukset, name: "Rakennustyön aikainen valvonta ja katselmukset", unit: rakennusvalvonta, realizes: [rakennustyon_valvonta_ja_katselmukset]}
+      - {key: rakennus_ja_huoneistotietojen_yllapito, name: "Rakennus- ja huoneistotietojen ylläpito", unit: rakennusvalvonta}
+  - key: ymparistonsuojelu_ja_ymparistoterveys
+    name: "Ympäristönsuojelu ja ympäristöterveys"
+    kind: core
+    unit: ymparistopalvelut
+    processes:
+      - {key: ymparistolupien_ja_ilmoitusten_kasittely, name: "Ympäristölupien ja -ilmoitusten käsittely", unit: ymparistonsuojelu, realizes: [ymparistoluvat_ja_ilmoitukset]}
+      - {key: ymparistonsuojelun_valvonta, name: "Ympäristönsuojelun valvonta", unit: ymparistonsuojelu, realizes: [ymparistonsuojelun_valvonta]}
+      - {key: elintarvike_ja_terveydensuojeluvalvonta, name: "Elintarvike- ja terveydensuojeluvalvonta", unit: ymparistoterveydenhuolto, realizes: [elintarvike_ja_terveydensuojeluvalvonta]}
+      - {key: elainlaakinta, name: "Eläinlääkintä", unit: ymparistoterveydenhuolto, realizes: [elainlaakaripalvelut]}
+  - key: katujen_ja_viheralueiden_yllapito
+    name: "Katujen ja viheralueiden ylläpito"
+    kind: core
+    unit: kuntatekniikka
+    processes:
+      - {key: katujen_ja_vaylien_yllapito, name: "Katujen ja väylien ylläpito", unit: kadut_ja_liikennevaylat, realizes: [katujen_ja_vaylien_kunnossapito]}
+      - {key: katutyo_ja_sijoituslupien_kasittely, name: "Katutyö- ja sijoituslupien käsittely", unit: kadut_ja_liikennevaylat, realizes: [katutyo_ja_sijoitusluvat]}
+      - {key: vika_ja_kunnossapitoilmoitusten_kasittely, name: "Vika- ja kunnossapitoilmoitusten käsittely", unit: kuntatekniikka, realizes: [vika_ja_kunnossapitoilmoitukset]}
+      - {key: viheralueiden_hoito, name: "Viheralueiden hoito", unit: puistot_ja_viheralueet, realizes: [puistojen_ja_viheralueiden_hoito]}
+  - key: liikenne
+    name: "Liikenne"
+    kind: core
+    unit: liikenne_ja_joukkoliikenne
+    processes:
+      - {key: liikenteen_suunnittelu, name: "Liikenteen suunnittelu", unit: liikenne_ja_joukkoliikenne, realizes: [liikennesuunnittelu]}
+      - {key: joukkoliikenteen_jarjestaminen, name: "Joukkoliikenteen järjestäminen", unit: liikenne_ja_joukkoliikenne, realizes: [joukkoliikenne_ja_lipputuotteet]}
+      - {key: pysakoinnin_valvonta, name: "Pysäköinnin valvonta", unit: liikenne_ja_joukkoliikenne, realizes: [pysakoinninvalvonta]}
+  - key: mittaus_ja_paikkatieto
+    name: "Mittaus ja paikkatieto"
+    kind: core
+    unit: mittaus_ja_paikkatieto
+    processes:
+      - {key: kiinteistotoimitukset_ja_tonttijaot, name: "Kiinteistötoimitukset ja tonttijaot", unit: kiinteistonmuodostus, realizes: [kiinteistonmuodostus_ja_tonttijaot]}
+      - {key: maastomittaus_ja_paikan_merkinta, name: "Maastomittaus ja paikan merkintä", unit: kiinteistonmuodostus, realizes: [rakennuksen_paikan_merkinta_ja_sijaintikatselmus]}
+      - {key: kantakartan_ja_paikkatietoaineistojen_yllapito, name: "Kantakartan ja paikkatietoaineistojen ylläpito", unit: paikkatietopalvelut, realizes: [kartta_ja_paikkatietopalvelut]}
+      - {key: osoitteiden_ja_nimiston_yllapito, name: "Osoitteiden ja nimistön ylläpito", unit: paikkatietopalvelut, realizes: [osoitteiden_ja_nimiston_hallinta]}
+
+  # --- Core: Sivistys
+  - key: varhaiskasvatus
+    name: "Varhaiskasvatus"
+    kind: core
+    unit: varhaiskasvatus
+    processes:
+      - {key: varhaiskasvatushakemusten_kasittely_ja_sijoittaminen, name: "Varhaiskasvatushakemusten käsittely ja sijoittaminen", unit: varhaiskasvatuksen_asiakaspalvelu, realizes: [varhaiskasvatukseen_hakeminen_ja_paikan_myontaminen]}
+      - {key: varhaiskasvatuksen_toteuttaminen_ja_suunnitelmat, name: "Varhaiskasvatuksen toteuttaminen ja suunnitelmat", unit: paivakotiverkosto, realizes: [kunnallinen_varhaiskasvatus_paivakodeissa, perhepaivahoito, avoin_varhaiskasvatus_ja_kerhot]}
+      - {key: esiopetuksen_toteuttaminen, name: "Esiopetuksen toteuttaminen", unit: paivakotiverkosto, realizes: [esiopetus]}
+      - {key: tuen_jarjestaminen_varhaiskasvatuksessa, name: "Tuen järjestäminen varhaiskasvatuksessa", unit: paivakotiverkosto, realizes: [lapsen_kasvun_ja_oppimisen_tuki_varhaiskasvatuksessa]}
+      - {key: palvelusetelien_myontaminen_ja_palveluntuottajien_valvonta, name: "Palvelusetelien myöntäminen ja palveluntuottajien valvonta", unit: yksityisen_varhaiskasvatuksen_ohjaus, realizes: [yksityisen_varhaiskasvatuksen_palveluseteli]}
+      - {key: asiakasmaksujen_maarittaminen_ja_laskutus, name: "Asiakasmaksujen määrittäminen ja laskutus", unit: varhaiskasvatuksen_asiakaspalvelu, realizes: [varhaiskasvatuksen_asiakasmaksut]}
+      - {key: varhaiskasvatustietojen_ilmoittaminen_kansalliseen_tietovarantoon, name: "Varhaiskasvatustietojen ilmoittaminen kansalliseen tietovarantoon", unit: varhaiskasvatuksen_asiakaspalvelu}
+  - key: perusopetus
+    name: "Perusopetus"
+    kind: core
+    unit: perusopetus
+    processes:
+      - {key: oppilaaksiotto, name: "Oppilaaksiotto", unit: sivistyksen_hallinto_ja_tukipalvelut, realizes: [kouluun_ilmoittautuminen_ja_oppilaaksiotto]}
+      - {key: opetuksen_suunnittelu_ja_toteutus, name: "Opetuksen suunnittelu ja toteutus", unit: kouluverkosto, realizes: [perusopetus, perusopetukseen_valmistava_opetus]}
+      - {key: oppimisen_tuen_jarjestaminen, name: "Oppimisen tuen järjestäminen", unit: oppimisen_tuki_ja_oppilashuolto, realizes: [oppimisen_ja_koulunkaynnin_tuki]}
+      - {key: yhteisollinen_oppilashuolto, name: "Yhteisöllinen oppilashuolto", unit: oppimisen_tuki_ja_oppilashuolto, realizes: [yhteisollinen_oppilashuolto]}
+      - {key: arviointi_ja_todistukset, name: "Arviointi ja todistukset", unit: kouluverkosto, realizes: [todistukset_ja_opintosuoritusten_hallinta]}
+      - {key: huoltajaviestinta, name: "Huoltajaviestintä", unit: kouluverkosto, realizes: [kodin_ja_koulun_yhteistyo_ja_viestinta]}
+      - {key: aamu_ja_iltapaivatoiminnan_jarjestaminen, name: "Aamu- ja iltapäivätoiminnan järjestäminen", unit: aamu_ja_iltapaivatoiminta, realizes: [aamu_ja_iltapaivatoiminta]}
+      - {key: koulukuljetusten_jarjestaminen, name: "Koulukuljetusten järjestäminen", unit: sivistyksen_hallinto_ja_tukipalvelut, realizes: [koulukuljetukset]}
+      - {key: oppivelvollisuuden_valvonta, name: "Oppivelvollisuuden valvonta", unit: sivistyksen_hallinto_ja_tukipalvelut, realizes: [oppivelvollisuuden_valvonta_ja_ohjaus]}
+      - {key: opintotietojen_ilmoittaminen_kansalliseen_tietovarantoon, name: "Opintotietojen ilmoittaminen kansalliseen tietovarantoon", unit: sivistyksen_hallinto_ja_tukipalvelut}
+  - key: lukiokoulutus
+    name: "Lukiokoulutus"
+    kind: core
+    unit: lukiokoulutus
+    processes:
+      - {key: opiskelijavalinta, name: "Opiskelijavalinta", unit: alylan_lukio, realizes: [lukioon_haku_ja_opiskelijaksi_ottaminen]}
+      - {key: lukio_opetuksen_toteutus, name: "Lukio-opetuksen toteutus", unit: alylan_lukio, realizes: [lukio_opetus]}
+      - {key: ylioppilastutkinnon_jarjestaminen, name: "Ylioppilastutkinnon järjestäminen", unit: alylan_lukio, realizes: [ylioppilastutkinnon_jarjestaminen]}
+      - {key: opinto_ohjaus_ja_jatko_opintoihin_ohjaus, name: "Opinto-ohjaus ja jatko-opintoihin ohjaus", unit: alylan_lukio, realizes: [opinto_ohjaus]}
+  - key: kulttuuripalvelut
+    name: "Kulttuuripalvelut"
+    kind: core
+    unit: kulttuuripalvelut
+    processes:
+      - {key: kirjastoaineiston_hankinta_ja_hallinta, name: "Kirjastoaineiston hankinta ja hallinta", unit: kirjasto, realizes: [kirjaston_lainaus_ja_aineistopalvelut, e_aineistot_ja_verkkokirjasto]}
+      - {key: lainaus_ja_asiakaspalvelu, name: "Lainaus ja asiakaspalvelu", unit: kirjasto, realizes: [kirjaston_lainaus_ja_aineistopalvelut, kirjaston_tilat_ja_tapahtumat]}
+      - {key: nayttely_ja_opastustoiminta, name: "Näyttely- ja opastustoiminta", unit: museo, realizes: [museon_nayttelyt_ja_opastukset]}
+      - {key: kokoelmatyo_ja_luettelointi, name: "Kokoelmatyö ja luettelointi", unit: museo, realizes: [kokoelmien_hallinta_ja_kulttuuriperinto]}
+      - {key: kurssien_suunnittelu_ja_ilmoittautumiset, name: "Kurssien suunnittelu ja ilmoittautumiset", unit: kansalaisopisto, realizes: [kansalaisopiston_kurssit, taiteen_perusopetus]}
+      - {key: kulttuuri_liikunta_ja_nuorisoavustusten_kasittely, name: "Kulttuuri-, liikunta- ja nuorisoavustusten käsittely", unit: kulttuuritoiminta, realizes: [kulttuuriavustukset, liikunta_avustukset, nuorisoavustukset]}
+      - {key: kulttuuritapahtumien_tuotanto, name: "Kulttuuritapahtumien tuotanto", unit: kulttuuritoiminta, realizes: [kulttuuritapahtumat_ja_taidekasvatus]}
+  - key: liikunta_ja_nuorisopalvelut
+    name: "Liikunta- ja nuorisopalvelut"
+    kind: core
+    unit: liikuntapalvelut
+    processes:
+      - {key: liikuntapaikkojen_vuorojen_jako_ja_varaukset, name: "Liikuntapaikkojen vuorojen jako ja varaukset", unit: liikuntapaikat, realizes: [liikuntapaikkojen_vuorojen_varaus]}
+      - {key: liikuntapaikkojen_yllapito, name: "Liikuntapaikkojen ylläpito", unit: liikuntapaikat, realizes: [uimahalli_ja_kuntosalipalvelut, ulkoilureitit_ja_latujen_kunnossapito]}
+      - {key: ohjatun_liikunnan_jarjestaminen, name: "Ohjatun liikunnan järjestäminen", unit: ohjattu_liikunta, realizes: [liikuntaneuvonta_ja_ohjattu_liikunta]}
+      - {key: nuorisotyo, name: "Nuorisotyö", unit: nuorisopalvelut, realizes: [nuorisotilat_ja_avoin_nuorisotoiminta, etsiva_nuorisotyo, nuorten_osallisuus_ja_vaikuttaminen]}
+      - {key: kesatyoseteleiden_myontaminen, name: "Kesätyöseteleiden myöntäminen", unit: nuorisopalvelut, realizes: [nuorten_kesatyoseteli]}
+
+  # --- Support
+  - key: henkilostohallinta
+    name: "Henkilöstöhallinta"
+    kind: support
+    unit: henkilostopalvelut
+    processes:
+      - {key: rekrytointi, name: "Rekrytointi", unit: rekrytointi_ja_osaamisen_kehittaminen, realizes: [rekrytointipalvelu]}
+      - {key: palvelussuhteen_hallinta, name: "Palvelussuhteen hallinta", unit: palvelussuhdeasiat, realizes: [palvelussuhde_ja_palkka_asioiden_neuvonta]}
+      - {key: osaamisen_kehittaminen, name: "Osaamisen kehittäminen", unit: rekrytointi_ja_osaamisen_kehittaminen, realizes: [henkiloston_osaamisen_kehittaminen]}
+      - {key: tyohyvinvoinnin_ja_tyosuojelun_hallinta, name: "Työhyvinvoinnin ja työsuojelun hallinta", unit: tyohyvinvointi_ja_tyosuojelu, realizes: [tyohyvinvointi_ja_tyosuojelupalvelut]}
+      - {key: tyoaikojen_ja_tyovuorojen_suunnittelu, name: "Työaikojen ja työvuorojen suunnittelu", unit: palvelussuhdeasiat}
+  - key: taloushallinto
+    name: "Taloushallinto"
+    kind: support
+    unit: talouspalvelut
+    processes:
+      - {key: ostolaskujen_kasittely, name: "Ostolaskujen käsittely", unit: laskenta_ja_maksuliikennepalvelut}
+      - {key: myyntilaskutus_ja_perinta, name: "Myyntilaskutus ja perintä", unit: laskenta_ja_maksuliikennepalvelut, realizes: [myyntilaskutus_ja_perinta]}
+      - {key: kirjanpito_ja_maksuliikenne, name: "Kirjanpito ja maksuliikenne", unit: laskenta_ja_maksuliikennepalvelut}
+  - key: hankintojen_hallinta
+    name: "Hankintojen hallinta"
+    kind: support
+    unit: hankintapalvelut
+    processes:
+      - {key: hankintojen_suunnittelu, name: "Hankintojen suunnittelu", unit: hankintapalvelut, realizes: [hankintojen_tuki_ja_kilpailutus]}
+      - {key: kilpailutus, name: "Kilpailutus", unit: hankintapalvelut, realizes: [hankintojen_tuki_ja_kilpailutus]}
+      - {key: sopimusten_hallinta_ja_toimittajaseuranta, name: "Sopimusten hallinta ja toimittajaseuranta", unit: hankintapalvelut}
+  - key: tilahallinta
+    name: "Tilahallinta"
+    kind: support
+    unit: tilapalvelut
+    processes:
+      - {key: tilojen_vuokraus_ja_varaukset, name: "Tilojen vuokraus ja varaukset", unit: tilahallinta_ja_vuokraus, realizes: [tilojen_vuokraus_ja_tilavaraukset]}
+      - {key: kiinteistonhoito_ja_huoltopyynnot, name: "Kiinteistönhoito ja huoltopyynnöt", unit: kiinteistonpito_ja_energianhallinta, realizes: [kiinteistojen_yllapito_ja_huolto]}
+      - {key: energiankulutuksen_seuranta, name: "Energiankulutuksen seuranta", unit: kiinteistonpito_ja_energianhallinta, realizes: [energianhallinta]}
+      - {key: kunto_ja_sisailmatutkimukset, name: "Kunto- ja sisäilmatutkimukset", unit: kiinteistonpito_ja_energianhallinta, realizes: [sisailma_ja_kuntotutkimukset]}
+      - {key: investointihankkeiden_rakennuttaminen, name: "Investointihankkeiden rakennuttaminen", unit: rakennuttaminen, realizes: [rakennuttaminen_ja_investointihankkeet]}
+  - key: tiedonhallinta
+    name: "Tiedonhallinta"
+    kind: support
+    unit: hallinto_ja_lakipalvelut
+    processes:
+      - {key: asiakirjahallinta_ja_arkistointi, name: "Asiakirjahallinta ja arkistointi", unit: kirjaamo_ja_arkisto}
+      - {key: asiakirja_ja_tietopyyntojen_kasittely, name: "Asiakirja- ja tietopyyntöjen käsittely", unit: kirjaamo_ja_arkisto, realizes: [asiakirja_ja_tietopyyntojen_kasittely]}
+      - {key: tiedonhallintamallin_yllapito, name: "Tiedonhallintamallin ylläpito", unit: arkkitehtuuri_ja_tiedonhallinta, realizes: [arkkitehtuuri_ja_tiedonhallintapalvelut]}
+      - {key: tietosuojan_hallinta_ja_rekisteroidyn_oikeudet, name: "Tietosuojan hallinta ja rekisteröidyn oikeudet", unit: tietoturva_ja_tietosuoja, realizes: [tietoturva_ja_tietosuojapalvelut]}
+  - key: ict_hallinta
+    name: "ICT-hallinta"
+    kind: support
+    unit: digipalvelut_ja_ict
+    processes:
+      - {key: ict_palvelupyyntojen_ja_hairioiden_hallinta, name: "ICT-palvelupyyntöjen ja häiriöiden hallinta", unit: ict_palvelutuotanto, realizes: [tyoasema_ja_kayttajatukipalvelut]}
+      - {key: sovellussalkun_hallinta, name: "Sovellussalkun hallinta", unit: arkkitehtuuri_ja_tiedonhallinta, realizes: [sovellus_ja_integraatiopalvelut]}
+      - {key: integraatioiden_hallinta, name: "Integraatioiden hallinta", unit: ict_palvelutuotanto, realizes: [sovellus_ja_integraatiopalvelut]}
+      - {key: kayttovaltuuksien_hallinta, name: "Käyttövaltuuksien hallinta", unit: tietoturva_ja_tietosuoja, realizes: [tietoturva_ja_tietosuojapalvelut]}
+      - {key: tietoturvapoikkeamien_hallinta, name: "Tietoturvapoikkeamien hallinta", unit: tietoturva_ja_tietosuoja, realizes: [tietoturva_ja_tietosuojapalvelut]}
+  - key: viestinta
+    name: "Viestintä"
+    kind: support
+    unit: viestinta
+    processes:
+      - {key: tiedottaminen_ja_mediasuhteet, name: "Tiedottaminen ja mediasuhteet", unit: viestinta, realizes: [kaupungin_viestinta_ja_tiedottaminen]}
+      - {key: verkkosivujen_ja_sosiaalisen_median_yllapito, name: "Verkkosivujen ja sosiaalisen median ylläpito", unit: viestinta, realizes: [kaupungin_viestinta_ja_tiedottaminen]}
+      - {key: hairio_ja_kriisiviestinta, name: "Häiriö- ja kriisiviestintä", unit: viestinta}

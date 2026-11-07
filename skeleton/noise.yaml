@@ -1,0 +1,17 @@
+# Älylän kaupunki: kohina
+
+# Noise N01, N02, … for the test version: realistic imperfection spread with per-item random streams
+# and logged. Elements and relationships touched by planted gaps are never changed by noise.
+
+# Attributes:
+#   name: Finnish name.  rate or count: how much.  applies_to: what the noise can touch.
+#   Other fields are specific to the noise type.
+
+
+noise:
+  N01: {name: "Vahvistamatta yli kaksi vuotta", rate: 0.20, applies_to: all_elements, last_confirmed_between: ["2021-01-01", "2024-10-31"]}
+  N02: {name: "Puuttuva kuvaus tai toimittaja", rate: 0.10, applies_to: information_systems}
+  N03: {name: "Roolin haltija puuttuu", count: 1, applies_to: owner_roles}
+  N04: {name: "Pienjärjestelmä kuvattu kahdesti", count: 3, applies_to: long_tail, name_variants: [" (koulut)", " Online", " – pilvi"]}
+  N05: {name: "Moduuli kuvattu omana järjestelmänä", modules: [[diaari, "Diaari Arkistointi", asiakirjahallinta_ja_arkistointi], [vaka_reppu, "Vaka-Reppu Maksut", asiakasmaksujen_maarittaminen_ja_laskutus]]}
+  N06: {name: "Irrallinen järjestelmä ilman suhteita", count: 6, applies_to: long_tail}

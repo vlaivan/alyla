@@ -1,0 +1,153 @@
+# Älylän kaupunki: organisaatio
+
+# The city, its political and governance bodies, customer groups, divisions with units and sub-units,
+# and the organisations outside the city. Group companies, the wellbeing services county and national
+# authorities are black boxes: the model shows their ownership, the services the city uses and the
+# boundary interfaces, not their internal structure. Kokonaisarkkitehtuuriryhmä approves principles,
+# architecture decisions and exceptions; Digitalisaation ohjausryhmä decides on initiatives and investments.
+
+# Attributes:
+#   key: the name in lowercase ASCII (ä→a, ö→o), words joined with underscores; unique within the type.
+#        The city's key is its technical name alyla. IDs are assigned from keys and stay stable.
+#   name: Finnish name.
+#   note: short Finnish description (black boxes).
+#   relates_to: the division whose work a national authority's services mainly touch.
+#   units / subunits: up to two levels below a division.
+
+
+city: {key: alyla, name: "Älylän kaupunki", residents: 69000, region: "Älymaa"}
+
+political_bodies:
+  - {key: kaupunginvaltuusto,        name: "Kaupunginvaltuusto"}
+  - {key: kaupunginhallitus,         name: "Kaupunginhallitus"}
+  - {key: kaupunginhallituksen_konsernijaosto,   name: "Kaupunginhallituksen konsernijaosto"}
+  - {key: sivistyslautakunta,      name: "Sivistyslautakunta"}
+  - {key: kaupunkiymparistolautakunta, name: "Kaupunkiympäristölautakunta"}
+  - {key: kaupunkiymparistolautakunnan_lupa_ja_valvontajaosto,     name: "Kaupunkiympäristölautakunnan lupa- ja valvontajaosto"}
+  - {key: elinvoimalautakunta,     name: "Elinvoimalautakunta"}
+  - {key: tarkastuslautakunta,     name: "Tarkastuslautakunta"}
+  - {key: keskusvaalilautakunta,   name: "Keskusvaalilautakunta"}
+
+steering_groups:
+  - {key: kokonaisarkkitehtuuriryhma, name: "Kokonaisarkkitehtuuriryhmä"}
+  - {key: digitalisaation_ohjausryhma, name: "Digitalisaation ohjausryhmä"}
+
+customer_groups:
+  - {key: asukkaat,     name: "Asukkaat"}
+  - {key: yritykset_ja_yhteisot,    name: "Yritykset ja yhteisöt"}
+  - {key: lapset_nuoret_ja_perheet,      name: "Lapset, nuoret ja perheet"}
+  - {key: tyonhakijat,  name: "Työnhakijat"}
+  - {key: maahanmuuttajat, name: "Maahanmuuttajat"}
+  - {key: matkailijat_ja_vierailijat,  name: "Matkailijat ja vierailijat"}
+  - {key: kaupungin_henkilosto,   name: "Kaupungin henkilöstö"}
+
+divisions:
+  - key: konsernihallinto
+    name: "Konsernihallinto"
+    units:
+      - {key: talouspalvelut, name: "Talouspalvelut", subunits: [
+          {key: talousohjaus_ja_budjetointi, name: "Talousohjaus ja budjetointi"},
+          {key: laskenta_ja_maksuliikennepalvelut, name: "Laskenta- ja maksuliikennepalvelut"}]}
+      - {key: henkilostopalvelut, name: "Henkilöstöpalvelut", subunits: [
+          {key: rekrytointi_ja_osaamisen_kehittaminen, name: "Rekrytointi ja osaamisen kehittäminen"},
+          {key: tyohyvinvointi_ja_tyosuojelu, name: "Työhyvinvointi ja työsuojelu"},
+          {key: palvelussuhdeasiat, name: "Palvelussuhdeasiat"}]}
+      - {key: hallinto_ja_lakipalvelut, name: "Hallinto- ja lakipalvelut", subunits: [
+          {key: kirjaamo_ja_arkisto, name: "Kirjaamo ja arkisto"},
+          {key: lakipalvelut, name: "Lakipalvelut"},
+          {key: paatoksenteon_tuki, name: "Päätöksenteon tuki"}]}
+      - {key: strategia_ja_kehittaminen, name: "Strategia ja kehittäminen", subunits: [
+          {key: strategia_ja_tietojohtaminen, name: "Strategia ja tietojohtaminen"},
+          {key: hyvinvoinnin_edistaminen, name: "Hyvinvoinnin edistäminen"}]}
+      - {key: digipalvelut_ja_ict, name: "Digipalvelut ja ICT", subunits: [
+          {key: arkkitehtuuri_ja_tiedonhallinta, name: "Arkkitehtuuri ja tiedonhallinta"},
+          {key: ict_palvelutuotanto, name: "ICT-palvelutuotanto"},
+          {key: digitaalinen_asiointi, name: "Digitaalinen asiointi"},
+          {key: tietoturva_ja_tietosuoja, name: "Tietoturva ja tietosuoja"}]}
+      - {key: hankintapalvelut, name: "Hankintapalvelut"}
+      - {key: omistajaohjaus, name: "Omistajaohjaus"}
+      - {key: viestinta, name: "Viestintä"}
+      - {key: asiakaspalvelu, name: "Asiakaspalvelu", subunits: [
+          {key: palvelupiste_alyla_info, name: "Palvelupiste Älylä-info"}]}
+
+  - key: elinvoima
+    name: "Elinvoima"
+    units:
+      - {key: elinkeinopalvelut, name: "Elinkeinopalvelut", subunits: [
+          {key: yrityspalvelut, name: "Yrityspalvelut"},
+          {key: elinkeinokehitys_ja_investoinnit, name: "Elinkeinokehitys ja investoinnit"}]}
+      - {key: tyollisyyspalvelut, name: "Työllisyyspalvelut", subunits: [
+          {key: tyonhakijapalvelut, name: "Työnhakijapalvelut"},
+          {key: tyonantajapalvelut, name: "Työnantajapalvelut"},
+          {key: tyollistamisen_tuet, name: "Työllistämisen tuet"}]}
+      - {key: kotoutumispalvelut, name: "Kotoutumispalvelut"}
+      - {key: matkailu_tapahtumat_ja_markkinointi, name: "Matkailu, tapahtumat ja markkinointi"}
+
+  - key: kaupunkiymparisto
+    name: "Kaupunkiympäristö"
+    units:
+      - {key: maankaytto_ja_kaavoitus, name: "Maankäyttö ja kaavoitus", subunits: [
+          {key: yleiskaavoitus, name: "Yleiskaavoitus"},
+          {key: asemakaavoitus, name: "Asemakaavoitus"},
+          {key: maapolitiikka_ja_tonttipalvelut, name: "Maapolitiikka ja tonttipalvelut"}]}
+      - {key: rakennusvalvonta, name: "Rakennusvalvonta"}
+      - {key: ymparistopalvelut, name: "Ympäristöpalvelut", subunits: [
+          {key: ymparistonsuojelu, name: "Ympäristönsuojelu"},
+          {key: ymparistoterveydenhuolto, name: "Ympäristöterveydenhuolto"}]}
+      - {key: kuntatekniikka, name: "Kuntatekniikka", subunits: [
+          {key: kadut_ja_liikennevaylat, name: "Kadut ja liikenneväylät"},
+          {key: puistot_ja_viheralueet, name: "Puistot ja viheralueet"}]}
+      - {key: tilapalvelut, name: "Tilapalvelut", subunits: [
+          {key: tilahallinta_ja_vuokraus, name: "Tilahallinta ja vuokraus"},
+          {key: kiinteistonpito_ja_energianhallinta, name: "Kiinteistönpito ja energianhallinta"},
+          {key: rakennuttaminen, name: "Rakennuttaminen"}]}
+      - {key: mittaus_ja_paikkatieto, name: "Mittaus ja paikkatieto", subunits: [
+          {key: kiinteistonmuodostus, name: "Kiinteistönmuodostus"},
+          {key: paikkatietopalvelut, name: "Paikkatietopalvelut"}]}
+      - {key: liikenne_ja_joukkoliikenne, name: "Liikenne ja joukkoliikenne"}
+
+  - key: sivistys
+    name: "Sivistys"
+    units:
+      - {key: varhaiskasvatus, name: "Varhaiskasvatus", subunits: [
+          {key: paivakotiverkosto, name: "Päiväkotiverkosto"},
+          {key: yksityisen_varhaiskasvatuksen_ohjaus, name: "Yksityisen varhaiskasvatuksen ohjaus"},
+          {key: varhaiskasvatuksen_asiakaspalvelu, name: "Varhaiskasvatuksen asiakaspalvelu"}]}
+      - {key: perusopetus, name: "Perusopetus", subunits: [
+          {key: kouluverkosto, name: "Kouluverkosto"},
+          {key: oppimisen_tuki_ja_oppilashuolto, name: "Oppimisen tuki ja oppilashuolto"},
+          {key: aamu_ja_iltapaivatoiminta, name: "Aamu- ja iltapäivätoiminta"}]}
+      - {key: lukiokoulutus, name: "Lukiokoulutus", subunits: [
+          {key: alylan_lukio, name: "Älylän lukio"}]}
+      - {key: kulttuuripalvelut, name: "Kulttuuripalvelut", subunits: [
+          {key: kirjasto, name: "Kirjasto"},
+          {key: museo, name: "Museo"},
+          {key: kansalaisopisto, name: "Kansalaisopisto"},
+          {key: kulttuuritoiminta, name: "Kulttuuritoiminta"}]}
+      - {key: liikuntapalvelut, name: "Liikuntapalvelut", subunits: [
+          {key: liikuntapaikat, name: "Liikuntapaikat"},
+          {key: ohjattu_liikunta, name: "Ohjattu liikunta"}]}
+      - {key: nuorisopalvelut, name: "Nuorisopalvelut"}
+      - {key: sivistyksen_hallinto_ja_tukipalvelut, name: "Sivistyksen hallinto- ja tukipalvelut"}
+
+group_companies:
+  - {key: alylan_vesi_ja_energia,   name: "Älylän vesi ja energia", note: "Kaupungin liikelaitos: vesihuolto ja energiapalvelut"}
+  - {key: alylan_vuokrakodit_oy,   name: "Älylän vuokrakodit Oy", note: "Kaupungin kokonaan omistama vuokrataloyhtiö"}
+  - {key: alylan_laskenta_oy,      name: "Älylän laskenta Oy", note: "Kaupungin tytäryhtiö: talous- ja henkilöstöhallinnon palvelut kaupungille"}
+
+external_orgs:
+  - {key: alymaan_hyvinvointialue, name: "Älymaan hyvinvointialue", note: "Sosiaali- ja terveyspalvelut sekä pelastustoimi"}
+  - {key: alymaan_elinkeino_ja_kehittamiskeskus, name: "Älymaan elinkeino- ja kehittämiskeskus", note: "Alueellinen viranomainen"}
+
+national_authorities:
+  - {key: kansallinen_digi_ja_vaestotietovirasto, name: "Kansallinen digi- ja väestötietovirasto", relates_to: konsernihallinto, note: "Tunnistus-, viestinvälitys- ja tiedonvälityspalvelut sekä väestötiedot"}
+  - {key: kansallinen_verovirasto, name: "Kansallinen verovirasto", relates_to: konsernihallinto, note: "Tulorekisteri ja palkkatietojen ilmoittaminen"}
+  - {key: kansallinen_tyollisyyspalvelujen_tietopalvelukeskus, name: "Kansallinen työllisyyspalvelujen tietopalvelukeskus", relates_to: elinvoima, note: "Työllisyyspalvelujen kansallinen asiakastietojärjestelmä"}
+  - {key: kansallinen_yritysrekisterivirasto, name: "Kansallinen yritysrekisterivirasto", relates_to: elinvoima, note: "Yritysten perustiedot"}
+  - {key: kansallinen_maanmittaus_ja_paikkatietolaitos, name: "Kansallinen maanmittaus- ja paikkatietolaitos", relates_to: kaupunkiymparisto, note: "Kiinteistötiedot ja kansalliset paikkatietoaineistot"}
+  - {key: kansallinen_ymparistokeskus, name: "Kansallinen ympäristökeskus", relates_to: kaupunkiymparisto, note: "Rakennetun ympäristön kansallinen tietojärjestelmä: kaava- ja rakennustiedot"}
+  - {key: kansallinen_lupa_ja_valvontavirasto, name: "Kansallinen lupa- ja valvontavirasto", relates_to: kaupunkiymparisto, note: "Ympäristölupien ja valvonnan ohjaus"}
+  - {key: kansallinen_ruokavirasto, name: "Kansallinen ruokavirasto", relates_to: kaupunkiymparisto, note: "Elintarvikevalvonnan kansallinen tietojärjestelmä"}
+  - {key: kansallinen_opetusvirasto, name: "Kansallinen opetusvirasto", relates_to: sivistys, note: "Varhaiskasvatuksen ja opintotietojen kansalliset tietovarannot"}
+  - {key: kansallinen_ylioppilastutkintolautakunta, name: "Kansallinen ylioppilastutkintolautakunta", relates_to: sivistys, note: "Sähköinen ylioppilastutkinto"}
+  - {key: kansallinen_kirjastokeskus, name: "Kansallinen kirjastokeskus", relates_to: sivistys, note: "Kirjastojen ja museoiden yhteinen hakupalvelu"}
