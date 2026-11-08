@@ -92,8 +92,10 @@ B('E07', 'Suoria integraatioita', f"{len(direct)} tietovirtaa kulkee eri toimitt
 
 # ---------------------------------------------------------------- questions
 Q = []
-def q(qid, k, question, points, items, plants_=()):
-    Q.append(dict(id=qid, k=k, question=question, points=points, items=[dict(ids=i[0], text=i[1]) for i in items], plants=list(plants_)))
+def q(qid, k, question, points, items, plants_=(), may=(), must_not=(), scope=None):
+    # points = must mention; may = bonus; must_not = penalty; scope = how the answer key reads the question
+    Q.append(dict(id=qid, k=k, question=question, points=points, may=list(may), must_not=list(must_not), scope=scope,
+                  items=[dict(ids=i[0], text=i[1]) for i in items], plants=list(plants_)))
 
 # U01 Neuvonta ja viestintä
 p = K('BusinessProcess', 'varhaiskasvatushakemusten_kasittely_ja_sijoittaminen'); ap = apps_serving(p)
@@ -101,15 +103,16 @@ q('Q01', 'U01', 'Mitkä tietojärjestelmät tukevat varhaiskasvatushakemusten k�
   [f"{len(ap)} järjestelmää: " + '; '.join(f"{c(a)} ({owner_role(a)})" for a in ap) + '.'], [([a], f"{c(a)}: {owner_role(a)}") for a in ap])
 a = K('ApplicationComponent', 'kerro_kartalla'); u = [x for x in out['Serving'][a] if typ(x) == 'BusinessActor']
 q('Q02', 'U01', 'Kuka omistaa Kerro kartalla -järjestelmän?',
-  ["Omistajaa ei ole kirjattu, eikä vastaus arvaa sitä.", f"Järjestelmää käyttää {cs(u)}; vastaus voi ehdottaa omistajan nimeämistä."],
-  [([a] + u, f"{c(a)}: {owner_role(a)}; käyttäjä {cs(u)}")], ['P01'])
+  ["Omistajaa ei ole kirjattu.", f"Järjestelmää käyttää {cs(u)}."],
+  [([a] + u, f"{c(a)}: {owner_role(a)}; käyttäjä {cs(u)}")], ['P01'], may=["Ehdottaa omistajaa käyttäjän perusteella, kun se esitetään ehdotuksena eikä tosiasiana."])
 unit = K('BusinessActor', 'rakennusvalvonta')
 procs = sorted((x for x in out['Assignment'][unit] if typ(x) == 'BusinessProcess'), key=n)
 svcs = sorted({s for x in procs for s in out['Realization'][x] if typ(s) == 'BusinessService'}, key=n)
 uapps = sorted({a for x in procs for a in apps_serving(x)} | {a for a in inn['Serving'][unit] if typ(a) == 'ApplicationComponent'}, key=n)
 q('Q03', 'U01', 'Mitä prosesseja, palveluja ja tietojärjestelmiä Rakennusvalvonnan organisaatiomuutos koskee?',
   [f"Prosessit ({len(procs)}): {cs(procs)}.", f"Palvelut ({len(svcs)}): {cs(svcs)}.", f"Tietojärjestelmät ({len(uapps)}): {cs(uapps)}."],
-  [([a], f"{c(a)}: {owner_role(a)}") for a in uapps])
+  [([a], f"{c(a)}: {owner_role(a)}") for a in uapps],
+  scope="Rakennusvalvontaan kohdistetut prosessit, niiden toteuttamat palvelut sekä järjestelmät, jotka tukevat näitä prosesseja tai palvelevat yksikköä.")
 
 # U02 Nykytila-analyysi
 ov_real, ov_nat = [], []
@@ -119,23 +122,27 @@ for dobj, ws in sorted(writers.items(), key=lambda kv: n(kv[0])):
     if len(ws) >= 2:
         (ov_real if set(ws) & real_apps else ov_nat).append((ws + [dobj], f"{c(dobj)}: {cs(ws)}"))
 q('Q04', 'U02', 'Missä on päällekkäisiä tietojärjestelmiä samaan käyttötarkoitukseen?',
-  ["Mahdollinen päällekkäisyys: `Ympäristöasiat` kirjaa samaa asiarekisteriä kuin kaupunkiyhteinen `Diaari` (P03). Yksikön oma järjestelmä voi olla perusteltu; hyvä vastaus nostaa asian esiin, ei tuomitse sitä.",
-   "Todennäköinen kaksoiskuvaus: `Infrakone` ja `Infra-kone 2` (P11).",
-   f"Erilliset varausjärjestelmät: {cs(book)} (E05). Lisäksi tilavarauspalvelu on kahden yksikön vastuulla (P12).",
-   f"Muut samaa tietoa kirjoittavat parit ({len(ov_nat)}) ovat luontevaa työnjakoa, esimerkiksi verkkoasiointi ja sen taustajärjestelmä. Niitä ei pidä esittää päällekkäisyyksinä."],
+  ["Todennäköinen kaksoiskuvaus: `Infrakone` ja `Infra-kone 2` (P11).",
+   f"Erilliset varausjärjestelmät: {cs(book)} (E05).",
+   "Mahdollinen päällekkäisyys: `Ympäristöasiat` kirjaa samaa asiarekisteriä kuin kaupunkiyhteinen `Diaari` (P03). Yksikön oma järjestelmä voi olla perusteltu; hyvä vastaus nostaa asian esiin, ei tuomitse sitä."],
   [(ids, 'Mahdollinen päällekkäisyys, ' + t) for ids, t in ov_real] + [(book, 'Mahdollinen päällekkäisyys, varausjärjestelmät: ' + cs(book))] + [(ids, 'Luontevaa työnjakoa, ' + t) for ids, t in ov_nat],
-  ['P03', 'P11', 'P12'])
-q('Q05', 'U02', 'Mitkä prosessit ovat ilman tietojärjestelmätukea?', [f"{len(nos)} prosessia: {cs(nos)}."], [([x], c(x)) for x in nos])
+  ['P03', 'P11'],
+  scope=f"Järjestelmät, jotka palvelevat samaa käyttötarkoitusta. Samaa tietoa kirjoittavat muut parit ({len(ov_nat)}) ovat todennäköisesti luontevaa työnjakoa, "
+        "esimerkiksi verkkoasiointi ja sen taustajärjestelmä: " + '; '.join(t for _, t in ov_nat) + '. Niiden nostaminen tarkistettaviksi ei ole virhe.')
+q('Q05', 'U02', 'Mitkä prosessit ovat ilman tietojärjestelmätukea?', [f"{len(nos)} prosessia: {cs(nos)}."], [([x], c(x)) for x in nos],
+  scope="Prosessiryhmien alaiset prosessit. Prosessiryhmiä ei lasketa, koska tietojärjestelmät tukevat prosesseja eivätkä ryhmiä.")
 po = sorted((a for a in apps if E[a]['meta']['lifecycle'] == 'phasing_out'), key=n)
-items, points = [], ["Korvaaja tarkoittaa toista aktiivista tai suunniteltua järjestelmää, joka tukee samoja prosesseja. Mallissa sellaista ei näy."]
+items, points = [], []
 for a in po:
-    points.append(f"{c(a)} poistuu {fi(E[a]['meta']['valid_to'])}.")
+    points.append(f"{c(a)} poistuu {fi(E[a]['meta']['valid_to'])}. Mallissa ei ole järjestelmää, joka tukisi samoja prosesseja.")
     for x in sorted((x for x in out['Serving'][a] if typ(x) == 'BusinessProcess'), key=n):
         others = [o for o in apps_serving(x) if o != a and E[o]['meta']['lifecycle'] in ('active', 'planned')]
         items.append(([a, x] + others, f"{c(a)} → {c(x)}; muut tukevat järjestelmät: {cs(others) or 'ei yhtään'}"))
-        points.append(f"{c(x)}: " + (f"jäljelle jäävät {cs(others)}" if others else 'jää kokonaan ilman järjestelmää') + '.')
-points.append("`Tonttihaku` itse riippuu `Tonttipalvelu`-järjestelmästä (P05), joten se ei ole korvaaja.")
-q('Q06', 'U02', 'Mitkä poistuvat tietojärjestelmät tukevat yhä prosesseja, ja onko niille korvaaja?', points, items, ['P04', 'P05'])
+        points.append(f"Prosessi {c(x)} " + (f"jää järjestelmien {cs(others)} varaan." if others else 'jää kokonaan ilman järjestelmää.'))
+p05 = next(r for r in flows if E[r['source']]['key'] == 'tonttihaku' and E[r['target']]['key'] == 'tonttipalvelu')
+may06 = [f"`Tonttihaku` ei ole korvaaja: se on kytketty poistuvaan `Tonttipalvelu`-järjestelmään uudella tietovirralla {fi(p05['meta']['valid_from'])}, ja poisto katkaisee sen (P05)."]
+q('Q06', 'U02', 'Mitkä poistuvat tietojärjestelmät tukevat yhä prosesseja, ja onko niille korvaaja?', points, items, ['P04', 'P05'], may=may06,
+  scope="Korvaaja tarkoittaa toista aktiivista tai suunniteltua järjestelmää, joka tukee samoja prosesseja kuin poistuva järjestelmä.")
 
 # U03 Tietoaukot ja ristiriidat
 rv = [a for a in uapps if K('BusinessActor', 'rakennusvalvonta') in out['Serving'][a]]
@@ -147,13 +154,13 @@ for a in rv:
     items.append(([a] + sw_of(a) + nodes_of(a), txt))
     if 'archetype' in E[a]['attrs'] and not issues: small.append(a)
     else: points.append(txt + '.')
-if small: points.append(f"Lisäksi yksikön pienjärjestelmät: {cs(small)}.")
+if small: points.append(f"Yksikön pienjärjestelmät {cs(small)} on kuvattu kevyemmin: kuvauksena on järjestelmän tyyppi. Niissä ei ole elinkaaripuutteita.")
 q('Q07', 'U03', 'Mitä tiedämme Rakennusvalvonnan tietojärjestelmistä, ja missä tiedot ovat puutteellisia tai ristiriitaisia?', points, items, ['P09'])
 no_owner = sorted((e['id'] for e in W['elements'] if typ(e['id']) in TYPE_FI and not E[e['id']]['meta'].get('owner') and not E[e['id']]['meta'].get('provider')), key=n)
 n5 = [x for x in noise if x['noise'] == 'N03']
 q('Q08', 'U03', 'Mistä tietojärjestelmistä ja tietoaineistoista puuttuu omistaja?',
-  [f"{c(x)} ({TYPE_FI[typ(x)]})" for x in no_owner] + [f"Testiversiossa lisäksi roolilta `{x['target_name']}` puuttuu henkilön nimi (kohina). Rooli on olemassa, mutta sen haltijaa ei tiedetä." for x in n5],
-  [([x], f"{c(x)} ({TYPE_FI[typ(x)]})") for x in no_owner], ['P01', 'P02'])
+  [f"{c(x)} ({TYPE_FI[typ(x)]})" for x in no_owner],
+  [([x], f"{c(x)} ({TYPE_FI[typ(x)]})") for x in no_owner], ['P01', 'P02'], may=["Ehdottaa omistajaa käyttäjän perusteella, kun se esitetään ehdotuksena eikä tosiasiana."])
 pd_objs = {e['id'] for e in W['elements'] if typ(e['id']) == 'DataObject' and E[e['id']]['attrs'].get('personal_data')}
 items = []
 for r in flows:
@@ -164,14 +171,16 @@ for r in W['relationships']:
         items.append(([r['source'], r['target']], f"{c(r['source'])} käyttää aineistoa {c(r['target'])}, mutta on merkitty henkilötiedottomaksi (P07)"))
 items.append(([K('ApplicationComponent', 'infrakone'), K('ApplicationComponent', 'infra_kone_2')], "`Infrakone` ja `Infra-kone 2` kuvaavat todennäköisesti samaa järjestelmää (P11)"))
 q('Q09', 'U03', 'Missä mallin tiedot ovat keskenään ristiriidassa?',
-  [f"{t}." for _, t in items] +
-  ["Lisäksi mahdollisia aukkoja: `Pysäköintivahti` käyttää aineistoa `Henkilöiden perustiedot`, mutta lähdettä ei ole kuvattu (P10), ja muita vastaavia tapauksia on mallissa valmiiksi (E04). Nämä eivät ole välttämättä virheitä."],
-  items + [(p10, '`Pysäköintivahti` käyttää aineistoa `Henkilöiden perustiedot` ilman kuvattua lähdettä (P10)')], ['P06', 'P07', 'P10', 'P11'])
+  [f"{t}." for _, t in items],
+  items + [(p10, '`Pysäköintivahti` käyttää aineistoa `Henkilöiden perustiedot` ilman kuvattua lähdettä (P10)')], ['P06', 'P07', 'P10', 'P11'],
+  may=["`Pysäköintivahti` käyttää aineistoa `Henkilöiden perustiedot`, mutta lähdettä ei ole kuvattu (P10).",
+       "Muut tapaukset, joissa järjestelmä käyttää toisen järjestelmän kirjoittamaa tietoa ilman kuvattua tietovirtaa (E04)."])
 
 # U04 Elinkaari ja tekninen velka
 ky = K('BusinessActor', 'kaupunkiymparisto')
 items, tech_n, contract_n = [], 0, 0
-for a in sorted((a for a in apps if division(a) == ky and active(a)), key=n):
+ky_procs = {p for act, ps in out['Assignment'].items() if typ(act) == 'BusinessActor' and division_of_actor(act) == ky for p in ps if typ(p) == 'BusinessProcess'}
+for a in sorted((a for a in apps if active(a) and set(out['Serving'][a]) & ky_procs), key=n):
     tech = [f"{c(s)} tuki {fi(E[s]['attrs']['vendor_support_end'])}" for s in sw_of(a) if E[s]['attrs']['vendor_support_end'] <= TWO_YEARS]
     tech += [f"alusta {c(x)} poistuu {fi(E[x]['meta']['valid_to'])}" for x in nodes_of(a) if E[x]['meta']['lifecycle'] == 'phasing_out']
     if E[a]['meta']['lifecycle'] == 'phasing_out': tech.append(f"järjestelmä poistuu {fi(E[a]['meta']['valid_to'])}")
@@ -185,7 +194,8 @@ q('Q10', 'U04', 'Mikä Kaupunkiympäristössä vaatii uusimista kahden vuoden si
    "`Lupakone` toimii vanhentuneilla ohjelmistoilla ja poistuvalla alustalla `Tietokantaklusteri Quarry` (P09).",
    "`Tonttipalvelu` poistuu, ja se toimii ohjelmistoilla, joiden tuki on päättynyt (P04).",
    f"Yhteensä {tech_n} järjestelmällä on teknologia- tai elinkaaririski ja {contract_n} järjestelmän sopimus päättyy. Täysi lista on liitteessä."],
-  items, ['P04', 'P09'])
+  items, ['P04', 'P09'], may=["Muut liitteen C kohteet, kuten yksittäisten järjestelmien vanhenevat ohjelmistot ja päättyvät sopimukset."],
+  scope=f"Järjestelmät, jotka tukevat Kaupunkiympäristön yksiköiden prosesseja. Kaksi vuotta lasketaan maailman päivästä eli {fi(TWO_YEARS)} asti.")
 q('Q11', 'U04', 'Mitkä tietojärjestelmät ovat riippuvaisia ohjelmistoista, joiden tuki on jo päättynyt?',
   [r['text'] + '.' for r in expired], [(r['ids'], r['text']) for r in expired])
 nat_flows = [r for r in flows if r['attrs'].get('via') == 'vayla' and E[r['target']]['attrs'].get('deployment') == 'national_service']
@@ -194,7 +204,9 @@ q('Q12', 'U04', 'Mitä seuraa, jos integraatioalusta Väylän ohjelmiston tuki p
    f"`Väylä` palvelee {len(vdeps)} tietojärjestelmää, ja sen kautta kulkee {nvf} tietovirtaa.",
    f"Niistä {len(nat_flows)} on ilmoituksia kansallisiin palveluihin: " + '; '.join(f"{c(r['source'])} → {c(r['target'])}" for r in nat_flows) + '.',
    "Riski: lakisääteiset ilmoitukset voivat katketa, jos alustaa ei päivitetä ajoissa."],
-  [([vayla] + vsw, f"{cs(vsw)} → `Väylä`")] + [([r['source'], r['target']], f"{c(r['source'])} → {c(r['target'])}: {r['name']}") for r in nat_flows])
+  [([vayla] + vsw, f"{cs(vsw)} → `Väylä`")] + [([r['source'], r['target']], f"{c(r['source'])} → {c(r['target'])}: {r['name']}") for r in nat_flows],
+  must_not=["Väittää, ettei Väylän kautta kulkevia tietovirtoja voi tunnistaa. Reitti on tietovirran ominaisuudessa `via`."],
+  scope="Järjestelmät, joita `Väylä` palvelee (Serving-suhde Väylästä tietojärjestelmään), ja tietovirrat, joiden ominaisuuden `via` arvo on `vayla`.")
 
 # U05 Muutosten vaikutukset
 law = K('Constraint', 'digipalvelulaki')
@@ -204,7 +216,9 @@ for x in reg: by_owner[owner_role(x)].append(x)
 q('Q13', 'U05', 'Mitä digipalvelulain saavutettavuusvaatimusten muutos koskee, ja kenelle siitä pitää kertoa?',
   [f"{len(reg)} kohdetta, jotka digipalvelulaki sääntelee. Vastaus ryhmittelee ne omistajan mukaan, koska omistajille pitää kertoa muutoksesta:"] +
   [f"{o}: {cs(v)}" for o, v in sorted(by_owner.items())],
-  [([x], f"{c(x)}: {owner_role(x)}") for x in reg])
+  [([x], f"{c(x)}: {owner_role(x)}") for x in reg],
+  may=["Asukkaille näkyvät tietojärjestelmät, joita ei ole kytketty digipalvelulakiin, ja suositus tarkistaa ne."],
+  scope="Kohteet, jotka mallissa toteuttavat digipalvelulain (Realization).")
 outside = []
 for a in apps:
     regions = {E[x]['attrs'].get('data_region') for x in nodes_of(a)}
@@ -217,9 +231,9 @@ vtj = K('ApplicationComponent', 'kansallinen_vaestotietojarjestelma'); hp = K('D
 via_flow = sorted({r['target'] for r in flows if r['source'] == vtj}, key=n)
 via_access = sorted({r['source'] for r in W['relationships'] if r['type'] == 'Access' and r['target'] == hp and r['source'] != vtj} - set(via_flow), key=n)
 q('Q15', 'U05', 'Jos väestötietojen toimitus kansallisesta väestötietojärjestelmästä muuttuu, mihin kaupungin järjestelmiin se vaikuttaa?',
-  [f"Tietovirtojen kautta: {cs(via_flow)}."] +
-  [f"Lisäksi {c(a)} käyttää aineistoa `Henkilöiden perustiedot`, mutta sen lähdettä ei ole kuvattu (P10). Pelkkiä tietovirtoja seuraamalla se jäisi huomaamatta; hyvä vastaus mainitsee sen ja suosittelee tarkistamaan, miten tieto saadaan." for a in via_access],
-  [([d], f"{c(d)} (tietovirta)") for d in via_flow] + [([d], f"{c(d)} (käyttää tietoa, lähdettä ei kuvattu)") for d in via_access], ['P10'])
+  [f"Tietovirtojen kautta: {cs(via_flow)}."],
+  [([d], f"{c(d)} (tietovirta)") for d in via_flow] + [([d], f"{c(d)} (käyttää tietoa, lähdettä ei kuvattu)") for d in via_access], ['P10'],
+  may=[f"{c(a)} käyttää aineistoa `Henkilöiden perustiedot`, mutta sen lähdettä ei ole kuvattu (P10). Pelkkiä tietovirtoja seuraamalla se jäisi huomaamatta." for a in via_access])
 
 # noise touching each answer
 by_target = defaultdict(list)
@@ -227,5 +241,17 @@ for x in noise: by_target[x['target']].append(x)
 for qq in Q:
     ids_ = {i for it in qq['items'] for i in it['ids']}
     qq['noise'] = [dict(noise=x['noise'], target=x['target'], target_name=x['target_name'], field=x['field']) for i in sorted(ids_) for x in by_target.get(i, [])]
+SCOPES = {
+ 'Q01': "Järjestelmät, jotka tukevat prosessia `Varhaiskasvatushakemusten käsittely ja sijoittaminen`, ja niiden omistajaroolit.",
+ 'Q02': "Järjestelmälle kirjattu omistajarooli.",
+ 'Q07': "Järjestelmät, jotka palvelevat Rakennusvalvontaa. Puutteellisuus ja ristiriitaisuus näkyvät tässä elinkaaritiedoissa: vanhentuneissa ohjelmistoissa ja poistuvissa alustoissa.",
+ 'Q08': "Tietojärjestelmät ja tietoaineistot, joilla ei ole omistajaa eikä ulkoista tarjoajaa. Kansallisilla palveluilla ja konserniyhtiöiden järjestelmillä on ulkoinen tarjoaja, joten niiltä ei puutu omistajaa.",
+ 'Q09': "Ristiriita tarkoittaa, että mallin kaksi tietoa eivät voi olla yhtä aikaa totta, esimerkiksi tietovirta poistettuun järjestelmään tai henkilötietomerkintä, joka ei vastaa käytettyä aineistoa.",
+ 'Q11': f"Järjestelmät, jotka toimivat ohjelmistoilla, joiden toimittajan tuki on päättynyt ennen maailman päivää {fi(TODAY)}.",
+ 'Q14': "Järjestelmät, joiden alusta sijaitsee EU/ETA-alueen ulkopuolella ja jotka käsittelevät henkilötietoja: järjestelmä on merkitty henkilötietoja käsitteleväksi tai se käyttää henkilötietoja sisältävää aineistoa.",
+ 'Q15': "Järjestelmät, jotka saavat väestötietoja kansallisesta väestötietojärjestelmästä tietovirtojen kautta."}
+for qq in Q:
+    qq['scope'] = qq['scope'] or SCOPES.get(qq['id'])
+    assert qq['scope'], f"{qq['id']} has no interpretation"
 json.dump(dict(questions=Q, baseline=baseline), open(path('build', 'answers.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
 print('questions', len(Q), '| baseline', len(baseline))

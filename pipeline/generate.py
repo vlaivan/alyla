@@ -123,14 +123,14 @@ for s in load('skeleton', 'services.yaml')['services']:
         vf = '2025-01-01' if unit_of(s['unit']) == 'tyollisyyspalvelut' else '2021-01-01'
         sid = el('SRV', 'BusinessService', s['key'], s['name'], owner=so(s['unit']), source='Palveluluettelo', classification='public', valid_from=vf, audience=s['audience'])
     for c in s.get('serves', []): rel('Serving', sid, A(c))
-proc_unit = {}
+proc_unit, group_leaves = {}, {}
 for g in procs_raw:
     gid = el('PRC', 'BusinessProcess', g['key'], g['name'], owner=so(g['unit']), source='Prosessikartta', process_kind=g['kind'])
     proc_unit[g['key']] = g['unit']; rel('Assignment', A(g['unit']), gid)
     for p in g['processes']:
         vf = '2025-01-01' if unit_of(p['unit']) == 'tyollisyyspalvelut' else '2021-01-01'
         pid = el('PRC', 'BusinessProcess', p['key'], p['name'], owner=so(p['unit']), source='Prosessikartta', valid_from=vf, process_kind=g['kind'])
-        proc_unit[p['key']] = p['unit']
+        proc_unit[p['key']] = p['unit']; group_leaves.setdefault(g['key'], []).append(p['key'])
         rel('Composition', gid, pid); rel('Assignment', A(p['unit']), pid)
         for s in p.get('realizes', []): rel('Realization', pid, KEY[('BusinessService', s)])
 P = lambda k: KEY[('BusinessProcess', k)]
@@ -210,7 +210,11 @@ for a in apps['applications']:
 
 units_all = sorted(k for k, v in kind.items() if v in ('unit', 'subunit'))
 procs_by_actor = defaultdict(list)
-for p, u in proc_unit.items(): procs_by_actor[u].append(p)
+# Small systems support leaf processes only; a unit that owns just a process group gets that group's processes.
+for p, u in proc_unit.items():
+    if p not in group_leaves: procs_by_actor[u].append(p)
+for g, leaves in group_leaves.items():
+    if not procs_by_actor.get(proc_unit[g]): procs_by_actor[proc_unit[g]] = list(leaves)
 small_vendors = ["Appsi Oy","Pilvipaja Oy","Koodiverstas Oy","Digiraami Oy","Nettinikkari Oy","Sovelluspuoti Oy","Datapolku Oy","Webtaimi Oy","Ohjelmistoapaja Oy",
                  "Kirkas Software","Tieto-Tuuli Oy","Linkki Labs","Oppiva Media Oy","Edutaito Oy","Satakieli Apps"]
 def pick_weighted(w, r):

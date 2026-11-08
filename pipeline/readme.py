@@ -2,7 +2,7 @@
 import json
 from collections import Counter
 from common import load, path
-from labels import VERSION, VERSION_HISTORY, MODEL_TITLE, VARIANTS, TRUTH_CARD, QUESTIONS, NOISE_LOG, USE_CASES
+from labels import VERSION, VERSION_HISTORY, MODEL_TITLE, VARIANTS, TRUTH_CARD, QUESTIONS, NOISE_LOG, SCORECARD, USE_CASES
 
 base = json.load(open(path('build', 'world.json'), encoding='utf-8'))
 test = json.load(open(path('build', 'world-test.json'), encoding='utf-8'))
@@ -29,8 +29,9 @@ L = [f"# {MODEL_TITLE}", "",
      f"| `export/{NOISE_LOG}` | Jokainen kohinan tekemä muutos. |",
      f"| `export/{QUESTIONS}` | Kysymyksiä mallin testaamiseen, ilman vastauksia. |",
      f"| `export/{TRUTH_CARD}` | Totuuskortti, eli mitä testiversioon on lisätty ja mitä hyvän vastauksen pitäisi löytää. |",
+     f"| `export/{SCORECARD}` | Pisteytyslomake yhden testiajon arviointiin. |",
      f"| `export/records/` | Mallin ulkopuoliset tietueet. Mallia voi laajentaa erilaisilla tietueilla, kuten päätöksillä tai asiakirjoilla. Nyt mukana on {len(rec['principles'])} arkkitehtuuriperiaatetta kuudella alueella (`periaatteet/`). |", "",
-     "Mallit avataan Archissa: File → Import → Open Exchange XML Model. Kummankin mallin aloitusnäkymä kertoo, mistä variantista on kyse.", "",
+     "Mallit ovat standardinmukaisia ArchiMate 3.2 -malleja Open Groupin mallinvaihtomuodossa (Model Exchange File Format), joten ne voi avata Archissa ja muissa muotoa tukevissa työkaluissa. Archissa mallit avataan näin: File → Import → Open Exchange XML Model. Kummankin mallin aloitusnäkymä kertoo, mistä variantista on kyse.", "",
      "## Mallin sisältö", "", "| Elementtityyppi | Perusversio | Testiversio |", "|---|---|---|"]
 L += [f"| {fi} | {bc[t]} | {tc[t]} |" for t, fi in TYPES]
 L += [f"| Suhteet | {len(base['relationships'])} | {len(test['relationships'])} |", "",

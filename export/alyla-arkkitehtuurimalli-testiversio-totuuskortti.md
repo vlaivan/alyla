@@ -1,6 +1,8 @@
 # Totuuskortti: Älylä – synteettinen kaupungin arkkitehtuurimalli (testiversio)
 
-Tämä kortti kertoo, mitä testiversioon (`alyla-arkkitehtuurimalli-testiversio.xml`, versio 1.0) on lisätty tarkoituksella ja mitä hyvän vastauksen pitäisi löytää.
+Tämä kortti kertoo, mitä testiversioon (`alyla-arkkitehtuurimalli-testiversio.xml`, versio 1.1) on lisätty tarkoituksella ja mitä hyvän vastauksen pitäisi löytää.
+
+**Sisältö:** Näin käytät korttia · 1. Mallin sisäiset epätäydellisyydet · 2. Istutetut puutteet · 3. Tarkoituksellisia erikoisuuksia · 4. Kohina · 5. Kysymykset ja vastaukset · Liitteet A–C
 
 ## Näin käytät korttia
 
@@ -9,15 +11,15 @@ Tämä kortti kertoo, mitä testiversioon (`alyla-arkkitehtuurimalli-testiversio
 - **Mallin sisäinen epätäydellisyys (E)** on realistinen heikkous, joka on jo perusversiossa. Hyvä analyysi voi raportoida senkin.
 - **Istutettu puute (P)** on tarkoituksella lisätty aukko, ristiriita tai mahdollinen ongelma. Hyvän analyysin pitäisi huomata se.
 - **Kohina (N)** on tavallista epätäydellisyyttä, kuten puuttuva kuvaus. Hyvä vastaus sietää sen; se ei ole vastauksen virhe.
-- **Kysymys (Q)** ja sen **odotettu vastaus (A)** kuuluvat yhteen: kysymykseen Q01 vastaa A01.
+- **Kysymys (Q)** ja sen **odotettu vastaus (A)** kuuluvat yhteen: kysymykseen Q01 vastaa A01. Vastauksessa on kohdat, jotka hyvä vastaus huomioi ainakin, kohdat, jotka vastaus voi mainita lisäksi, ja kohdat, joita vastaus ei saa sisältää.
+
+Vastaukset pisteytetään lomakkeella `alyla-arkkitehtuurimalli-testiversio-pisteytys.md`.
 
 Mallin elementtien nimet, ominaisuudet ja tiedostonimet on kirjoitettu `näin`, jotta ne on helppo löytää Archista.
 
-**Esimerkki.** Kysyt tekoälyltä kysymyksen Q02: "Kuka omistaa Kerro kartalla -järjestelmän?" Vastauksen A02 mukaan hyvä vastaus mainitsee ainakin, että omistajaa ei ole kirjattu, eikä vastaus arvaa sitä. Jos tekoäly keksii omistajan, vastaus on virheellinen.
+**Esimerkki.** Kysyt tekoälyltä kysymyksen Q02: "Kuka omistaa Kerro kartalla -järjestelmän?" Vastauksen A02 mukaan hyvä vastaus mainitsee ainakin, että omistajaa ei ole kirjattu. Jos tekoäly keksii omistajan, vastaus on virheellinen.
 
 Maailman päivä on 1.11.2026. Käyttötapaukset (U01–U05) on kuvattu README-tiedostossa.
-
-**Sisältö:** 1. Mallin sisäiset epätäydellisyydet · 2. Istutetut puutteet · 3. Tarkoituksellisia erikoisuuksia · 4. Kohina · 5. Kysymykset ja vastaukset · Liitteet A–C
 
 ## 1. Mallin sisäiset epätäydellisyydet
 
@@ -200,7 +202,7 @@ Kohina on levitetty malliin satunnaisesti, ja jokainen muutos on kirjattu kohina
 | Tunnus | Kohina | Määrä | Mitä se tarkoittaa vastauksille |
 |---|---|---|---|
 | N01 | Vahvistamatta yli kaksi vuotta | 180 | Vastaus voi todeta tiedon mahdollisesti vanhentuneeksi. Ei virhe. |
-| N02 | Puuttuva kuvaus tai toimittaja | 26 | Vastaus ei voi kertoa puuttuvaa tietoa. Ei virhe, jos vastaus ei keksi sitä. |
+| N02 | Puuttuva kuvaus tai toimittaja | 25 | Vastaus ei voi kertoa puuttuvaa tietoa. Ei virhe, jos vastaus ei keksi sitä. |
 | N03 | Roolin haltija puuttuu | 1 | Rooli on olemassa, mutta sen haltijaa ei tiedetä. |
 | N04 | Pienjärjestelmä kuvattu kahdesti | 3 | Vastaus voi luetella järjestelmän kahdesti; hyvä vastaus huomaa kaksoiskuvauksen. |
 | N05 | Moduuli kuvattu omana järjestelmänä | 2 | Vastaus voi esittää moduulin erillisenä järjestelmänä. |
@@ -210,12 +212,19 @@ Kohina on levitetty malliin satunnaisesti, ja jokainen muutos on kirjattu kohina
 
 Kysymykset ilman vastauksia ovat tiedostossa `alyla-arkkitehtuurimalli-testiversio-kysymykset.md`. Vastaukset on laskettu ennen kohinaa; kaikki vastauksiin kuuluvat kohteet on lueteltu liitteessä C.
 
+Aikaan sidotut vastaukset lasketaan maailman päivästä 1.11.2026. Jos vastaus käyttää todellista päivämäärää ja kertoo sen, sekin hyväksytään.
+
+**Mikään vastaus ei saa:**
+
+- Keksiä puuttuvaa tietoa, kuten omistajaa, kuvausta tai toimittajaa.
+- Esittää istutettua puutetta kohinana tai sivuuttaa sitä mahdollisena kohinana. Kohina ei koske istutettujen puutteiden kohteita.
+
 | Kysymys | Käyttötapaus | Istutetut puutteet |
 |---|---|---|
 | Q01 Mitkä tietojärjestelmät tukevat varhaiskasvatushakemusten käsittelyä, ja kuka niistä vastaa? | U01 | – |
 | Q02 Kuka omistaa Kerro kartalla -järjestelmän? | U01 | P01 |
 | Q03 Mitä prosesseja, palveluja ja tietojärjestelmiä Rakennusvalvonnan organisaatiomuutos koskee? | U01 | – |
-| Q04 Missä on päällekkäisiä tietojärjestelmiä samaan käyttötarkoitukseen? | U02 | P03, P11, P12 |
+| Q04 Missä on päällekkäisiä tietojärjestelmiä samaan käyttötarkoitukseen? | U02 | P03, P11 |
 | Q05 Mitkä prosessit ovat ilman tietojärjestelmätukea? | U02 | – |
 | Q06 Mitkä poistuvat tietojärjestelmät tukevat yhä prosesseja, ja onko niille korvaaja? | U02 | P04, P05 |
 | Q07 Mitä tiedämme Rakennusvalvonnan tietojärjestelmistä, ja missä tiedot ovat puutteellisia tai ristiriitaisia? | U03 | P09 |
@@ -232,13 +241,16 @@ Kysymykset ilman vastauksia ovat tiedostossa `alyla-arkkitehtuurimalli-testivers
 
 *U01 Neuvonta ja viestintä*
 
-**A01 – hyvä vastaus mainitsee ainakin:**
+*Tulkinta:* Järjestelmät, jotka tukevat prosessia `Varhaiskasvatushakemusten käsittely ja sijoittaminen`, ja niiden omistajaroolit. Jos vastaus kertoo käyttävänsä toista perusteltua tulkintaa, sekin hyväksytään.
 
-- 3 järjestelmää: `Rakennusvalvonnan apurekisteri` (`Tietojärjestelmäomistaja, Sivistys`); `Vaka-Reppu` (`Tietojärjestelmäomistaja, Sivistys`); `Vaka-Reppu Asiointi` (`Tietojärjestelmäomistaja, Sivistys`).
+**A01**
+
+Hyvä vastaus huomioi ainakin:
+
+- [ ] 2 järjestelmää: `Vaka-Reppu` (`Tietojärjestelmäomistaja, Sivistys`); `Vaka-Reppu Asiointi` (`Tietojärjestelmäomistaja, Sivistys`).
 
 **Testiversiossa kohina on muuttanut näitä kohteita.** Vastaus voi olla näiltä osin vajaampi, eikä sitä lasketa virheeksi:
 
-- `Rakennusvalvonnan apurekisteri`: kuvaus puuttuu; vastaus ei voi kertoa käyttötarkoitusta
 - `Vaka-Reppu`: vahvistettu viimeksi yli kaksi vuotta sitten; vastaus voi todeta tiedon mahdollisesti vanhentuneeksi
 - `Vaka-Reppu Asiointi`: toimittaja puuttuu; vastaus ei voi kertoa toimittajaa
 
@@ -246,10 +258,18 @@ Kysymykset ilman vastauksia ovat tiedostossa `alyla-arkkitehtuurimalli-testivers
 
 *U01 Neuvonta ja viestintä*
 
-**A02 – hyvä vastaus mainitsee ainakin:**
+*Tulkinta:* Järjestelmälle kirjattu omistajarooli. Jos vastaus kertoo käyttävänsä toista perusteltua tulkintaa, sekin hyväksytään.
 
-- Omistajaa ei ole kirjattu, eikä vastaus arvaa sitä.
-- Järjestelmää käyttää `Maankäyttö ja kaavoitus`; vastaus voi ehdottaa omistajan nimeämistä.
+**A02**
+
+Hyvä vastaus huomioi ainakin:
+
+- [ ] Omistajaa ei ole kirjattu.
+- [ ] Järjestelmää käyttää `Maankäyttö ja kaavoitus`.
+
+Vastaus voi mainita lisäksi:
+
+- [ ] Ehdottaa omistajaa käyttäjän perusteella, kun se esitetään ehdotuksena eikä tosiasiana.
 
 **Testiversiossa kohina on muuttanut näitä kohteita.** Vastaus voi olla näiltä osin vajaampi, eikä sitä lasketa virheeksi:
 
@@ -259,11 +279,15 @@ Kysymykset ilman vastauksia ovat tiedostossa `alyla-arkkitehtuurimalli-testivers
 
 *U01 Neuvonta ja viestintä*
 
-**A03 – hyvä vastaus mainitsee ainakin:**
+*Tulkinta:* Rakennusvalvontaan kohdistetut prosessit, niiden toteuttamat palvelut sekä järjestelmät, jotka tukevat näitä prosesseja tai palvelevat yksikköä. Jos vastaus kertoo käyttävänsä toista perusteltua tulkintaa, sekin hyväksytään.
 
-- Prosessit (5): `Rakennus- ja huoneistotietojen ylläpito`, `Rakennus- ja toimenpidelupien käsittely`, `Rakennustyön aikainen valvonta ja katselmukset`, `Rakennusvalvonta`, `Rakentamisen neuvonta ja ennakko-ohjaus`.
-- Palvelut (3): `Rakennus- ja toimenpideluvat`, `Rakennustyön valvonta ja katselmukset`, `Rakentamisen neuvonta`.
-- Tietojärjestelmät (8): `Kansallinen lupapalvelu`, `Kansallinen rakennetun ympäristön tietojärjestelmä`, `Kartta-apu`, `Kuittiskanneri`, `Lupakone`, `Piirustusarkisto`, `Uutiskirjetyökalu`, `Verkkokauppa Mini`.
+**A03**
+
+Hyvä vastaus huomioi ainakin:
+
+- [ ] Prosessit (5): `Rakennus- ja huoneistotietojen ylläpito`, `Rakennus- ja toimenpidelupien käsittely`, `Rakennustyön aikainen valvonta ja katselmukset`, `Rakennusvalvonta`, `Rakentamisen neuvonta ja ennakko-ohjaus`.
+- [ ] Palvelut (3): `Rakennus- ja toimenpideluvat`, `Rakennustyön valvonta ja katselmukset`, `Rakentamisen neuvonta`.
+- [ ] Tietojärjestelmät (8): `Kansallinen lupapalvelu`, `Kansallinen rakennetun ympäristön tietojärjestelmä`, `Kartta-apu`, `Kuittiskanneri`, `Lupakone`, `Piirustusarkisto`, `Uutiskirjetyökalu`, `Verkkokauppa Mini`.
 
 **Testiversiossa kohina on muuttanut näitä kohteita.** Vastaus voi olla näiltä osin vajaampi, eikä sitä lasketa virheeksi:
 
@@ -278,12 +302,15 @@ Kysymykset ilman vastauksia ovat tiedostossa `alyla-arkkitehtuurimalli-testivers
 
 *U02 Nykytila-analyysi*
 
-**A04 – hyvä vastaus mainitsee ainakin:**
+*Tulkinta:* Järjestelmät, jotka palvelevat samaa käyttötarkoitusta. Samaa tietoa kirjoittavat muut parit (7) ovat todennäköisesti luontevaa työnjakoa, esimerkiksi verkkoasiointi ja sen taustajärjestelmä: `Hankinta- ja sopimustiedot`: `Sopimus+`, `Tarjouspalvelu`; `Kantakartta ja paikkatietoaineistot`: `Karttakone`, `Mittaus Pro`; `Myyntilaskut ja saatavat`: `Kassa`, `Raita`; `Tiedonhallintamalli`: `Arkiva TOS`, `Arkki`; `Tilatiedot ja tilavaraukset`: `Tilakone`, `Varaamo`; `Tontti- ja maanvuokrasopimukset`: `Tonttihaku`, `Tonttipalvelu`; `Varhaiskasvatuksen asiakastiedot`: `Vaka-Reppu`, `Vaka-Reppu Asiointi`. Niiden nostaminen tarkistettaviksi ei ole virhe. Jos vastaus kertoo käyttävänsä toista perusteltua tulkintaa, sekin hyväksytään.
 
-- Mahdollinen päällekkäisyys: `Ympäristöasiat` kirjaa samaa asiarekisteriä kuin kaupunkiyhteinen `Diaari` (P03). Yksikön oma järjestelmä voi olla perusteltu; hyvä vastaus nostaa asian esiin, ei tuomitse sitä.
-- Todennäköinen kaksoiskuvaus: `Infrakone` ja `Infra-kone 2` (P11).
-- Erilliset varausjärjestelmät: `Eläinklinikka`, `Ohjaamo-ajanvaraus`, `Varaamo`, `Vuoro` (E05). Lisäksi tilavarauspalvelu on kahden yksikön vastuulla (P12).
-- Muut samaa tietoa kirjoittavat parit (7) ovat luontevaa työnjakoa, esimerkiksi verkkoasiointi ja sen taustajärjestelmä. Niitä ei pidä esittää päällekkäisyyksinä.
+**A04**
+
+Hyvä vastaus huomioi ainakin:
+
+- [ ] Todennäköinen kaksoiskuvaus: `Infrakone` ja `Infra-kone 2` (P11).
+- [ ] Erilliset varausjärjestelmät: `Eläinklinikka`, `Ohjaamo-ajanvaraus`, `Varaamo`, `Vuoro` (E05).
+- [ ] Mahdollinen päällekkäisyys: `Ympäristöasiat` kirjaa samaa asiarekisteriä kuin kaupunkiyhteinen `Diaari` (P03). Yksikön oma järjestelmä voi olla perusteltu; hyvä vastaus nostaa asian esiin, ei tuomitse sitä.
 
 **Testiversiossa kohina on muuttanut näitä kohteita.** Vastaus voi olla näiltä osin vajaampi, eikä sitä lasketa virheeksi:
 
@@ -302,21 +329,31 @@ Kysymykset ilman vastauksia ovat tiedostossa `alyla-arkkitehtuurimalli-testivers
 
 *U02 Nykytila-analyysi*
 
-**A05 – hyvä vastaus mainitsee ainakin:**
+*Tulkinta:* Prosessiryhmien alaiset prosessit. Prosessiryhmiä ei lasketa, koska tietojärjestelmät tukevat prosesseja eivätkä ryhmiä. Jos vastaus kertoo käyttävänsä toista perusteltua tulkintaa, sekin hyväksytään.
 
-- 3 prosessia: `Oikaisuvaatimusten ja valitusten käsittely`, `Opinto-ohjaus ja jatko-opintoihin ohjaus`, `Poikkeamis- ja suunnittelutarveasioiden käsittely`.
+**A05**
+
+Hyvä vastaus huomioi ainakin:
+
+- [ ] 3 prosessia: `Oikaisuvaatimusten ja valitusten käsittely`, `Opinto-ohjaus ja jatko-opintoihin ohjaus`, `Poikkeamis- ja suunnittelutarveasioiden käsittely`.
 
 ### Q06 Mitkä poistuvat tietojärjestelmät tukevat yhä prosesseja, ja onko niille korvaaja?
 
 *U02 Nykytila-analyysi*
 
-**A06 – hyvä vastaus mainitsee ainakin:**
+*Tulkinta:* Korvaaja tarkoittaa toista aktiivista tai suunniteltua järjestelmää, joka tukee samoja prosesseja kuin poistuva järjestelmä. Jos vastaus kertoo käyttävänsä toista perusteltua tulkintaa, sekin hyväksytään.
 
-- Korvaaja tarkoittaa toista aktiivista tai suunniteltua järjestelmää, joka tukee samoja prosesseja. Mallissa sellaista ei näy.
-- `Tonttipalvelu` poistuu 30.6.2027.
-- `Maanhankinta ja maankäyttösopimukset`: jää kokonaan ilman järjestelmää.
-- `Tonttien luovutus`: jäljelle jäävät `Tilausportaali`, `Tonttihaku`.
-- `Tonttihaku` itse riippuu `Tonttipalvelu`-järjestelmästä (P05), joten se ei ole korvaaja.
+**A06**
+
+Hyvä vastaus huomioi ainakin:
+
+- [ ] `Tonttipalvelu` poistuu 30.6.2027. Mallissa ei ole järjestelmää, joka tukisi samoja prosesseja.
+- [ ] Prosessi `Maanhankinta ja maankäyttösopimukset` jää kokonaan ilman järjestelmää.
+- [ ] Prosessi `Tonttien luovutus` jää järjestelmien `Tilausportaali`, `Tonttihaku` varaan.
+
+Vastaus voi mainita lisäksi:
+
+- [ ] `Tonttihaku` ei ole korvaaja: se on kytketty poistuvaan `Tonttipalvelu`-järjestelmään uudella tietovirralla 4.5.2026, ja poisto katkaisee sen (P05).
 
 **Testiversiossa kohina on muuttanut näitä kohteita.** Vastaus voi olla näiltä osin vajaampi, eikä sitä lasketa virheeksi:
 
@@ -326,11 +363,15 @@ Kysymykset ilman vastauksia ovat tiedostossa `alyla-arkkitehtuurimalli-testivers
 
 *U03 Tietoaukot ja ristiriidat*
 
-**A07 – hyvä vastaus mainitsee ainakin:**
+*Tulkinta:* Järjestelmät, jotka palvelevat Rakennusvalvontaa. Puutteellisuus ja ristiriitaisuus näkyvät tässä elinkaaritiedoissa: vanhentuneissa ohjelmistoissa ja poistuvissa alustoissa. Jos vastaus kertoo käyttävänsä toista perusteltua tulkintaa, sekin hyväksytään.
 
-- `Lupakone` (Rakennusvalvonnan lupa- ja valvontajärjestelmä): `Pohjola Linux 7` tuki päättyi 30.6.2024; alusta `Tietokantaklusteri Quarry` poistuu 31.3.2027.
-- `Piirustusarkisto` (Rakennuslupapiirustusten sähköinen arkisto): `Polaris SQL 2016` tuki päättyi 14.7.2026.
-- Lisäksi yksikön pienjärjestelmät: `Kartta-apu`, `Kuittiskanneri`, `Uutiskirjetyökalu`, `Verkkokauppa Mini`.
+**A07**
+
+Hyvä vastaus huomioi ainakin:
+
+- [ ] `Lupakone` (Rakennusvalvonnan lupa- ja valvontajärjestelmä): `Pohjola Linux 7` tuki päättyi 30.6.2024; alusta `Tietokantaklusteri Quarry` poistuu 31.3.2027.
+- [ ] `Piirustusarkisto` (Rakennuslupapiirustusten sähköinen arkisto): `Polaris SQL 2016` tuki päättyi 14.7.2026.
+- [ ] Yksikön pienjärjestelmät `Kartta-apu`, `Kuittiskanneri`, `Uutiskirjetyökalu`, `Verkkokauppa Mini` on kuvattu kevyemmin: kuvauksena on järjestelmän tyyppi. Niissä ei ole elinkaaripuutteita.
 
 **Testiversiossa kohina on muuttanut näitä kohteita.** Vastaus voi olla näiltä osin vajaampi, eikä sitä lasketa virheeksi:
 
@@ -346,33 +387,56 @@ Kysymykset ilman vastauksia ovat tiedostossa `alyla-arkkitehtuurimalli-testivers
 
 *U03 Tietoaukot ja ristiriidat*
 
-**A08 – hyvä vastaus mainitsee ainakin:**
+*Tulkinta:* Tietojärjestelmät ja tietoaineistot, joilla ei ole omistajaa eikä ulkoista tarjoajaa. Kansallisilla palveluilla ja konserniyhtiöiden järjestelmillä on ulkoinen tarjoaja, joten niiltä ei puutu omistajaa. Jos vastaus kertoo käyttävänsä toista perusteltua tulkintaa, sekin hyväksytään.
 
-- `Kerro kartalla` (tietojärjestelmä)
-- `Kesätyösetelitiedot` (tietoaineisto)
-- Testiversiossa lisäksi roolilta `Tietojärjestelmäomistaja, Sivistys` puuttuu henkilön nimi (kohina). Rooli on olemassa, mutta sen haltijaa ei tiedetä.
+**A08**
+
+Hyvä vastaus huomioi ainakin:
+
+- [ ] `Kerro kartalla` (tietojärjestelmä)
+- [ ] `Kesätyösetelitiedot` (tietoaineisto)
+
+Vastaus voi mainita lisäksi:
+
+- [ ] Ehdottaa omistajaa käyttäjän perusteella, kun se esitetään ehdotuksena eikä tosiasiana.
 
 ### Q09 Missä mallin tiedot ovat keskenään ristiriidassa?
 
 *U03 Tietoaukot ja ristiriidat*
 
-**A09 – hyvä vastaus mainitsee ainakin:**
+*Tulkinta:* Ristiriita tarkoittaa, että mallin kaksi tietoa eivät voi olla yhtä aikaa totta, esimerkiksi tietovirta poistettuun järjestelmään tai henkilötietomerkintä, joka ei vastaa käytettyä aineistoa. Jos vastaus kertoo käyttävänsä toista perusteltua tulkintaa, sekin hyväksytään.
 
-- Tietovirta `Tilakone` → `Tilavaraus Classic`, vaikka `Tilavaraus Classic` on poistettu käytöstä (P06).
-- `Lukudiplomi` käyttää aineistoa `Oppilastiedot`, mutta on merkitty henkilötiedottomaksi (P07).
-- `Infrakone` ja `Infra-kone 2` kuvaavat todennäköisesti samaa järjestelmää (P11).
-- Lisäksi mahdollisia aukkoja: `Pysäköintivahti` käyttää aineistoa `Henkilöiden perustiedot`, mutta lähdettä ei ole kuvattu (P10), ja muita vastaavia tapauksia on mallissa valmiiksi (E04). Nämä eivät ole välttämättä virheitä.
+**A09**
+
+Hyvä vastaus huomioi ainakin:
+
+- [ ] Tietovirta `Tilakone` → `Tilavaraus Classic`, vaikka `Tilavaraus Classic` on poistettu käytöstä (P06).
+- [ ] `Lukudiplomi` käyttää aineistoa `Oppilastiedot`, mutta on merkitty henkilötiedottomaksi (P07).
+- [ ] `Infrakone` ja `Infra-kone 2` kuvaavat todennäköisesti samaa järjestelmää (P11).
+
+Vastaus voi mainita lisäksi:
+
+- [ ] `Pysäköintivahti` käyttää aineistoa `Henkilöiden perustiedot`, mutta lähdettä ei ole kuvattu (P10).
+- [ ] Muut tapaukset, joissa järjestelmä käyttää toisen järjestelmän kirjoittamaa tietoa ilman kuvattua tietovirtaa (E04).
 
 ### Q10 Mikä Kaupunkiympäristössä vaatii uusimista kahden vuoden sisällä?
 
 *U04 Elinkaari ja tekninen velka*
 
-**A10 – hyvä vastaus mainitsee ainakin:**
+*Tulkinta:* Järjestelmät, jotka tukevat Kaupunkiympäristön yksiköiden prosesseja. Kaksi vuotta lasketaan maailman päivästä eli 1.11.2028 asti. Jos vastaus kertoo käyttävänsä toista perusteltua tulkintaa, sekin hyväksytään.
 
-- Paikkatietojärjestelmien alusta: `Geomatica Server 10` ja `OpenRel 12` vanhenevat; niitä käyttävät `Infrakone`, `Kaavakone`, `Karttakone`, `Kiinteistö+`, `Älylän karttapalvelu`.
-- `Lupakone` toimii vanhentuneilla ohjelmistoilla ja poistuvalla alustalla `Tietokantaklusteri Quarry` (P09).
-- `Tonttipalvelu` poistuu, ja se toimii ohjelmistoilla, joiden tuki on päättynyt (P04).
-- Yhteensä 20 järjestelmällä on teknologia- tai elinkaaririski ja 23 järjestelmän sopimus päättyy. Täysi lista on liitteessä.
+**A10**
+
+Hyvä vastaus huomioi ainakin:
+
+- [ ] Paikkatietojärjestelmien alusta: `Geomatica Server 10` ja `OpenRel 12` vanhenevat; niitä käyttävät `Infrakone`, `Kaavakone`, `Karttakone`, `Kiinteistö+`, `Älylän karttapalvelu`.
+- [ ] `Lupakone` toimii vanhentuneilla ohjelmistoilla ja poistuvalla alustalla `Tietokantaklusteri Quarry` (P09).
+- [ ] `Tonttipalvelu` poistuu, ja se toimii ohjelmistoilla, joiden tuki on päättynyt (P04).
+- [ ] Yhteensä 20 järjestelmällä on teknologia- tai elinkaaririski ja 23 järjestelmän sopimus päättyy. Täysi lista on liitteessä.
+
+Vastaus voi mainita lisäksi:
+
+- [ ] Muut liitteen C kohteet, kuten yksittäisten järjestelmien vanhenevat ohjelmistot ja päättyvät sopimukset.
 
 **Testiversiossa kohina on muuttanut näitä kohteita.** Vastaus voi olla näiltä osin vajaampi, eikä sitä lasketa virheeksi:
 
@@ -395,15 +459,19 @@ Kysymykset ilman vastauksia ovat tiedostossa `alyla-arkkitehtuurimalli-testivers
 
 *U04 Elinkaari ja tekninen velka*
 
-**A11 – hyvä vastaus mainitsee ainakin:**
+*Tulkinta:* Järjestelmät, jotka toimivat ohjelmistoilla, joiden toimittajan tuki on päättynyt ennen maailman päivää 1.11.2026. Jos vastaus kertoo käyttävänsä toista perusteltua tulkintaa, sekin hyväksytään.
 
-- `Fenestra Server 2012 R2`: tuki päättyi 10.10.2023; käyttävät `Tonttipalvelu`.
-- `Pohjola Linux 7`: tuki päättyi 30.6.2024; käyttävät `Lupakone`.
-- `Polaris SQL 2014`: tuki päättyi 9.7.2024; käyttävät `Tonttipalvelu`.
-- `OpenRel 12`: tuki päättyi 14.11.2024; käyttävät `Infrakone`, `Kaavakone`, `Karttakone`, `Kiinteistö+`, `Älylän karttapalvelu`.
-- `Automaatio BMS 5`: tuki päättyi 31.12.2025; käyttävät `Kulku`, `Rakennusautomaatio`.
-- `Sisältöhallinta Kaari 9`: tuki päättyi 30.4.2026; käyttävät `Sisänet`.
-- `Polaris SQL 2016`: tuki päättyi 14.7.2026; käyttävät `Lukkari`, `Mittaus Pro`, `Piirustusarkisto`, `Reppu`, `Tuki-Reppu`.
+**A11**
+
+Hyvä vastaus huomioi ainakin:
+
+- [ ] `Fenestra Server 2012 R2`: tuki päättyi 10.10.2023; käyttävät `Tonttipalvelu`.
+- [ ] `Pohjola Linux 7`: tuki päättyi 30.6.2024; käyttävät `Lupakone`.
+- [ ] `Polaris SQL 2014`: tuki päättyi 9.7.2024; käyttävät `Tonttipalvelu`.
+- [ ] `OpenRel 12`: tuki päättyi 14.11.2024; käyttävät `Infrakone`, `Kaavakone`, `Karttakone`, `Kiinteistö+`, `Älylän karttapalvelu`.
+- [ ] `Automaatio BMS 5`: tuki päättyi 31.12.2025; käyttävät `Kulku`, `Rakennusautomaatio`.
+- [ ] `Sisältöhallinta Kaari 9`: tuki päättyi 30.4.2026; käyttävät `Sisänet`.
+- [ ] `Polaris SQL 2016`: tuki päättyi 14.7.2026; käyttävät `Lukkari`, `Mittaus Pro`, `Piirustusarkisto`, `Reppu`, `Tuki-Reppu`.
 
 **Testiversiossa kohina on muuttanut näitä kohteita.** Vastaus voi olla näiltä osin vajaampi, eikä sitä lasketa virheeksi:
 
@@ -418,12 +486,20 @@ Kysymykset ilman vastauksia ovat tiedostossa `alyla-arkkitehtuurimalli-testivers
 
 *U04 Elinkaari ja tekninen velka*
 
-**A12 – hyvä vastaus mainitsee ainakin:**
+*Tulkinta:* Järjestelmät, joita `Väylä` palvelee (Serving-suhde Väylästä tietojärjestelmään), ja tietovirrat, joiden ominaisuuden `via` arvo on `vayla`. Jos vastaus kertoo käyttävänsä toista perusteltua tulkintaa, sekin hyväksytään.
 
-- `Väylä Integrator 6`: tuki päättyy 30.6.2027.
-- `Väylä` palvelee 40 tietojärjestelmää, ja sen kautta kulkee 40 tietovirtaa.
-- Niistä 4 on ilmoituksia kansallisiin palveluihin: `Vaka-Reppu` → `Kansallinen varhaiskasvatuksen tietovaranto`; `Reppu` → `Kansallinen opintotietovaranto`; `Lupakone` → `Kansallinen rakennetun ympäristön tietojärjestelmä`; `Kaavakone` → `Kansallinen rakennetun ympäristön tietojärjestelmä`.
-- Riski: lakisääteiset ilmoitukset voivat katketa, jos alustaa ei päivitetä ajoissa.
+**A12**
+
+Hyvä vastaus huomioi ainakin:
+
+- [ ] `Väylä Integrator 6`: tuki päättyy 30.6.2027.
+- [ ] `Väylä` palvelee 40 tietojärjestelmää, ja sen kautta kulkee 40 tietovirtaa.
+- [ ] Niistä 4 on ilmoituksia kansallisiin palveluihin: `Vaka-Reppu` → `Kansallinen varhaiskasvatuksen tietovaranto`; `Reppu` → `Kansallinen opintotietovaranto`; `Lupakone` → `Kansallinen rakennetun ympäristön tietojärjestelmä`; `Kaavakone` → `Kansallinen rakennetun ympäristön tietojärjestelmä`.
+- [ ] Riski: lakisääteiset ilmoitukset voivat katketa, jos alustaa ei päivitetä ajoissa.
+
+Vastaus ei saa:
+
+- [ ] Väittää, ettei Väylän kautta kulkevia tietovirtoja voi tunnistaa. Reitti on tietovirran ominaisuudessa `via`.
 
 **Testiversiossa kohina on muuttanut näitä kohteita.** Vastaus voi olla näiltä osin vajaampi, eikä sitä lasketa virheeksi:
 
@@ -436,14 +512,22 @@ Kysymykset ilman vastauksia ovat tiedostossa `alyla-arkkitehtuurimalli-testivers
 
 *U05 Muutosten vaikutukset*
 
-**A13 – hyvä vastaus mainitsee ainakin:**
+*Tulkinta:* Kohteet, jotka mallissa toteuttavat digipalvelulain (Realization). Jos vastaus kertoo käyttävänsä toista perusteltua tulkintaa, sekin hyväksytään.
 
-- 17 kohdetta, jotka digipalvelulaki sääntelee. Vastaus ryhmittelee ne omistajan mukaan, koska omistajille pitää kertoa muutoksesta:
-- `Palveluomistaja, Konsernihallinto`: `Sähköinen asiointi kaupungin verkkopalvelussa`
-- `Tietojärjestelmäomistaja, Elinvoima`: `Työtä Älylässä`, `Visit Älylä`
-- `Tietojärjestelmäomistaja, Kaupunkiympäristö`: `Korjaa kaupunki`, `Reittiopas`, `Tonttihaku`, `Varaamo`, `Älylän karttapalvelu`
-- `Tietojärjestelmäomistaja, Konsernihallinto`: `Asiointi`, `Diaari Julkaisu`, `Palautepolku`, `Valtuustolive`, `Älylä-botti`, `Älylä.fi`
-- `Tietojärjestelmäomistaja, Sivistys`: `Reppu Koti`, `Vaka-Reppu Asiointi`, `Vuoro`
+**A13**
+
+Hyvä vastaus huomioi ainakin:
+
+- [ ] 17 kohdetta, jotka digipalvelulaki sääntelee. Vastaus ryhmittelee ne omistajan mukaan, koska omistajille pitää kertoa muutoksesta:
+- [ ] `Palveluomistaja, Konsernihallinto`: `Sähköinen asiointi kaupungin verkkopalvelussa`
+- [ ] `Tietojärjestelmäomistaja, Elinvoima`: `Työtä Älylässä`, `Visit Älylä`
+- [ ] `Tietojärjestelmäomistaja, Kaupunkiympäristö`: `Korjaa kaupunki`, `Reittiopas`, `Tonttihaku`, `Varaamo`, `Älylän karttapalvelu`
+- [ ] `Tietojärjestelmäomistaja, Konsernihallinto`: `Asiointi`, `Diaari Julkaisu`, `Palautepolku`, `Valtuustolive`, `Älylä-botti`, `Älylä.fi`
+- [ ] `Tietojärjestelmäomistaja, Sivistys`: `Reppu Koti`, `Vaka-Reppu Asiointi`, `Vuoro`
+
+Vastaus voi mainita lisäksi:
+
+- [ ] Asukkaille näkyvät tietojärjestelmät, joita ei ole kytketty digipalvelulakiin, ja suositus tarkistaa ne.
 
 **Testiversiossa kohina on muuttanut näitä kohteita.** Vastaus voi olla näiltä osin vajaampi, eikä sitä lasketa virheeksi:
 
@@ -457,19 +541,30 @@ Kysymykset ilman vastauksia ovat tiedostossa `alyla-arkkitehtuurimalli-testivers
 
 *U05 Muutosten vaikutukset*
 
-**A14 – hyvä vastaus mainitsee ainakin:**
+*Tulkinta:* Järjestelmät, joiden alusta sijaitsee EU/ETA-alueen ulkopuolella ja jotka käsittelevät henkilötietoja: järjestelmä on merkitty henkilötietoja käsitteleväksi tai se käyttää henkilötietoja sisältävää aineistoa. Jos vastaus kertoo käyttävänsä toista perusteltua tulkintaa, sekin hyväksytään.
 
-- `Englantikeidas` toimii alustalla `Oppimissovelluksen pilvipalvelu (Yhdysvallat)` ja käyttää aineistoa `Oppilastiedot` (P08).
-- Koskee lasten henkilötietoja ja on periaatteen 19 vastaista.
+**A14**
+
+Hyvä vastaus huomioi ainakin:
+
+- [ ] `Englantikeidas` toimii alustalla `Oppimissovelluksen pilvipalvelu (Yhdysvallat)` ja käyttää aineistoa `Oppilastiedot` (P08).
+- [ ] Koskee lasten henkilötietoja ja on periaatteen 19 vastaista.
 
 ### Q15 Jos väestötietojen toimitus kansallisesta väestötietojärjestelmästä muuttuu, mihin kaupungin järjestelmiin se vaikuttaa?
 
 *U05 Muutosten vaikutukset*
 
-**A15 – hyvä vastaus mainitsee ainakin:**
+*Tulkinta:* Järjestelmät, jotka saavat väestötietoja kansallisesta väestötietojärjestelmästä tietovirtojen kautta. Jos vastaus kertoo käyttävänsä toista perusteltua tulkintaa, sekin hyväksytään.
 
-- Tietovirtojen kautta: `Diaari`, `Reppu`, `Vaka-Reppu`.
-- Lisäksi `Pysäköintivahti` käyttää aineistoa `Henkilöiden perustiedot`, mutta sen lähdettä ei ole kuvattu (P10). Pelkkiä tietovirtoja seuraamalla se jäisi huomaamatta; hyvä vastaus mainitsee sen ja suosittelee tarkistamaan, miten tieto saadaan.
+**A15**
+
+Hyvä vastaus huomioi ainakin:
+
+- [ ] Tietovirtojen kautta: `Diaari`, `Reppu`, `Vaka-Reppu`.
+
+Vastaus voi mainita lisäksi:
+
+- [ ] `Pysäköintivahti` käyttää aineistoa `Henkilöiden perustiedot`, mutta sen lähdettä ei ole kuvattu (P10). Pelkkiä tietovirtoja seuraamalla se jäisi huomaamatta.
 
 **Testiversiossa kohina on muuttanut näitä kohteita.** Vastaus voi olla näiltä osin vajaampi, eikä sitä lasketa virheeksi:
 
@@ -635,7 +730,6 @@ Periaate 11 edellyttää integraatioalustaa. Poikkeamispäätökset kuvataan vai
 
 ### A01
 
-- `Rakennusvalvonnan apurekisteri`: `Tietojärjestelmäomistaja, Sivistys`
 - `Vaka-Reppu`: `Tietojärjestelmäomistaja, Sivistys`
 - `Vaka-Reppu Asiointi`: `Tietojärjestelmäomistaja, Sivistys`
 

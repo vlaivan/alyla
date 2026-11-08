@@ -1,10 +1,10 @@
-# Metamodel for the Älylä reference world (alyla), version 1.0
+# Metamodel for the Älylä reference world (alyla), version 1.1
 #
 # Defines everything that may exist in the world. Nothing outside this file is generated,
 # and the validator checks all content against it. To add a type, change this file first.
 # Field names, type names and enumeration codes are English; all content is Finnish.
 
-version: "1.0"
+version: "1.1"
 archimate: "3.2"
 world_today: "2026-11-01"
 id_format: "PREFIX-NNNN (type prefix, hyphen, four digits); stable across regenerations"

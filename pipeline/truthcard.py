@@ -2,7 +2,7 @@
 import json, csv
 from collections import Counter, defaultdict
 from common import load, path
-from labels import MODEL_TITLE, VARIANTS, TRUTH_CARD, QUESTIONS, NOISE_LOG, USE_CASES, answer_id, VERSION
+from labels import MODEL_TITLE, VARIANTS, TRUTH_CARD, QUESTIONS, NOISE_LOG, USE_CASES, answer_id, VERSION, SCORECARD, GLOBAL_MUST_NOT
 
 W = json.load(open(path('build', 'world-planted.json'), encoding='utf-8'))
 E = {e['id']: e for e in W['elements']}
@@ -31,17 +31,18 @@ TEST_XML = VARIANTS['test'][1]
 
 L = [f"# Totuuskortti: {MODEL_TITLE} (testiversio)", "",
      f"Tämä kortti kertoo, mitä testiversioon (`{TEST_XML}`, versio {VERSION}) on lisätty tarkoituksella ja mitä hyvän vastauksen pitäisi löytää.", "",
+     "**Sisältö:** Näin käytät korttia · 1. Mallin sisäiset epätäydellisyydet · 2. Istutetut puutteet · 3. Tarkoituksellisia erikoisuuksia · 4. Kohina · 5. Kysymykset ja vastaukset · Liitteet A–C", "",
      "## Näin käytät korttia", "",
      "**Testiversio = perusversio + istutetut puutteet + kohina.**", "",
      "- **Mallin sisäinen epätäydellisyys (E)** on realistinen heikkous, joka on jo perusversiossa. Hyvä analyysi voi raportoida senkin.",
      "- **Istutettu puute (P)** on tarkoituksella lisätty aukko, ristiriita tai mahdollinen ongelma. Hyvän analyysin pitäisi huomata se.",
      "- **Kohina (N)** on tavallista epätäydellisyyttä, kuten puuttuva kuvaus. Hyvä vastaus sietää sen; se ei ole vastauksen virhe.",
-     "- **Kysymys (Q)** ja sen **odotettu vastaus (A)** kuuluvat yhteen: kysymykseen Q01 vastaa A01.", "",
+     "- **Kysymys (Q)** ja sen **odotettu vastaus (A)** kuuluvat yhteen: kysymykseen Q01 vastaa A01. Vastauksessa on kohdat, jotka hyvä vastaus huomioi ainakin, kohdat, jotka vastaus voi mainita lisäksi, ja kohdat, joita vastaus ei saa sisältää.", "",
+     f"Vastaukset pisteytetään lomakkeella `{SCORECARD}`.", "",
      "Mallin elementtien nimet, ominaisuudet ja tiedostonimet on kirjoitettu `näin`, jotta ne on helppo löytää Archista.", "",
      f"**Esimerkki.** Kysyt tekoälyltä kysymyksen {ex['id']}: \"{ex['question']}\" Vastauksen {answer_id(ex['id'])} mukaan hyvä vastaus mainitsee ainakin, että "
      f"{ex['points'][0][0].lower()}{ex['points'][0][1:]} Jos tekoäly keksii omistajan, vastaus on virheellinen.", "",
      f"Maailman päivä on {today_fi}. Käyttötapaukset (U01–U05) on kuvattu README-tiedostossa.", "",
-     "**Sisältö:** 1. Mallin sisäiset epätäydellisyydet · 2. Istutetut puutteet · 3. Tarkoituksellisia erikoisuuksia · 4. Kohina · 5. Kysymykset ja vastaukset · Liitteet A–C", "",
      "## 1. Mallin sisäiset epätäydellisyydet", "", "Nämä ovat jo perusversiossa; niitä ei ole istutettu, vaan ne on laskettu mallista. Kaikki kohteet on lueteltu liitteessä A.", "",
       "| Tunnus | Epätäydellisyys | Yhteenveto |", "|---|---|---|"]
 L += [f"| {b['id']} | {b['title']} | {b['summary']} |" for b in ans['baseline']] + [""]
@@ -67,11 +68,15 @@ L += ["## 3. Tarkoituksellisia erikoisuuksia", "", "Nämä voivat näyttää vir
 cnt = Counter(x['noise'] for x in noise)
 L += [f"| {k} | {spec[k]['name']} | {cnt[k]} | {NOISE_MEANS.get(k, '')} |" for k in spec] + [""]
 L += ["## 5. Kysymykset ja vastaukset", "", f"Kysymykset ilman vastauksia ovat tiedostossa `{QUESTIONS}`. Vastaukset on laskettu ennen kohinaa; kaikki vastauksiin kuuluvat kohteet on lueteltu liitteessä C.", "",
+      f"Aikaan sidotut vastaukset lasketaan maailman päivästä {today_fi}. Jos vastaus käyttää todellista päivämäärää ja kertoo sen, sekin hyväksytään.", "",
+      "**Mikään vastaus ei saa:**", ""] + [f"- {x}" for x in GLOBAL_MUST_NOT] + ["",
       "| Kysymys | Käyttötapaus | Istutetut puutteet |", "|---|---|---|"]
 L += [f"| {q['id']} {q['question']} | {q['k']} | {', '.join(q['plants']) or '–'} |" for q in ans['questions']] + [""]
 for q in ans['questions']:
-    L += [f"### {q['id']} {q['question']}", "", f"*{q['k']} {USE_CASES[q['k']][0]}*", "", f"**{answer_id(q['id'])} – hyvä vastaus mainitsee ainakin:**", ""]
-    L += [f"- {x}" for x in q['points']] + [""]
+    L += [f"### {q['id']} {q['question']}", "", f"*{q['k']} {USE_CASES[q['k']][0]}*", ""] + ([f"*Tulkinta:* {q['scope']} Jos vastaus kertoo käyttävänsä toista perusteltua tulkintaa, sekin hyväksytään.", ""] if q['scope'] else []) + [f"**{answer_id(q['id'])}**", "", "Hyvä vastaus huomioi ainakin:", ""]
+    L += [f"- [ ] {x}" for x in q['points']] + [""]
+    if q['may']: L += ["Vastaus voi mainita lisäksi:", ""] + [f"- [ ] {x}" for x in q['may']] + [""]
+    if q['must_not']: L += ["Vastaus ei saa:", ""] + [f"- [ ] {x}" for x in q['must_not']] + [""]
     if q['noise']:
         g = defaultdict(list)
         for x in q['noise']: g[x['target']].append(EFFECT.get((x['noise'], x['field']), x['noise']))
@@ -88,7 +93,7 @@ for q in ans['questions']:
 open(path('export', TRUTH_CARD), 'w', encoding='utf-8').write('\n'.join(L))
 
 Qs = [f"# Kysymykset: {MODEL_TITLE} (testiversio)", "",
-      f"Näillä kysymyksillä voi testata, miten tekoäly käyttää arkkitehtuurimallia (versio {VERSION}). Kysymykset on ryhmitelty käyttötapauksittain. "
+      f"Näillä kysymyksillä voi testata, miten tekoäly käyttää arkkitehtuurimallia (versio {VERSION}). Kysymykset on ryhmitelty käyttötapauksittain. Mallin maailman päivä on {today_fi}; aikaan sidotut kysymykset lasketaan siitä. "
       f"Odotetut vastaukset (A01–A{len(ans['questions']):02d}) ovat totuuskortissa (`{TRUTH_CARD}`).", ""]
 cur = None
 for q in ans['questions']:
@@ -96,6 +101,30 @@ for q in ans['questions']:
         cur = q['k']; Qs += [f"## {cur} {USE_CASES[cur][0]}", "", USE_CASES[cur][1], ""]
     Qs += [f"{q['id']}. {q['question']}", ""]
 open(path('export', QUESTIONS), 'w', encoding='utf-8').write('\n'.join(Qs))
+# ---------------------------------------------------------------- scoring form
+QUALITY = [('Jäljitettävyys', 'Vastaukset antavat elementtien tunnisteet ja suhteiden tyypit, joten ihminen voi tarkistaa ne.'),
+           ('Kattavuus', 'Tekoäly käy läpi koko mallin, kun kysymys sitä vaatii, eikä nojaa pelkkään nimihakuun.'),
+           ('Ominaisuuksien käyttö', 'Tekoäly lukee elementtien ja suhteiden ominaisuuksia, kuten `via`, `lifecycle` ja `last_confirmed`.'),
+           ('Tosiasiat ja päätelmät', 'Vastaukset erottavat mallin tiedot omista päätelmistä ja ehdotuksista.'),
+           ('Puuttuva tieto', 'Vastaukset kertovat, mikä tieto puuttuu tai voi olla vanhentunutta, eivätkä keksi sitä.')]
+S = [f"# Pisteytys: {MODEL_TITLE} (testiversio)", "",
+     f"Tällä lomakkeella pisteytetään yksi testiajo, jossa tekoäly on vastannut kysymyksiin (`{QUESTIONS}`) ilman totuuskorttia. "
+     f"Odotetut vastaukset ja säännöt ovat totuuskortissa (`{TRUTH_CARD}`), versio {VERSION}. "
+     "Pisteytä ajo mieluiten erillisessä istunnossa, joka näkee totuuskortin ja vastaukset mutta ei vastanneen istunnon päättelyä.", "",
+     "| Tieto | Arvo |", "|---|---|", "| Päivämäärä | |", "| Tekoäly ja malli | |", "| Lukuyhteys | |", "| Ohjeistus | |", "| Pisteyttäjä | |", "",
+     "## 1. Kysymykset", "",
+     "Pisteet 0–2 kysymystä kohden: **2** kaikki kohdat, jotka hyvä vastaus huomioi, eikä yhtään kiellettyä, **1,5** yksi kohta puuttuu tai yksi kielletty, "
+     "**1** selvä aukko, **0,5** enimmäkseen väärin, **0** vastaus puuttuu tai sisältää keksittyä tietoa. Lisähuomiot eli kohdat, jotka vastaus voi mainita lisäksi, kirjataan erikseen, eikä niitä lasketa pisteisiin.", "",
+     "| Kysymys | Pisteet (0–2) | Lisähuomiot | Huomiot |", "|---|---|---|---|"]
+S += [f"| {q['id']} | | | |" for q in ans['questions']]
+S += ["", "## 2. Menetelmä ja jäljitettävyys", "", "Pisteet 0–2 kustakin: **2** toteutuu johdonmukaisesti, **1** osittain, **0** ei toteudu.", "",
+      "| Ominaisuus | Kuvaus | Pisteet (0–2) |", "|---|---|---|"]
+S += [f"| {a} | {b} | |" for a, b in QUALITY]
+nq = 2 * len(ans['questions']); nm = 2 * len(QUALITY)
+S += ["", "## 3. Yhteenveto", "", "| Osa | Pisteet |", "|---|---|",
+      f"| Kysymykset | ___ / {nq} |", f"| Menetelmä ja jäljitettävyys | ___ / {nm} |", f"| **Yhteensä** | ___ / {nq + nm} |",
+      "| Lisähuomiot (erikseen) | ___ |", "", "**Tärkeimmät havainnot:**", ""]
+open(path('export', SCORECARD), 'w', encoding='utf-8').write('\n'.join(S))
 with open(path('export', NOISE_LOG), 'w', encoding='utf-8', newline='') as f:
     wr = csv.writer(f, delimiter=';'); wr.writerow(['kohina', 'kuvaus', 'kohde', 'kohteen_nimi', 'kenttä', 'alkuperäinen', 'uusi'])
     for x in noise: wr.writerow([x['noise'], x['name'], x['target'], x['target_name'], x['field'], x['old'], x['new']])

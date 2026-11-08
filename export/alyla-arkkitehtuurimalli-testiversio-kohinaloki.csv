@@ -197,7 +197,6 @@ N02;Puuttuva kuvaus tai toimittaja;APP-0176;Tarinatehdas;description;Perusopetuk
 N02;Puuttuva kuvaus tai toimittaja;APP-0189;Kuvakirja;description;Varhaiskasvatuksen pedagoginen sovellus;
 N02;Puuttuva kuvaus tai toimittaja;APP-0212;Kilpailuseuranta;vendor;Kaupunki (oma);
 N02;Puuttuva kuvaus tai toimittaja;APP-0216;Avainrekisteri;vendor;Kaupunki (oma);
-N02;Puuttuva kuvaus tai toimittaja;APP-0225;Rakennusvalvonnan apurekisteri;description;Yksikön paikallinen rekisteri;
 N02;Puuttuva kuvaus tai toimittaja;APP-0229;Projektiseuranta;description;Yksikön paikallinen rekisteri;
 N02;Puuttuva kuvaus tai toimittaja;APP-0254;Esittelyalusta;vendor;Koodiverstas Oy;
 N02;Puuttuva kuvaus tai toimittaja;APP-0258;Kuittiskanneri;description;Yksikön SaaS-pientyökalu;
@@ -207,13 +206,13 @@ N02;Puuttuva kuvaus tai toimittaja;APP-0290;Matematiikkaeditori;vendor;Pilvipaja
 N02;Puuttuva kuvaus tai toimittaja;APP-0293;Hankintalista;description;Yksikön paikallinen rekisteri;
 N03;Roolin haltija puuttuu;ROL-0199;Tietojärjestelmäomistaja, Sivistys;holder;Sami Saarinen;
 N04;Pienjärjestelmä kuvattu kahdesti;APP-0307;Sähköinen vieraskirja (koulut);element;;kaksoiskuvaus: APP-0264 Sähköinen vieraskirja
-N04;Pienjärjestelmä kuvattu kahdesti;APP-0308;Rakennusvalvonnan apurekisteri Online;element;;kaksoiskuvaus: APP-0225 Rakennusvalvonnan apurekisteri
+N04;Pienjärjestelmä kuvattu kahdesti;APP-0311;Rakenne-analyysi Online;element;;kaksoiskuvaus: APP-0265 Rakenne-analyysi
 N04;Pienjärjestelmä kuvattu kahdesti;APP-0309;Videoverstas – pilvi;element;;kaksoiskuvaus: APP-0151 Videoverstas
 N05;Moduuli kuvattu omana järjestelmänä;APP-0305;Diaari Arkistointi;element;;moduuli kuvattu omana järjestelmänä: APP-0001 Diaari
 N05;Moduuli kuvattu omana järjestelmänä;APP-0306;Vaka-Reppu Maksut;element;;moduuli kuvattu omana järjestelmänä: APP-0086 Vaka-Reppu
 N06;Irrallinen järjestelmä ilman suhteita;APP-0232;Tuntikirjanpito;relationships;3;0
 N06;Irrallinen järjestelmä ilman suhteita;APP-0246;Tarjouspyyntöpohja;relationships;3;0
 N06;Irrallinen järjestelmä ilman suhteita;APP-0256;Uutiskirjetyökalu;relationships;3;0
-N06;Irrallinen järjestelmä ilman suhteita;APP-0281;Lisenssivahti;relationships;4;0
+N06;Irrallinen järjestelmä ilman suhteita;APP-0139;Liikuntalokikirja;relationships;3;0
 N06;Irrallinen järjestelmä ilman suhteita;APP-0240;Tilausportaali;relationships;3;0
-N06;Irrallinen järjestelmä ilman suhteita;APP-0235;Projektityötila;relationships;3;0
+N06;Irrallinen järjestelmä ilman suhteita;APP-0229;Projektiseuranta;relationships;3;0

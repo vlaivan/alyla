@@ -1,5 +1,5 @@
 """Apply planted findings (skeleton/plants.yaml) to the clean world. Output: build/world-planted.json, build/plants.json."""
-import json, copy
+import json, copy, random, datetime
 from common import load, path, IdRegistry
 
 ids = IdRegistry()
@@ -9,6 +9,12 @@ E = {e['id']: e for e in w['elements']}
 KEY = {(e['type'], e['key']): e['id'] for e in w['elements']}
 R = {r['id']: r for r in w['relationships']}
 def ref(x): return KEY[tuple(x)]
+SEED = load('world.yaml')['seed']
+def confirmed(item, after):
+    # Same rule as the generator: a per-item random date between March 2025 and mid-October 2026, never
+    # before the item came into use, so planted items cannot be recognised by a shared date.
+    a = datetime.date.fromisoformat(max('2025-03-01', after)); b = datetime.date.fromisoformat(max('2026-10-15', after))
+    return (a + datetime.timedelta(days=random.Random(f'{SEED}|plant|confirmed|{item}').randint(0, (b - a).days))).isoformat()
 plants_out = []
 for p in load('skeleton', 'plants.yaml')['plants']:
     touched_e, touched_r = set(), set()
@@ -23,7 +29,8 @@ for p in load('skeleton', 'plants.yaml')['plants']:
         elif kind == 'add_element':
             prefix = {'ApplicationComponent': 'APP', 'Node': 'NOD', 'DataObject': 'DAT'}[a['type']]
             eid = ids.get(prefix, a['key'])
-            meta = dict(lifecycle='active', last_confirmed='2026-06-15'); meta.update(a.get('meta', {}))
+            meta = dict(lifecycle='active'); meta.update(a.get('meta', {}))
+            meta.setdefault('last_confirmed', confirmed(eid, meta.get('valid_from', '2021-01-01')))
             if isinstance(meta.get('owner'), list): meta['owner'] = ref(meta['owner'])
             if meta.get('provider'): meta['external'] = True
             e = dict(id=eid, type=a['type'], key=a['key'], name=a['name'], description=a.get('description'), meta=meta, attrs=dict(a.get('attrs', {})))
@@ -31,8 +38,9 @@ for p in load('skeleton', 'plants.yaml')['plants']:
         elif kind == 'add_rel':
             s, t = ref(a['source']), ref(a['target'])
             rid = ids.get('REL', f"{a['type']}:{s}:{t}:{a.get('name') or ''}")
-            meta = dict(source='Mallin ylläpito', last_confirmed='2026-06-15', valid_from=max(E[s]['meta']['valid_from'], E[t]['meta']['valid_from']))
+            meta = dict(source='Mallin ylläpito', valid_from=max(E[s]['meta']['valid_from'], E[t]['meta']['valid_from']))
             meta.update(a.get('meta', {}))
+            meta.setdefault('last_confirmed', confirmed(rid, meta['valid_from']))
             r = dict(id=rid, type=a['type'], source=s, target=t, name=a.get('name'), meta=meta, attrs=dict(a.get('attrs', {})))
             w['relationships'].append(r); R[rid] = r; touched_r.add(rid); touched_e |= {s, t}
         elif kind == 'remove_rel':

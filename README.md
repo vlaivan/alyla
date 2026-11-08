@@ -2,7 +2,7 @@
 
 Älylän kaupunki on kuvitteellinen, noin 69 000 asukkaan kaupunki Älymaan maakunnassa. Tässä repositoryssa on kaupungin kokonaisarkkitehtuurimalli, jonka avulla voidaan testata tekoälyn käyttöä kokonaisarkkitehtuurityössä. Malli on luotu niin laajaksi, että sitä voi käyttää realistisena testiaineistona, ja siihen on lisätty tunnettuja puutteita, joiden avulla vastausten laatua voi arvioida.
 
-Kaikki nimet ja sisältö ovat kuvitteellisia. Säädökset perustuvat todelliseen lainsäädäntöön yleisellä tasolla, mutta eivät välttämättä heijasta oikeaa todellisuutta. Versio 1.0. Maailman päivä on 1.11.2026.
+Kaikki nimet ja sisältö ovat kuvitteellisia. Säädökset perustuvat todelliseen lainsäädäntöön yleisellä tasolla, mutta eivät välttämättä heijasta oikeaa todellisuutta. Versio 1.1. Maailman päivä on 1.11.2026.
 
 ## Mallin variantit ja tiedostot
 
@@ -13,9 +13,10 @@ Kaikki nimet ja sisältö ovat kuvitteellisia. Säädökset perustuvat todellise
 | `export/alyla-arkkitehtuurimalli-testiversio-kohinaloki.csv` | Jokainen kohinan tekemä muutos. |
 | `export/alyla-arkkitehtuurimalli-testiversio-kysymykset.md` | Kysymyksiä mallin testaamiseen, ilman vastauksia. |
 | `export/alyla-arkkitehtuurimalli-testiversio-totuuskortti.md` | Totuuskortti, eli mitä testiversioon on lisätty ja mitä hyvän vastauksen pitäisi löytää. |
+| `export/alyla-arkkitehtuurimalli-testiversio-pisteytys.md` | Pisteytyslomake yhden testiajon arviointiin. |
 | `export/records/` | Mallin ulkopuoliset tietueet. Mallia voi laajentaa erilaisilla tietueilla, kuten päätöksillä tai asiakirjoilla. Nyt mukana on 20 arkkitehtuuriperiaatetta kuudella alueella (`periaatteet/`). |
 
-Mallit avataan Archissa: File → Import → Open Exchange XML Model. Kummankin mallin aloitusnäkymä kertoo, mistä variantista on kyse.
+Mallit ovat standardinmukaisia ArchiMate 3.2 -malleja Open Groupin mallinvaihtomuodossa (Model Exchange File Format), joten ne voi avata Archissa ja muissa muotoa tukevissa työkaluissa. Archissa mallit avataan näin: File → Import → Open Exchange XML Model. Kummankin mallin aloitusnäkymä kertoo, mistä variantista on kyse.
 
 ## Mallin sisältö
 
@@ -33,7 +34,7 @@ Mallit avataan Archissa: File → Import → Open Exchange XML Model. Kummankin 
 | Ohjelmistot | 37 | 37 |
 | Teknologia-alustat | 37 | 38 |
 | Sijainnit | 9 | 9 |
-| Suhteet | 2369 | 2384 |
+| Suhteet | 2369 | 2389 |
 
 Organisaatio kattaa neljä toimialaa (Konsernihallinto, Elinvoima, Kaupunkiympäristö, Sivistys), konserniyhtiöt mustina laatikoina, Älymaan hyvinvointialueen ja kansalliset viranomaiset. Tietojärjestelmistä noin puolet on yksiköiden pieniä järjestelmiä, jotka on kuvattu kevyemmin.
 
@@ -90,7 +91,7 @@ Kohina on realistista epätäydellisyyttä, joka on levitetty testiversioon satu
 | Tunnus | Kohina | Määrä |
 |---|---|---|
 | N01 | Vahvistamatta yli kaksi vuotta | 180 |
-| N02 | Puuttuva kuvaus tai toimittaja | 26 |
+| N02 | Puuttuva kuvaus tai toimittaja | 25 |
 | N03 | Roolin haltija puuttuu | 1 |
 | N04 | Pienjärjestelmä kuvattu kahdesti | 3 |
 | N05 | Moduuli kuvattu omana järjestelmänä | 2 |
@@ -129,6 +130,7 @@ Vaiheet: perusversio (generate) → periaatteet (records) → istutetut puutteet
 
 | Versio | Päivämäärä | Muutokset |
 |---|---|---|
+| 1.1 | 8.11.2026 | Ensimmäisten testiajojen perusteella totuuskorttia tarkennettiin ja lisättiin pisteytyslomake. |
 | 1.0 | 7.11.2026 | Ensimmäinen julkaisu: perusversio, testiversio, totuuskortti, kysymykset, kohinaloki ja arkkitehtuuriperiaatteet. |
 
 ## Jatkokehitysmahdollisuuksia

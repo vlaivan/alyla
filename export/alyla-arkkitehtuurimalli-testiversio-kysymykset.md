@@ -1,6 +1,6 @@
 # Kysymykset: Älylä – synteettinen kaupungin arkkitehtuurimalli (testiversio)
 
-Näillä kysymyksillä voi testata, miten tekoäly käyttää arkkitehtuurimallia (versio 1.0). Kysymykset on ryhmitelty käyttötapauksittain. Odotetut vastaukset (A01–A15) ovat totuuskortissa (`alyla-arkkitehtuurimalli-testiversio-totuuskortti.md`).
+Näillä kysymyksillä voi testata, miten tekoäly käyttää arkkitehtuurimallia (versio 1.1). Kysymykset on ryhmitelty käyttötapauksittain. Mallin maailman päivä on 1.11.2026; aikaan sidotut kysymykset lasketaan siitä. Odotetut vastaukset (A01–A15) ovat totuuskortissa (`alyla-arkkitehtuurimalli-testiversio-totuuskortti.md`).
 
 ## U01 Neuvonta ja viestintä
 
